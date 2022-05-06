@@ -9,7 +9,7 @@ lest.
 
 ## Dependencies
 - [Node.js](https://nodejs.org/en/download)
-- React [See App README for more information](../app/README.md)
+- React [See App README for more information](/app/README.md)
 
 ## GitHub Tour
 
