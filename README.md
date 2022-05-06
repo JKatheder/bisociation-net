@@ -8,8 +8,8 @@ Bitte stellt sicher, dass Ihr
 lest.
 
 ## Dependencies
-- [Node.js] (https://nodejs.org/en/download/)
-- React [See App README for more information] (https://github.com/JKatheder/bisociation-net/blob/Xenia/app/README.md)
+- [Node.js](https://nodejs.org/en/download)
+- React [See App README for more information](../app/README.md)
 
 ## GitHub Tour
 
