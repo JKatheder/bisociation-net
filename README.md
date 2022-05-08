@@ -7,6 +7,10 @@ Bitte stellt sicher, dass Ihr
 
 lest.
 
+## Dependencies
+- [Node.js](https://nodejs.org/en/download)
+- React [See App README for more information](/app/README.md)
+
 ## GitHub Tour
 
 - In [Issues](../../issues) könnt Ihr entdeckte Fehler (Bugs), User Stories und andere Tickets festhalten, damit ihr nicht vergesst diese zu bearbeiten.
