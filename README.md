@@ -11,6 +11,21 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 ## GitHub Tour/ Github Explanations
 
+# Willkommen zum Teamprojekt!
+
+In diesem Github Repository wird ein großer Teil Eurer Arbeit stattfinden.
+Bitte stellt sicher, dass Ihr
+
+>  [Anforderungen im Teamprojekt](COURSE-DESCRIPTION.md)
+
+lest.
+
+## Dependencies
+- [Node.js](https://nodejs.org/en/download)
+- React [See App README for more information](/app/README.md)
+
+## GitHub Tour
+
 - In [Issues](../../issues) könnt Ihr entdeckte Fehler (Bugs), User Stories und andere Tickets festhalten, damit ihr nicht vergesst diese zu bearbeiten.
 
 - [Pull Requests](../../pulls) sind spezielle Issues, die dazu verwendet werden, um Code Reviews durchzuführen.
