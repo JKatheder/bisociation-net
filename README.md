@@ -9,15 +9,15 @@ We project aims to develop a web application that offers a project structure and
 - ...
 ## Getting Started
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
+(Cannot be done yet)
 ## Usage 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 (Cannot be done yet)
 
 ## Course-Related Requirements
-In diesem Github Repository wird ein großer Teil Eurer Arbeit stattfinden.
-Bitte stellt sicher, dass Ihr
 
 -  [Anforderungen im Teamprojekt](COURSE-DESCRIPTION.md)
+-  [Link zur Vorlesung](https://se.informatik.uni-tuebingen.de/teaching/ss22/se/)
 
 ## GitHub Tour
 
