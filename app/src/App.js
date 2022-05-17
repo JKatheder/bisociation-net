@@ -1,5 +1,5 @@
 import './App.css';
-import ProjektListe from './ProjektListe';
+import ProjektListe from './components/ProjectList';
 
 function App() {
     return (
