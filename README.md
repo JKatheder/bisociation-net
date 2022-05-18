@@ -1,15 +1,23 @@
-# Willkommen zum Teamprojekt!
-
-In diesem Github Repository wird ein großer Teil Eurer Arbeit stattfinden.
-Bitte stellt sicher, dass Ihr
-
->  [Anforderungen im Teamprojekt](COURSE-DESCRIPTION.md)
-
-lest.
-
-## Dependencies
+# Bisociation Network - Our Teamproject
+## About The Project
+The aim of the bisociation method is to break down thought patterns. Terms, objects or images that trigger associations and have nothing to do with the given basic problem are used as aids. The term bisociation refers to the creative process in which objects, images, concepts or ideas from very different conceptual frames of reference are linked with one another (https://www.ask-flip.com/method/649). <br>
+We project aims to develop a web application that offers a project structure and within a randomly chosen word input to help developing ideas.
+## Build With
 - [Node.js](https://nodejs.org/en/download)
-- React [See App README for more information](/app/README.md)
+- [React.js](https://reactjs.org/)
+- [Bootstrap](https://getbootstrap.com/)
+- ...
+## Getting Started
+This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
+(Cannot be done yet)
+## Usage 
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+(Cannot be done yet)
+
+## Course-Related Requirements
+
+-  [Anforderungen im Teamprojekt](COURSE-DESCRIPTION.md)
+-  [Link zur Vorlesung](https://se.informatik.uni-tuebingen.de/teaching/ss22/se/)
 
 ## GitHub Tour
 
