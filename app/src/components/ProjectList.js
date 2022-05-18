@@ -44,7 +44,7 @@ const Item = ({ text, date, title }) => {
         text = text.substring(0, 20) + "...";
     }
     return (
-    <Card border="border border-dark" class="card h-100">
+    <Card border="border border-dark" className="card h-100">
             <Card.Body>
                 <Row>
                     <Col xs={11}>
@@ -54,11 +54,11 @@ const Item = ({ text, date, title }) => {
                             {text}
                         </Card.Text>
                     </Col>
-                    <Col item xs={1} style={{ paddingRight: -50 }}>
-                        <div id = "Event1" class='justify-content-end bi bi-three-dots-vertical'></div>
+                    <Col xs={1} style={{ paddingRight: -50 }}>
+                        <div id = "Event1" className='justify-content-end bi bi-three-dots-vertical'></div>
                     </Col>
                 </Row>
-                <div class="d-grid">
+                <div className="d-grid">
                     <Button variant="btn btn-secondary">Öffnen</Button>
                 </div>
             </Card.Body>
@@ -67,7 +67,7 @@ const Item = ({ text, date, title }) => {
 
 //erstellt den Button für ein neues Item
 const NewItem = () => (
-    <Card border="border border-dark" class="card h-100" >
+    <Card border="border border-dark" className="card h-100" >
         <Card.Body>
             <Row>
                 <Col>
