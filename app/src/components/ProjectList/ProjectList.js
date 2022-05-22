@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import { Link } from 'react-router-dom';
 
 
 export default function ProjektListe() {
@@ -20,16 +21,16 @@ export default function ProjektListe() {
 
                     </Col>
                     <Col xs={3}>
-                        <Item text="text1 ist viel zu lange daher wird das ersetzt..." date="02.03.22" title="Card 1"></Item>
+                        <Item text="text1 ist viel zu lange daher wird das ersetzt..." date="02.03.22" title="Card 1" id={1}></Item>
                     </Col>
                     <Col xs={3}>
-                        <Item text="text2" date="02.03.22" title="Card 2: Projekt"></Item>
+                        <Item text="text2" date="02.03.22" title="Card 2: Projekt" id={2}></Item>
                     </Col>
                     <Col xs={3}>
-                        <Item text="text3" date="02.03.22" title="Card 3"></Item>
+                        <Item text="text3" date="02.03.22" title="Card 3" id={3}></Item>
                     </Col>
                     <Col xs={3}>
-                        <Item text="text4" date="02.04.22" title="Card 4"></Item>
+                        <Item text="text4" date="02.04.22" title="Card 4" id={4}></Item>
                     </Col>
                 </Row>
             </Container>
@@ -38,7 +39,7 @@ export default function ProjektListe() {
 } 
 
 //erstellt Item mit den 3 Eingaben Text, Datum und Name 
-const Item = ({ text, date, title }) => {
+const Item = ({ text, date, title, id}) => {
     //fügt ... hinzu falls Text zu lang ist 
     if (text.length > 10) {
         text = text.substring(0, 20) + "...";
@@ -58,8 +59,8 @@ const Item = ({ text, date, title }) => {
                         <div id = "Event1" className='justify-content-end bi bi-three-dots-vertical'></div>
                     </Col>
                 </Row>
-                <div className="d-grid">
-                    <Button variant="btn btn-secondary">Öffnen</Button>
+                <div class="d-grid">
+                    <Link to={`/project/${id}`} className="btn btn-secondary">Öffnen</Link>
                 </div>
             </Card.Body>
         </Card>);

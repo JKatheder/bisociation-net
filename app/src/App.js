@@ -1,5 +1,7 @@
 import './App.css';
-import ProjektListe from './components/ProjectList';
+import ProjektListe from './components/ProjectList/ProjectList';
+import ProjectView from './components/ProjectView/ProjectView';
+import {Routes, Route } from "react-router-dom";
 
 function App() {
     return (
@@ -7,7 +9,10 @@ function App() {
           <header className = "App-header">
             <h1>Bisociation Net</h1>
           </header>
-          <ProjektListe />
+          <Routes>
+            <Route path="/" element={<ProjektListe />} />
+            <Route path="/project/:projectID" element={<ProjectView />} />
+          </Routes>
         </div>
     );
 }
