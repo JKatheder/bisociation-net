@@ -88,3 +88,16 @@ const NewItem = () => (
 function Test() {
     return <h2> Project 1 </h2>;
 }
+
+{/*
+function getData () {
+
+    const [data, setdata] = useState(0)
+
+    axios.get("http://localhost:3001")
+        .then(res => {
+            console.log(res);
+        })
+
+}
+*/}
