@@ -6,13 +6,19 @@ We project aims to develop a web application that offers a project structure and
 - [Node.js](https://nodejs.org/en/download)
 - [React.js](https://reactjs.org/)
 - [Bootstrap](https://getbootstrap.com/)
-- ...
+- [yFiles](https://www.yworks.com/products/yfiles)
+
 ## Getting Started
-This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
-(Cannot be done yet)
+Make sure that you have installed Node.js, this includes the installation of npm.
+Then, run the following commands:
+npm install react-scripts
+npm install react-bootstrap bootstrap
+
 ## Usage 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-(Cannot be done yet)
+(If you have something in mind, please add!)
+
+- For starting npm, make sure you are within the folder app
 
 ## Course-Related Requirements
 
