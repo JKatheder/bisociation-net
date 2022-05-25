@@ -9,10 +9,10 @@ We project aims to develop a web application that offers a project structure and
 - [yFiles](https://www.yworks.com/products/yfiles)
 
 ## Getting Started
-Make sure that you have installed Node.js, this includes the installation of npm.
-Then, run the following commands:
-npm install react-scripts
-npm install react-bootstrap bootstrap
+Make sure that you have installed Node.js, this includes the installation of npm. <br>
+Then, run the following commands: <br>
+npm install react-scripts <br>
+npm install react-bootstrap bootstrap <br>
 
 ## Usage 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
