@@ -11,6 +11,7 @@ We project aims to develop a web application that offers a project structure and
 ## Getting Started
 Make sure that you have installed Node.js, this includes the installation of npm. <br>
 Then, run the following commands: <br>
+npm install --save <br>
 npm install react-scripts <br>
 npm install react-bootstrap bootstrap <br>
 
