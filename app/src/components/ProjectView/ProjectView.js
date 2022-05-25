@@ -11,13 +11,17 @@ export default function ProjektListe() {
         <div>
             <Navbar bg="light" variant="light">
                 <Container>
-                    <Navbar.Brand href="#home">Project {params.projectID}</Navbar.Brand>
+                    <Navbar.Brand href="#home">
+                        Project {params.projectID}
+                    </Navbar.Brand>
                     <Form>
-                        <Link to={`/`} className="btn btn-success">zurück</Link>{' '}
+                        <Link to={`/`} className="btn btn-success">
+                            zurück
+                        </Link>{' '}
                         <Button variant="secondary">Logout</Button>
                     </Form>
                 </Container>
             </Navbar>
         </div>
-    )
+    );
 }
