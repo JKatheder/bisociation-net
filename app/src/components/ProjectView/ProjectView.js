@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 
-export default function ProjektListe() {
+export default function ProjectView() {
     let params = useParams();
     return (
         <div>
@@ -13,7 +13,7 @@ export default function ProjektListe() {
                 <Container>
                     <Navbar.Brand href="#home">Project {params.projectID}</Navbar.Brand>
                     <Form>
-                        <Link to={`/`} className="btn btn-success">zurück</Link>{' '}
+                        <Link to={`/`} className="btn btn-success">back</Link>{' '}
                         <Button variant="secondary">Logout</Button>
                     </Form>
                 </Container>

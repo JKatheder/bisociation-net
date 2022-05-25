@@ -1,5 +1,5 @@
 import './App.css';
-import ProjektListe from './components/ProjectList/ProjectList';
+import ProjectList from './components/ProjectList/ProjectList';
 import ProjectView from './components/ProjectView/ProjectView';
 import {Routes, Route } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function App() {
             <h1>Bisociation Net</h1>
           </header>
           <Routes>
-            <Route path="/" element={<ProjektListe />} />
+            <Route path="/" element={<ProjectList />} />
             <Route path="/project/:projectID" element={<ProjectView />} />
           </Routes>
         </div>
