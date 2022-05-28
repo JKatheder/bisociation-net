@@ -11,6 +11,25 @@ import { get } from 'express/lib/response';
 
 
 export default function ProjektListe() {
+
+    const [arrayItems, setArrayItems] = React.useState([]);
+
+    React.useEffect(() => {
+        var arrayIt = [];
+        axios.get("http://localhost:3001")
+        .then(res => {
+            res.data.map((item) => {
+                //hier sollte komponente dynamisch erzeugt werden 
+                //irgendwas mit createElement...
+                //arrayIt = [...]
+            });
+            setArrayItems(arrayIt);
+        })
+    }, []);
+
+    //renders Item so that it can be added in return
+    const renderItems = () => (arrayItems.map((item) => (<Col xl={3}>{item}</Col>)));
+    
     return (
         <div>
             <h1 style={{ padding: 50 }} >Meine Projekte</h1>
@@ -22,18 +41,7 @@ export default function ProjektListe() {
                         </NewItem>
 
                     </Col>
-                    <Col xs={3}>
-                        <Item text="text1 ist viel zu lange daher wird das ersetzt..." date="02.03.22" title="Card 1" id={1}></Item>
-                    </Col>
-                    <Col xs={3}>
-                        <Item text="text2" date="02.03.22" title="Card 2: Projekt" id={2}></Item>
-                    </Col>
-                    <Col xs={3}>
-                        <Item text="text3" date="02.03.22" title="Card 3" id={3}></Item>
-                    </Col>
-                    <Col xs={3}>
-                        <Item text="text4" date="02.04.22" title="Card 4" id={4}></Item>
-                    </Col>
+                    {renderItems()}
                 </Row>
             </Container>
         </div>
@@ -84,20 +92,9 @@ const NewItem = () => (
             </Row>
         </Card.Body>
     </Card>);
+
 // hier Code für ListView der Projekte, in ProjectList.css Format definieren
 function Test() {
     return <h2> Project 1 </h2>;
 }
 
-{/*
-function getData () {
-
-    const [data, setdata] = useState(0)
-
-    axios.get("http://localhost:3001")
-        .then(res => {
-            console.log(res);
-        })
-
-}
-*/}
