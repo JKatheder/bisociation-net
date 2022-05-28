@@ -17,45 +17,36 @@ export default function ProjektListe() {
     React.useEffect(() => {
         var arrayIt = [];
         axios.get("http://localhost:3001")
-        .then(res => {
-            res.data.map((item) => {
-                //hier sollte komponente dynamisch erzeugt werden 
-                //irgendwas mit createElement...
-                //arrayIt = [...]
-            });
-            setArrayItems(arrayIt);
+        .then((res) => {
+            // saves objects from json in form of Items
+            Object.keys(res.data).forEach(function(key) {
+                var item = res.data[key]
+                // key could also be id
+                // TODO: check when database is connected
+                arrayIt.push(<Item text={item.text} date={item.date} title={item.title} id={item.id}></Item>)
+              });
+            setArrayItems(arrayIt)
         })
+        .catch(err => console.log(err))
     }, []);
 
-    //renders Item so that it can be added in return
-    const renderItems = () => (arrayItems.map((item) => (<Col xl={3}>{item}</Col>)));
-    
-    return (
-        <div>
-            <h1 style={{ padding: 50 }} >Meine Projekte</h1>
-            <Container>
-                <Row>
-                    <Col xs={3}>
-                        <NewItem>
+    const CreateNewItem = () => {
 
-                        </NewItem>
+        // TODO: user input
+        setArrayItems((prev) => [
+            ...prev,
+            <Item text="h" date="h" title="h" id="h"></Item>
+        ]);
+    };
 
-                    </Col>
-                    {renderItems()}
-                </Row>
-            </Container>
-        </div>
-    )
-} 
-
-//erstellt Item mit den 3 Eingaben Text, Datum und Name 
-const Item = ({ text, date, title, id}) => {
-    //fügt ... hinzu falls Text zu lang ist 
-    if (text.length > 10) {
-        text = text.substring(0, 20) + "...";
-    }
-    return (
-    <Card border="border border-dark" className="card h-100">
+    //erstellt Item mit den 3 Eingaben Text, Datum und Name 
+    const Item = ({ text, date, title, id}) => {
+        //fügt ... hinzu falls Text zu lang ist 
+        if (text.length > 10) {
+            text = text.substring(0, 20) + "...";
+        }
+        return (
+        <Card border="border border-dark" className="card h-100">
             <Card.Body>
                 <Row>
                     <Col xs={11}>
@@ -74,27 +65,39 @@ const Item = ({ text, date, title, id}) => {
                 </div>
             </Card.Body>
         </Card>);
-}
+    }
 
-//erstellt den Button für ein neues Item
-const NewItem = () => (
-    <Card border="border border-dark" className="card h-100" >
-        <Card.Body>
-            <Row>
-                <Col>
+    //erstellt den Button für ein neues Item
+    const NewItem = () => (
+        <Card border="border border-dark" className="card h-100" >
+            <Card.Body>
+                <Row>
+                    <Col>
                     <Card.Text>
                         <div style={{ textAlign: "center", margin: "auto"}}>
-                            <Button variant="btn btn-secondary" >+</Button>
+                            <Button variant="btn btn-secondary" onClick={CreateNewItem}>+</Button>
                             <p>Neues Projekt</p>
                         </div>
                     </Card.Text>
-                </Col>
-            </Row>
-        </Card.Body>
-    </Card>);
+                    </Col>
+                </Row>
+            </Card.Body>
+        </Card>);
 
-// hier Code für ListView der Projekte, in ProjectList.css Format definieren
-function Test() {
-    return <h2> Project 1 </h2>;
+    //renders Item so that it can be added in return
+    const RenderItems = () => (arrayItems.map((item) => (<Col xl={3}>{item}</Col>)));
+
+    return (
+        <div>
+            <h1 style={{ padding: 50 }} >Meine Projekte</h1>
+            <Container>
+                <Row>
+                    <Col xs={3}>
+                        <NewItem></NewItem>
+                    </Col>
+                    <RenderItems />
+                </Row>
+            </Container>
+        </div>
+    )
 }
-
