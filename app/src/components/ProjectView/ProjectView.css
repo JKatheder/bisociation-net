@@ -1,0 +1,13 @@
+.graph-container {
+    height: calc(100vh - 56px);
+    width: 100vw;
+    position: relative;
+}
+
+.graph-container .yfiles-canvascomponent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
