@@ -5,9 +5,9 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import DropDown from 'react-bootstrap/DropDown'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { get } from 'express/lib/response';
 
 
 export default function ProjektListe() {
@@ -39,8 +39,28 @@ export default function ProjektListe() {
         ]);
     };
 
+    const DropDownMenu = () => {
+        return(
+            <DropDown.Menu show>
+                <DropDown.Header>Options</DropDown.Header>
+                <DropDown.Item>Edit</DropDown.Item>
+                <DropDown.Item onClick={deleteProject} >Delete</DropDown.Item>
+            </DropDown.Menu>);
+    }
+
+    {/*
+        const showMenu = () => {
+            this.setState({showM: !this.state.showM})
+        }
+    */}
+
+    const deleteProject = () => {
+        // TODO
+    }
+
     //erstellt Item mit den 3 Eingaben Text, Datum und Name 
     const Item = ({ text, date, title, id}) => {
+        const [showMenu, setShowMenu] = React.useState(false)
         //fügt ... hinzu falls Text zu lang ist 
         if (text.length > 10) {
             text = text.substring(0, 20) + "...";
@@ -57,10 +77,11 @@ export default function ProjektListe() {
                         </Card.Text>
                     </Col>
                     <Col xs={1} style={{ paddingRight: -50 }}>
-                        <div id = "Event1" className='justify-content-end bi bi-three-dots-vertical'></div>
+                        <span onClick= {() => setShowMenu(!showMenu)} className='justify-content-end bi bi-three-dots-vertical'></span>
+                        {showMenu ? <DropDownMenu /> : null}
                     </Col>
                 </Row>
-                <div class="d-grid">
+                <div className="d-grid">
                     <Link to={`/project/${id}`} className="btn btn-secondary">Öffnen</Link>
                 </div>
             </Card.Body>
