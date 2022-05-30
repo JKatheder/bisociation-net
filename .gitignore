@@ -50,3 +50,8 @@ yarn-error.log*
 /.changelog
 .npm/
 dist
+
+# ignore yFiles package
+/app/src/assets/yfiles/*
+yfiles-24.0.5-dev.tgz
+license.json
