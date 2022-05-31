@@ -41,18 +41,14 @@ export default function ProjektListe() {
 
     const DropDownMenu = () => {
         return(
-            <DropDown.Menu show>
-                <DropDown.Header>Options</DropDown.Header>
-                <DropDown.Item>Edit</DropDown.Item>
-                <DropDown.Item onClick={deleteProject} >Delete</DropDown.Item>
-            </DropDown.Menu>);
+            <DropDown className="d-inline mx-2" autoClose="true">
+                <DropDown.Menu show>
+                    <DropDown.Header>Options</DropDown.Header>
+                    <DropDown.Item>Edit</DropDown.Item>
+                    <DropDown.Item onClick={deleteProject} >Delete</DropDown.Item>
+                </DropDown.Menu>
+            </DropDown>);
     }
-
-    {/*
-        const showMenu = () => {
-            this.setState({showM: !this.state.showM})
-        }
-    */}
 
     const deleteProject = () => {
         // TODO
