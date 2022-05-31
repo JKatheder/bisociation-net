@@ -14,6 +14,13 @@ Then, run the following commands: <br>
 npm install --save <br>
 npm install react-scripts <br>
 npm install react-bootstrap bootstrap <br>
+After placing the files for yfile and its license accordingly, run wihtin /app: <br>
+npm install --save src/assets/js/yfiles/yfiles-24.0.5-dev.tgz <br>
+
+## Getting Started With Additional Software
+ - [React READme](/app/README.md)
+ - [yfile Introduction](https://docs.yworks.com/yfileshtml/#/dguide/introduction)
+
 
 ## Usage 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
