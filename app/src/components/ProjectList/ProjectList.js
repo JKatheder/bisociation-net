@@ -21,10 +21,9 @@ export default function ProjektListe() {
             // saves objects from json in form of Items
             Object.keys(res.data).forEach(function(key) {
                 var item = res.data[key]
-                // key could also be id
                 // TODO: check when database is connected
-                arrayIt.push(<Item text={item.text} date={item.date} title={item.title} id={item.id}></Item>)
-              });
+                arrayIt.push({content: item.text, date:item.date, title:item.title, id:item.id})
+            });
             setArrayItems(arrayIt)
         })
         .catch(err => console.log(err))
@@ -39,35 +38,38 @@ export default function ProjektListe() {
         ]);
     };
 
-    const DropDownMenu = () => {
-        return(
-            <DropDown className="d-inline mx-2" autoClose="true">
-                <DropDown.Menu show>
-                    <DropDown.Header>Options</DropDown.Header>
-                    <DropDown.Item>Edit</DropDown.Item>
-                    <DropDown.Item onClick={deleteProject} >Delete</DropDown.Item>
-                </DropDown.Menu>
-            </DropDown>);
-    }
-
-    const deleteProject = () => {
-        // TODO
-    }
 
     //erstellt Item mit den 3 Eingaben Text, Datum und Name 
-    const Item = ({ text, date, title, id}) => {
+    const Item = (props) => {
         const [showMenu, setShowMenu] = React.useState(false)
         //fügt ... hinzu falls Text zu lang ist 
+        var text = props.text;
         if (text.length > 10) {
             text = text.substring(0, 20) + "...";
         }
+        const deleteProject = () => {
+            // TODO
+            props.onDelete(props.allItems.filter((items) =>  items.id !== props.id));
+        }
+
+        const DropDownMenu = () => {
+            return(
+                <DropDown className="d-inline mx-2" autoClose="true">
+                    <DropDown.Menu show>
+                        <DropDown.Header>Options</DropDown.Header>
+                        <DropDown.Item>Edit</DropDown.Item>
+                        <DropDown.Item onClick={deleteProject} >Delete</DropDown.Item>
+                    </DropDown.Menu>
+                </DropDown>);
+        }
+
         return (
         <Card border="border border-dark" className="card h-100">
             <Card.Body>
                 <Row>
                     <Col xs={11}>
-                        <Card.Title>{title} </Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">{date}</Card.Subtitle>
+                        <Card.Title>{props.title} </Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">{props.date}</Card.Subtitle>
                         <Card.Text>
                             {text}
                         </Card.Text>
@@ -78,7 +80,7 @@ export default function ProjektListe() {
                     </Col>
                 </Row>
                 <div className="d-grid">
-                    <Link to={`/project/${id}`} className="btn btn-secondary">Öffnen</Link>
+                    <Link to={`/project/${props.id}`} className="btn btn-secondary">Öffnen</Link>
                 </div>
             </Card.Body>
         </Card>);
@@ -102,7 +104,8 @@ export default function ProjektListe() {
         </Card>);
 
     //renders Item so that it can be added in return
-    const RenderItems = () => (arrayItems.map((item) => (<Col xl={3}>{item}</Col>)));
+    const RenderItems = () => (arrayItems.map((item) => (<Col xl={3}><Item text={item.content} date={item.date} title={item.title} id={item.id} onDelete={setArrayItems} allItems={arrayItems}></Item></Col>)));
+
 
     return (
         <div>

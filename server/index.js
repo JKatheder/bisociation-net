@@ -15,9 +15,9 @@ app.listen(PORT, () => {
 
 app.get('/', (req, res) => {
     res.json({
-        1: { text: "text1 ist viel zu lange daher wird das ersetzt...", date: "02.03.22", title: "Card 1" },
-        2: { text: "text2", date: "02.03.22", title: "Card 2: Projekt" },
-        3: { text: "text3", date: "02.03.22", title: "Card 3" },
-        4: { text: "text4", date: "02.04.22", title: "Card 4" }
+        1: { text: "text1 ist viel zu lange daher wird das ersetzt...", date: "02.03.22", title: "Card 1", id: 1},
+        2: { text: "text2", date: "02.03.22", title: "Card 2: Projekt", id: 2},
+        3: { text: "text3", date: "02.03.22", title: "Card 3", id:3},
+        4: { text: "text4", date: "02.04.22", title: "Card 4", id:4}
     })
 });
