@@ -6,15 +6,17 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import DropDown from 'react-bootstrap/DropDown'
+import Modal from "react-bootstrap/Modal";
+import Form from 'react-bootstrap/Form'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
 export default function ProjektListe() {
 
-    const [arrayItems, setArrayItems] = React.useState([]);
+    const [arrayItems, setArrayItems] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         var arrayIt = [];
         axios.get("http://localhost:3001")
         .then((res) => {
@@ -29,26 +31,15 @@ export default function ProjektListe() {
         .catch(err => console.log(err))
     }, []);
 
-    const CreateNewItem = () => {
 
-        // TODO: user input
-        setArrayItems((prev) => [
-            ...prev,
-            <Item text="h" date="h" title="h" id="h"></Item>
-        ]);
-    };
-
-
-    //erstellt Item mit den 3 Eingaben Text, Datum und Name 
     const Item = (props) => {
         const [showMenu, setShowMenu] = React.useState(false)
-        //fügt ... hinzu falls Text zu lang ist 
+        //adds ... if text is to long 
         var text = props.text;
         if (text.length > 10) {
             text = text.substring(0, 20) + "...";
         }
         const deleteProject = () => {
-            // TODO
             props.onDelete(props.allItems.filter((items) =>  items.id !== props.id));
         }
 
@@ -87,21 +78,69 @@ export default function ProjektListe() {
     }
 
     //erstellt den Button für ein neues Item
-    const NewItem = () => (
-        <Card border="border border-dark" className="card h-100" >
-            <Card.Body>
-                <Row>
-                    <Col>
-                    <Card.Text>
-                        <div style={{ textAlign: "center", margin: "auto"}}>
-                            <Button variant="btn btn-secondary" onClick={CreateNewItem}>+</Button>
-                            <p>Neues Projekt</p>
-                        </div>
-                    </Card.Text>
-                    </Col>
-                </Row>
-            </Card.Body>
-        </Card>);
+    const NewItem = () => {
+        const [show, setShow] = useState(false);
+        const [title, setTitle] = useState("");
+        const [description, setDescription] = useState("");
+
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+        const handleSave = () => {
+            setShow(true); 
+            console.log(description); 
+            console.log(title); 
+            //TODO
+        };
+
+        return (
+            <div>
+                <Card border="border border-dark" className="card h-100" >
+                    <Card.Body>
+                        <Row>
+                            <Col>
+                            <Card.Text>
+                                <div style={{ textAlign: "center", margin: "auto"}}>
+                                    <Button variant="btn btn-secondary" onClick={handleShow}>+</Button>
+                                    <p>New Project</p>
+                                </div>
+                            </Card.Text>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Create New Project</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3">
+                        <Form.Label>Titel</Form.Label>
+                        <Form.Control
+                            value={title}
+                            onChange={e => setTitle(e.target.value)}
+                        />
+                        </Form.Group>
+                        <Form.Group>
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control as="textarea" rows={3} 
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}/>
+                        </Form.Group>
+                    </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSave}>
+                        Save
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+        </div>);
+    };
+    
 
     //renders Item so that it can be added in return
     const RenderItems = () => (arrayItems.map((item) => (<Col xl={3}><Item text={item.content} date={item.date} title={item.title} id={item.id} onDelete={setArrayItems} allItems={arrayItems}></Item></Col>)));
