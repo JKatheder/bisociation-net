@@ -8,10 +8,10 @@ import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom';
 
 
-export default function ProjektListe() {
+export default function ProjectList() {
     return (
         <div>
-            <h1 style={{ padding: 50 }} >Meine Projekte</h1>
+            <h1 style={{ padding: 50 }} >My projects</h1>
             <Container>
                 <Row>
                     <Col xs={3}>
@@ -21,10 +21,10 @@ export default function ProjektListe() {
 
                     </Col>
                     <Col xs={3}>
-                        <Item text="text1 ist viel zu lange daher wird das ersetzt..." date="02.03.22" title="Card 1" id={1}></Item>
+                        <Item text="text1 is way too long so that will be replaced..." date="02.03.22" title="Card 1" id={1}></Item>
                     </Col>
                     <Col xs={3}>
-                        <Item text="text2" date="02.03.22" title="Card 2: Projekt" id={2}></Item>
+                        <Item text="text2" date="02.03.22" title="Card 2" id={2}></Item>
                     </Col>
                     <Col xs={3}>
                         <Item text="text3" date="02.03.22" title="Card 3" id={3}></Item>
@@ -38,9 +38,9 @@ export default function ProjektListe() {
     )
 } 
 
-//erstellt Item mit den 3 Eingaben Text, Datum und Name 
+//creates card with the inputs text, date, name and id
 const Item = ({ text, date, title, id}) => {
-    //fügt ... hinzu falls Text zu lang ist 
+    //adds ... if text is too long 
     if (text.length > 10) {
         text = text.substring(0, 20) + "...";
     }
@@ -60,13 +60,13 @@ const Item = ({ text, date, title, id}) => {
                     </Col>
                 </Row>
                 <div class="d-grid">
-                    <Link to={`/project/${id}`} className="btn btn-secondary">Öffnen</Link>
+                    <Link to={`/project/${id}`} className="btn btn-secondary">open</Link>
                 </div>
             </Card.Body>
         </Card>);
 }
 
-//erstellt den Button für ein neues Item
+//creates the button for a new item
 const NewItem = () => (
     <Card border="border border-dark" class="card h-100" >
         <Card.Body>
@@ -75,15 +75,10 @@ const NewItem = () => (
                     <Card.Text>
                         <div style={{ textAlign: "center", margin: "auto"}}>
                             <Button variant="btn btn-secondary" >+</Button>
-                            <p>Neues Projekt</p>
+                            <p>New project</p>
                         </div>
                     </Card.Text>
                 </Col>
             </Row>
         </Card.Body>
     </Card>);
-// hier Code für ListView der Projekte, in ProjectList.css Format definieren
-function Test() {
-    return <h2> Project 1 </h2>;
-}
-

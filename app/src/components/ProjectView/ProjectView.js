@@ -11,7 +11,7 @@ import './ProjectView.css';
 // Providing license information for the yfiles library
 License.value = license;
 
-export default function ProjektListe() {
+export default function ProjectView() {
     let params = useParams();
 
     // The useRef hook is used to reference the graph-container DOM node directly in order to append the graphComponent canvas to it
@@ -41,9 +41,7 @@ export default function ProjektListe() {
                         Project {params.projectID}
                     </Navbar.Brand>
                     <Form>
-                        <Link to={`/`} className="btn btn-success">
-                            zurück
-                        </Link>{' '}
+                        <Link to={`/`} className="btn btn-success">back</Link>{' '}
                         <Button variant="secondary">Logout</Button>
                     </Form>
                 </Container>
