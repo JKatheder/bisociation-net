@@ -1,7 +1,7 @@
 import './App.css';
 import ProjectList from './components/ProjectList/ProjectList';
 import ProjectView from './components/ProjectView/ProjectView';
-import {Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
     return (
