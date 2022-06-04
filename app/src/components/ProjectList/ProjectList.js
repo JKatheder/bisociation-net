@@ -48,7 +48,7 @@ export default function ProjektListe() {
 
   return (
     <div>
-      <h1 style={{ padding: 50 }}>Meine Projekte</h1>
+      <h1 style={{ padding: 50 }}>My Projects</h1>
       <Container>
         <Row>
           <Col xs={3}>
