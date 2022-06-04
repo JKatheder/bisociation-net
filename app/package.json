@@ -3,11 +3,6 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@testing-library/jest-dom": "^5.16.4",
-        "@testing-library/react": "^13.2.0",
-        "@testing-library/user-event": "^13.5.0",
-        "assert": "^2.0.0",
-        "axios": "^0.27.2",
         "bootstrap": "^5.1.3",
         "bootstrap-icons": "^1.8.1",
         "browserify-zlib": "^0.2.0",
@@ -23,23 +18,25 @@
         "react-dom": "^18.1.0",
         "react-router-dom": "^6.3.0",
         "react-scripts": "5.0.1",
-        "stream-browserify": "^3.0.0",
-        "stream-http": "^3.2.0",
-        "url": "^0.11.0",
-        "util": "^0.12.4",
-        "web-vitals": "^2.1.4"
+        "web-vitals": "^2.1.4",
+        "yfiles": "file:src/assets/js/yfiles/yfiles-24.0.5-dev.tgz"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "prettier": "prettier --write ."
     },
     "eslintConfig": {
         "extends": [
             "react-app",
             "react-app/jest"
-        ]
+        ],
+        "globals": {
+            "renderWithRouter": "readonly",
+            "renderWithHistory": "readonly"
+        }
     },
     "browserslist": {
         "production": [
@@ -52,5 +49,11 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^5.16.4",
+        "@testing-library/react": "^13.2.0",
+        "@testing-library/user-event": "^14.2.0",
+        "react-test-renderer": "^18.1.0"
     }
 }
