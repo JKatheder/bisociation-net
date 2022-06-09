@@ -14,7 +14,6 @@ export default function NewItem(props) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    // TODO: save only with set title
     // TODO: fix id system when database is connected
     const handleSave = () => {
         setShow(false);
@@ -25,7 +24,6 @@ export default function NewItem(props) {
         if (new_title === '') {
             new_title = 'Project ' + new_id;
         }
-        console.log(title);
         const newItems = [
             ...props.prevItems,
             {
