@@ -25,13 +25,13 @@ export default function NewItem(props) {
             new_title = 'Project ' + new_id;
         }
         const newItems = [
-            ...props.prevItems,
             {
                 content: description,
                 title: new_title,
                 date: DateString(),
                 id: new_id,
             },
+            ...props.prevItems,
         ];
         props.onSave(newItems);
     };
