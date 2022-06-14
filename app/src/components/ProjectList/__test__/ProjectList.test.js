@@ -1,18 +1,20 @@
 import { screen } from '@testing-library/react';
 import ProjectList from '../ProjectList'
-import projects from './mock-projects.json'
+import axios from 'axios';
+
+jest.mock('axios');
 
 describe('ProjectList', () => {
-
   describe('Rendering', () => {
-    // TODO this test has to be adjusted for a ProjectList with dynamic data
     it('Renders the correct number of projects', async () => {
+      axios.get.mockResolvedValueOnce(projects);
       renderWithRouter(<ProjectList projects={projects} />, '/');
+      expect(axios.get).toHaveBeenCalledWith('http://localhost:3001');
       expect(screen.getAllByText('Öffnen')).toHaveLength(projects.length)
     });
-  
-    // TODO this test has to be adjusted for a ProjectList with dynamic data
-    it('Renders all projects', () => { 
+
+    it('Renders all projects', async () => { 
+      axios.get.mockResolvedValueOnce(projects);
       renderWithRouter(<ProjectList projects={projects} />, '/');
       projects.forEach((project) => {
         const projectExcerpt = project.description.length > 20 ? project.description.substring(0, 20) + '...' : project.description;
@@ -29,19 +31,18 @@ describe('ProjectList', () => {
       expect(screen.getByText('Neues Projekt')).toBeInTheDocument();
     });
 
-    // TODO this test has to be adjusted for a ProjectList with dynamic data
+    // TODO
     test(`When the project array is empty
           Then it renders only the new project button`, () => {
       renderWithRouter(<ProjectList />, '/');
       expect(screen.getByText('Neues Projekt')).toBeInTheDocument();
       expect(screen.queryByTestId('projectList-item')).not.toBeInTheDocument();
-
     });
   });
 
-  // TODO this test has to be adjusted for a ProjectList with dynamic data
   describe('Navigation', () => {
     it('Navigates to the correct project', async () => {
+      axios.get.mockResolvedValueOnce(projects);
       const {history, user} = renderWithHistory(<ProjectList projects={projects} />, ['/']);
     
       let projectLinks = screen.getAllByText('Öffnen');
@@ -53,5 +54,17 @@ describe('ProjectList', () => {
         expect(history.location.pathname).toBe(`/project/${project.id}`);
       }
     });
+  });
+
+  describe("Toggle menu", () => {
+    
+  });
+
+  describe("Delete project", () => {
+
+  });
+
+  describe("Create new project", () => {
+
   });
 });
