@@ -3,10 +3,10 @@ export default function DateString() {
     var month = date.getMonth() + 1;
     var day = date.getDate();
     var year = date.getFullYear();
-    if (day.toString().length < 10) {
+    if (day.toString().length < 2) {
         day = '0' + day;
     }
-    if (month.toString().length < 10) {
+    if (month.toString().length < 2) {
         month = '0' + month;
     }
     var date_string = day + '.' + month + '.' + year;
