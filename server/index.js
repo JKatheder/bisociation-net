@@ -40,16 +40,74 @@ app.use(express.json());
 //create a project
 
 //insert in table projects via http post
-//http post: {"id": 2, "title": "title2", "date": "2022-06-06", "description": "text"}
-app.post("/", async (req, res) => {
+//post: {"title": "title", "date": "2022-06-06", "description": "text"}
+app.post("/projects", async (req, res) => {
     try {
-        const { id, title, date, description } = req.body;
+        const { title, date, description } = req.body;
         const newProject = await pool.query(
-            "INSERT INTO projects (id, title, date, description) VALUES ($1, $2, $3, $4)",
-            [id, title, date, description]
+            "INSERT INTO projects (title, date, description) VALUES ($1, $2, $3)",
+            [title, date, description]
         );
 
         res.json(newProject);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+
+//get all projects 
+//get
+app.get("/projects", async (req, res) => {
+    try{
+        const allProjects = await pool.query("SELECT * FROM projects");
+        res.json(allProjects.rows)
+    } catch (err) {
+        console.error(err.message)
+    }
+})
+
+
+//get the project with :id
+//get
+app.get("/projects/:id", async (req, res) => {
+    try{
+        const { id } = req.params
+        const project = await pool.query("SELECT * FROM projects WHERE id = $1", 
+        [id])
+
+        res.json(project.rows[0])
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+
+//update the project with :id
+//put:  {"title": "updated-title", "date": "2022-07-07", "description": "updated text"}
+app.put("/projects/:id", async (req, res) => {
+    try{
+        const { id } = req.params;
+        const { title, date, description } = req.body;
+        const updateProject = await pool.query("UPDATE projects SET title = $2, date = $3, description = $4 WHERE id = $1", 
+        [id, title, date, description])
+
+        res.json(updateProject);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+
+//delete the project with :id
+//delete
+app.delete("/projects/:id", async (req, res) => {
+    try{
+        const { id } = req.params;
+        const deleteProject = await pool.query("DELETE FROM projects WHERE id = $1", 
+        [id])
+
+        res.json(deleteProject);
     } catch (err) {
         console.error(err.message);
     }
