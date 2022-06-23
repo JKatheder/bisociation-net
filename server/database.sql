@@ -3,11 +3,17 @@ CREATE DATABASE bisociationnet;
 \c bisociationnet
 
 CREATE TABLE projects(
+	node_id      int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	id           int,
 	title        text,
 	date         date,
 	description	 text
 );
 
-ALTER TABLE projects
-	ADD PRIMARY KEY (id);
+CREATE TABLE nodes(
+	node_id      int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	project 	 int REFERENCES projects(project_id),
+	x_pos		 int,
+	y_pos 		 int,
+	content		 text
+);
