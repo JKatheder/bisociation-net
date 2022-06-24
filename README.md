@@ -6,13 +6,27 @@ We project aims to develop a web application that offers a project structure and
 - [Node.js](https://nodejs.org/en/download)
 - [React.js](https://reactjs.org/)
 - [Bootstrap](https://getbootstrap.com/)
-- ...
+- [yFiles](https://www.yworks.com/products/yfiles)
+
 ## Getting Started
-This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
-(Cannot be done yet)
+Make sure that you have installed Node.js, this includes the installation of npm. <br>
+Then, run the following commands: <br>
+npm install --save <br>
+npm install react-scripts <br>
+npm install react-bootstrap bootstrap <br>
+After placing the files for yfile and its license accordingly, run wihtin /app: <br>
+npm install --save src/assets/js/yfiles/yfiles-24.0.5-dev.tgz <br>
+
+## Getting Started With Additional Software
+ - [React READme](/app/README.md)
+ - [yfile Introduction](https://docs.yworks.com/yfileshtml/#/dguide/introduction)
+
+
 ## Usage 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-(Cannot be done yet)
+(If you have something in mind, please add!)
+
+- For starting npm, make sure you are within the folder app
 
 ## Course-Related Requirements
 
