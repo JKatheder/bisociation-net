@@ -7,6 +7,8 @@ import { Link, useParams } from 'react-router-dom';
 import { GraphComponent, License } from 'yfiles';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
+import Toolbox from './Toolbox.js';
+
 
 // Providing license information for the yfiles library
 License.value = license;
