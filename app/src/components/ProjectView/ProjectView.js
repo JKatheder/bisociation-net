@@ -53,8 +53,8 @@ export default function ProjectView() {
                     </Form>
                 </Container>
             </Navbar>
-            <div className="graph-container" ref={graphContainer}></div>
             <RenderToolbox />
+            <div className="graph-container" ref={graphContainer}></div>
         </div>
     );
 }
