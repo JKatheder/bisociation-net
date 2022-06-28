@@ -18,17 +18,14 @@ app.use(express.json());
 
 //ROUTES
 
-//create a project
-
 //insert in table projects via http post
 //returns title, description, generated id and generated date
 //post: {"title": "title", "description": "text"}
-app.post('/projects', async (req, res) => {
+app.post('/projects', async(req, res) => {
     try {
-        const { title, date, description } = req.body;
+        const { title, description } = req.body;
         const newProject = await pool.query(
-            'INSERT INTO projects (title, description) VALUES ($1, $2) RETURNING project_id, title, date, description',
-            [title, description]
+            'INSERT INTO projects (title, description) VALUES ($1, $2) RETURNING project_id, title, date, description', [title, description]
         );
         res.json(newProject);
     } catch (err) {
@@ -38,7 +35,7 @@ app.post('/projects', async (req, res) => {
 
 //get all projects
 //get
-app.get('/projects', async (req, res) => {
+app.get('/projects', async(req, res) => {
     try {
         const allProjects = await pool.query('SELECT * FROM projects');
         res.json(allProjects.rows);
@@ -49,12 +46,11 @@ app.get('/projects', async (req, res) => {
 
 //get the project with :id
 //get
-app.get('/projects/:id', async (req, res) => {
+app.get('/projects/:id', async(req, res) => {
     try {
         const { id } = req.params;
         const project = await pool.query(
-            'SELECT * FROM projects WHERE id = $1',
-            [id]
+            'SELECT * FROM projects WHERE project_id = $1', [id]
         );
 
         res.json(project.rows[0]);
@@ -64,14 +60,13 @@ app.get('/projects/:id', async (req, res) => {
 });
 
 //update the project with :id
-//put:  {"title": "updated-title", "date": "2022-07-07", "description": "updated text"}
-app.put('/projects/:id', async (req, res) => {
+//put:  {"title": "updated-title", "description": "updated text"}
+app.put('/projects/:id', async(req, res) => {
     try {
         const { id } = req.params;
-        const { title, date, description } = req.body;
+        const { title, description } = req.body;
         const updateProject = await pool.query(
-            'UPDATE projects SET title = $2, date = $3, description = $4 WHERE id = $1',
-            [id, title, date, description]
+            'UPDATE projects SET title = $2, description = $3 WHERE project_id = $1', [id, title, description]
         );
 
         res.json(updateProject);
@@ -82,13 +77,13 @@ app.put('/projects/:id', async (req, res) => {
 
 //delete the project with :id
 //delete
-app.delete('/projects/:id', async (req, res) => {
+app.delete('/projects/:id', async(req, res) => {
     try {
         const { id } = req.params;
         const deleteProject = await pool.query(
-            'DELETE FROM projects WHERE id = $1',
-            [id]
+            'DELETE FROM projects WHERE project_id = $1', [id]
         );
+        console.log(id);
 
         res.json(deleteProject);
     } catch (err) {
