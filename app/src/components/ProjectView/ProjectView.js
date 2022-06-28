@@ -75,7 +75,7 @@ export default function ProjectView() {
                         Project {params.projectID}
                     </Navbar.Brand>
                     <Form>
-                        <Link to={`/`} className="btn btn-success">back</Link>{' '}
+                        <Link to={`/`} className="btn btn-success">Back</Link>{' '}
                         <Button variant="secondary">Logout</Button>
                     </Form>
                 </Container>
