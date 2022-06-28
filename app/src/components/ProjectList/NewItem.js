@@ -19,12 +19,13 @@ export default function NewItem(props) {
     const handleSave = () => {
         setShow(false);
         axios
+            // add in database
             .post('http://localhost:3001/projects', {
                 title: title,
                 description: description,
             })
+            // add in current state
             .then((res) => {
-                console.log(res.data.rows[0]);
                 var item = res.data.rows[0];
                 props.onSave([
                     {
