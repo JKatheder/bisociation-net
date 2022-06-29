@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DropDown from 'react-bootstrap/DropDown';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Item(props) {
     const [showMenu, setShowMenu] = useState(false);
@@ -13,6 +14,13 @@ export default function Item(props) {
         text = text.substring(0, 20) + '...';
     }
     const deleteProject = () => {
+        // delete in database
+        axios
+            .delete(`http://localhost:3001/projects/${props.id}`)
+            .catch((error) => {
+                console.log(error);
+            });
+        // delete in current state
         props.onDelete(props.allItems.filter((items) => items.id !== props.id));
     };
 
