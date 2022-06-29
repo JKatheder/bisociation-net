@@ -20,6 +20,6 @@ CREATE TABLE nodes(
 CREATE TABLE edges(
 	edge_id      int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	project_id 	 int REFERENCES projects(project_id),
-	node_1		 int,
-	node_2 		 int,
+	node_1		 int REFERENCES nodes(node_id),
+	node_2 		 int REFERENCES nodes(node_id),
 );
