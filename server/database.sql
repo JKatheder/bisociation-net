@@ -16,3 +16,10 @@ CREATE TABLE nodes(
 	y_pos 		 int,
 	content		 text
 );
+
+CREATE TABLE edges(
+	edge_id      int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	project_id 	 int REFERENCES projects(project_id),
+	node_1		 int,
+	node_2 		 int,
+);
