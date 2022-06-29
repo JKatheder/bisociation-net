@@ -20,7 +20,6 @@ export default function Toolbox() {
     return (
         <Draggable
             defaultPosition={{ x: 0, y: 0 }}
-            style={{ display: 'block' }}
         >
             <Card style={{ zIndex: 1000, width: '10rem' }}>
                 <Card.Body>
