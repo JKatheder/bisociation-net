@@ -83,7 +83,6 @@ app.delete('/projects/:id', async(req, res) => {
         const deleteProject = await pool.query(
             'DELETE FROM projects WHERE project_id = $1', [id]
         );
-        console.log(id);
 
         res.json(deleteProject);
     } catch (err) {
