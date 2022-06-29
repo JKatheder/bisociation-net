@@ -11,7 +11,8 @@ the database is now added
 # Nice to have - productivity
 - pgAdmin for overview of the database
 - Postman (API Test tool) https://www.postman.com
-    - this makes it easy to write data from the body (JSON format) to the database using POST http://localhost:3001 
+    - this makes it easy to write data from the body (JSON format) to the database using POST http://localhost:3001/projects and reading data from the database using GET
+    - update, delete, read a specific project use PUT, DELETE and GET http://localhost:3001/projects/:id
 
 # Inserting in the database
 1. start the server in / with ```node server/index.js```

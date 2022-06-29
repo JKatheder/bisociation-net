@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import DateString from './Date.js';
+import axios from 'axios';
 
 //erstellt den Button für ein neues Item
 export default function NewItem(props) {
@@ -14,26 +14,32 @@ export default function NewItem(props) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    // TODO: fix id system when database is connected
+
+    // saves new project to database and puts into state
     const handleSave = () => {
         setShow(false);
-        var all_ids = props.prevItems.map((item) => item.id);
-        var new_id = Math.max(...all_ids) + 1;
-        // change title if empty
-        var new_title = title;
-        if (new_title === '') {
-            new_title = 'Project ' + new_id;
-        }
-        const newItems = [
-            {
-                content: description,
-                title: new_title,
-                date: DateString(),
-                id: new_id,
-            },
-            ...props.prevItems,
-        ];
-        props.onSave(newItems);
+        axios
+            // add in database
+            .post('http://localhost:3001/projects', {
+                title: title,
+                description: description,
+            })
+            // add in current state
+            .then((res) => {
+                var item = res.data.rows[0];
+                props.onSave([
+                    {
+                        content: item.description,
+                        title: item.title,
+                        date: item.date,
+                        id: item.project_id,
+                    },
+                    ...props.prevItems,
+                ]);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
