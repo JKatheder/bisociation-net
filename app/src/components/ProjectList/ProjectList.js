@@ -13,16 +13,15 @@ export default function ProjectList() {
     useEffect(() => {
         var arrayIt = [];
         axios
-            .get('http://localhost:3001')
+            .get('http://localhost:3001/projects')
             .then((res) => {
                 // saves objects from json in form of Items
                 res.data.map((item) =>
-                    // TODO: check when database is connected
                     arrayIt.push({
-                        content: item.text,
+                        content: item.description,
                         date: item.date,
                         title: item.title,
-                        id: item.id,
+                        id: item.project_id,
                     })
                 );
                 setArrayItems(arrayIt);
@@ -48,7 +47,9 @@ export default function ProjectList() {
     // creates Button for new Item
     const RenderNewItem = () => {
         return (
-            <NewItem onSave={setArrayItems} prevItems={arrayItems}></NewItem>
+            <NewItem onSave={setArrayItems} prevItems={arrayItems}>
+                {' '}
+            </NewItem>
         );
     };
 
