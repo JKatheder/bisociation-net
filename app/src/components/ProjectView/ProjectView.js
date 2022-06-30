@@ -22,6 +22,8 @@ const graphComponent = new GraphComponent();
 const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode()
 
+//suppress automatic node creation due white rectangle
+GraphEditorInputMode.allowCreateNode = false
 
 //Style:
 const greenNodeStyle = new ShapeNodeStyle({
@@ -30,6 +32,7 @@ const greenNodeStyle = new ShapeNodeStyle({
   stroke: 'transparent'
 })
 graph.nodeDefaults.size = new Size(150, 150)
+
 
 //Graph methods: not used right now
 //Adds a node to the graph at (x,y) with label 'Label'
@@ -40,9 +43,9 @@ function generateNewNode(x, y, input_label) {
 }
 
 // Construct a some sample nodes:
-const node0 = generateNewNode(700,200, 'PROJECT-X')
-const node1 = generateNewNode(200,700, 'Node1')
-const node2 = generateNewNode(800,700, 'Node2')
+const node0 = generateNewNode(700,100, 'PROJECT-X')
+const node1 = generateNewNode(200,500, 'Node1')
+const node2 = generateNewNode(800,500, 'Node2')
 graph.createEdge(node0, node1)
 graph.createEdge(node0, node2)
 
