@@ -13,7 +13,6 @@ import { GraphComponent,
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
-import Toolbox from './Toolbox.js';
 
 // Providing license information for the yfiles library
 License.value = license;
@@ -73,12 +72,6 @@ export default function ProjectView() {
         };
     });
 
-    const RenderToolbox = () => {
-        return (
-            <Toolbox></Toolbox>
-        )
-    }
-
     return (
         <div>
             <Navbar bg="light" variant="light">
@@ -92,7 +85,6 @@ export default function ProjectView() {
                     </Form>
                 </Container>
             </Navbar>
-            <RenderToolbox />
             <div className="graph-container" ref={graphContainer}></div>
         </div>
     );
