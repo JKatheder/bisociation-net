@@ -2,10 +2,13 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Draggable from 'react-draggable';
 import './Toolbox.css';
+import saveNodes from './saveNodes.js';
+import saveEdges from './saveEdges.js';
 
-export default function Toolbox() {
+export default function Toolbox(props) {
     const handleSave = () => {
-        /* TODO */
+        saveNodes(props);
+        saveEdges(props);
     };
     const handleExport = () => {
         /* TODO */
@@ -18,9 +21,7 @@ export default function Toolbox() {
     };
 
     return (
-        <Draggable
-            defaultPosition={{ x: 0, y: 0 }}
-        >
+        <Draggable defaultPosition={{ x: 0, y: 0 }}>
             <Card style={{ zIndex: 1000, width: '10rem' }}>
                 <Card.Body>
                     <Card.Title>Toolbox</Card.Title>

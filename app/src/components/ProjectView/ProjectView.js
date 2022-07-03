@@ -4,12 +4,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
-import { GraphComponent,
-    License, 
+import {
+    GraphComponent,
+    License,
     ShapeNodeStyle,
     GraphEditorInputMode,
-    Size, 
-    Point } from 'yfiles';
+    Size,
+    Point,
+} from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
@@ -21,35 +23,55 @@ License.value = license;
 // Initialize graphComponent and ContextMenu
 const graphComponent = new GraphComponent();
 const graph = graphComponent.graph;
-graphComponent.inputMode = new GraphEditorInputMode()
-
+graphComponent.inputMode = new GraphEditorInputMode();
 
 //Style:
 const greenNodeStyle = new ShapeNodeStyle({
-  shape: 'ellipse',
-  fill: 'green',
-  stroke: 'transparent'
-})
-graph.nodeDefaults.size = new Size(150, 150)
+    shape: 'ellipse',
+    fill: 'green',
+    stroke: 'transparent',
+});
+graph.nodeDefaults.size = new Size(150, 150);
 
 //Graph methods: not used right now
 //Adds a node to the graph at (x,y) with label 'Label'
 function generateNewNode(x, y, input_label) {
-  const node = graph.createNodeAt(new Point(x,y), greenNodeStyle)
-  graph.addLabel(node, input_label)
-  return node
+    const node = graph.createNodeAt(new Point(x, y), greenNodeStyle);
+    graph.addLabel(node, input_label);
+    return node;
 }
 
 // Construct a some sample nodes:
-const node0 = generateNewNode(700,200, 'PROJECT-X')
-const node1 = generateNewNode(200,700, 'Node1')
-const node2 = generateNewNode(800,700, 'Node2')
-graph.createEdge(node0, node1)
-graph.createEdge(node0, node2)
+// const node0 = generateNewNode(700, 200, 'PROJECT-X');
+// const node1 = generateNewNode(200, 700, 'Node1');
+// const node2 = generateNewNode(800, 700, 'Node2');
+// graph.createEdge(node0, node1);
+// graph.createEdge(node0, node2);
 
+// Load nodes and edges from database
+// axios
+//     .get(`http://localhost:3001/nodes/${2}`)
+//     .then((res) => {
+//         res.data.map((node) => {
+//             generateNewNode(
+//                 Number(node.x_pos),
+//                 Number(node.y_pos),
+//                 node.content
+//             );
+//         });
+//     })
+//     .catch((err) => console.log(err));
+// var node1 = null;
+// var node2 = null;
+// console.log(graph.nodes.toList());
+// axios
+//     .get(`http://localhost:3001/edges/${2}`)
+//     .then((res) => {
+//         res.data.map((edge) => {});
+//     })
+//     .catch((err) => console.log(err));
 
 export default function ProjectView() {
-  
     let params = useParams();
 
     // The useRef hook is used to reference the graph-container DOM node directly in order to append the graphComponent canvas to it
@@ -71,10 +93,8 @@ export default function ProjectView() {
     });
 
     const RenderToolbox = () => {
-        return (
-            <Toolbox></Toolbox>
-        )
-    }
+        return <Toolbox graph={graph} project_id={params.projectID}></Toolbox>;
+    };
 
     return (
         <div>
@@ -84,7 +104,9 @@ export default function ProjectView() {
                         Project {params.projectID}
                     </Navbar.Brand>
                     <Form>
-                        <Link to={`/`} className="btn btn-success">Back</Link>{' '}
+                        <Link to={`/`} className="btn btn-success">
+                            Back
+                        </Link>{' '}
                         <Button variant="secondary">Logout</Button>
                     </Form>
                 </Container>

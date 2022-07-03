@@ -17,8 +17,8 @@ app.use(
 app.use(express.json());
 
 //ROUTES
+// Project List
 
-//insert in table projects via http post
 //returns title, description, generated id and generated date
 //post: {"title": "title", "description": "text"}
 app.post('/projects', async(req, res) => {
@@ -85,6 +85,122 @@ app.delete('/projects/:id', async(req, res) => {
         );
 
         res.json(deleteProject);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Project View
+
+// Nodes
+// get all nodes for project
+app.get('/nodes/:project_id', async(req, res) => {
+    try {
+        const { project_id } = req.params;
+        const allNodes = await pool.query(
+            'SELECT * FROM nodes WHERE project_id = $1', [project_id]
+        );
+        res.json(allNodes.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// save new node
+app.post('/nodes/:project_id', async(req, res) => {
+    try {
+        const { project_id } = req.params;
+        const { x, y, content } = req.body;
+        const newNode = await pool.query(
+            'INSERT INTO nodes (project_id, x_pos, y_pos, content) VALUES ($1, $2, $3, $4) RETURNING node_id', [project_id, x, y, content]
+        );
+        res.json(newNode);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// update existing node
+app.put('/nodes/:node_id', async(req, res) => {
+    try {
+        const { node_id } = req.params;
+        const { x, y, content } = req.body;
+        const updateNode = await pool.query(
+            'UPDATE nodes SET x_pos = $2, y_pos = $3, content = $4 WHERE node_id = $1', [node_id, x, y, content]
+        );
+
+        res.json(updateNode);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// delete node
+app.delete('/nodes/:node_id', async(req, res) => {
+    try {
+        const { node_id } = req.params;
+        const deleteNode = await pool.query(
+            'DELETE FROM nodes WHERE node_id = $1', [node_id]
+        );
+
+        res.json(deleteNode);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Edges
+// get all edges for project
+app.get('/edges/:project_id', async(req, res) => {
+    try {
+        const { project_id } = req.params;
+        const allEdges = await pool.query(
+            'SELECT * FROM edges WHERE project_id = $1', [project_id]
+        );
+        res.json(allEdges.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// save new edge
+app.post('/edges/:project_id', async(req, res) => {
+    try {
+        const { project_id } = req.params;
+        const { node1, node2, content } = req.body;
+        const newEdge = await pool.query(
+            'INSERT INTO edges (project_id, node_1, node_2, content) VALUES ($1, $2, $3, $4) RETURNING edge_id', [project_id, node1, node2, content]
+        );
+        res.json(newEdge);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// update existing edge
+app.put('/edges/:edge_id', async(req, res) => {
+    try {
+        const { edge_id } = req.params;
+        const { node1, node2, content } = req.body;
+        const updateEdge = await pool.query(
+            'UPDATE edges SET node_1 = $2, node_2 = $3, content = $4 WHERE edge_id = $1', [edge_id, node1, node2, content]
+        );
+
+        res.json(updateEdge);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// delete edge
+app.delete('/edges/:edge_id', async(req, res) => {
+    try {
+        const { edge_id } = req.params;
+        const deleteEdge = await pool.query(
+            'DELETE FROM edges WHERE edge_id = $1', [edge_id]
+        );
+
+        res.json(deleteEdge);
     } catch (err) {
         console.error(err.message);
     }
