@@ -1,40 +1,71 @@
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import App from './App';
-import projects from './components/ProjectList/__test__/mock-projects.json'
+import projects from './components/ProjectList/__test__/mock-projects.json';
+import axios from 'axios';
+import { GraphComponent, License, Size } from 'yfiles';
 
+jest.mock('axios');
+let mockElem = document.createElement('div');
+jest.mock('yfiles', () => ({
+    GraphComponent: class GraphComponent {
+        get graph() {
+            return {
+                nodeDefaults: {
+                    size: jest.fn(),
+                },
+                createNodeAt: jest.fn(),
+                createEdge: jest.fn(),
+                addLabel: jest.fn(),
+            };
+        }
+        get div() {
+            return mockElem;
+        }
+        get inputMode() {
+            return {
+                addPopulateItemContextMenuListener: jest.fn(),
+                contextMenuInputMode: {
+                    addCloseMenuListener: jest.fn(),
+                },
+            };
+        }
+        set inputMode(mode) {}
+    },
+    License: class License {},
+    GraphEditorInputMode: class GraphEditorInputMode {},
+    ShapeNodeStyle: class ShapeNodeStyle {},
+    Size: class Size {},
+    Point: class Point {},
+    TimeSpan: {
+        fromMilliseconds: jest.fn(),
+    },
+}));
 
 describe('App', () => {
-
-    describe('Rendering', () => {
-        it('Renders the app title', () => {
-            renderWithRouter(<App />, '/');
-            const titleElement = screen.getByText('Bisociation Net');
-            expect(titleElement).toBeInTheDocument();
-        });
+    beforeEach(() => {
+        axios.get.mockResolvedValueOnce({ data: projects });
     });
+
+    // Project title is no longer displayed
+    // describe('Rendering', () => {
+    //     it('Renders the app title', async () => {
+    //         renderWithRouter(<App />, '/');
+    //         const titleElement = await screen.findByText('Bisociation Net');
+    //         expect(titleElement).toBeInTheDocument();
+    //     });
+    // });
 
     describe('Routing', () => {
-        it('Navigates to the project list view', () => {
+        it('Navigates to the project list view', async () => {
             renderWithRouter(<App />, '/');
-            expect(screen.getByText('Meine Projekte')).toBeInTheDocument();
+            expect(await screen.findByText('My Projects')).toBeInTheDocument();
         });
-    
-        it('Navigates to the project view', () => {
+
+        it('Navigates to the project view', async () => {
             renderWithRouter(<App />, '/project/0');
-            expect(screen.getByText(/project(.*)0/i)).toBeInTheDocument();
-        });
-    
-        // TODO this test has to be adjusted for a ProjectList with dynamic data
-        it('Navigates to all projects and back', async () => {
-            const {user} = renderWithRouter(<App projects={projects}/>, '/');
-            for (let index = 0; index < projects.length; index++) {
-                let link = screen.getAllByText('Öffnen')[index];
-                await user.click(link);
-                expect(screen.getByText(`Project ${projects[index].id}`)).toBeInTheDocument();
-                await user.click(screen.getByText('zurück'));
-                expect(screen.getByText('Meine Projekte')).toBeInTheDocument();
-            }
+            expect(
+                await screen.findByText(/project(.*)0/i)
+            ).toBeInTheDocument();
         });
     });
-
 });
