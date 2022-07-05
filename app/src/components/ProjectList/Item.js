@@ -3,6 +3,9 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DropDown from 'react-bootstrap/DropDown';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,6 +16,7 @@ export default function Item(props) {
     if (text.length > 10) {
         text = text.substring(0, 20) + '...';
     }
+
     const deleteProject = () => {
         // delete in database
         axios
@@ -24,12 +28,55 @@ export default function Item(props) {
         props.onDelete(props.allItems.filter((items) => items.id !== props.id));
     };
 
+    const [show, setShow] = useState(false);
+    
+    const editItem = () => {
+
+        const handleShow = () => setShow(true);
+        const handleClose = () => setShow(false);
+        const handleSave = () => {
+            setShow(false);
+            /*TODO*/
+        }
+
+            return (
+                <Modal
+                    show={show}
+                    onHide={handleClose}
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit Project</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group className="mb-3">
+                                <Form.Label> Titel </Form.Label>
+                                <Form.Control />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label> Description </Form.Label>
+                                <Form.Control />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleSave}>
+                            Save
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            );
+    };
+
     const DropDownMenu = () => {
         return (
             <DropDown className="d-inline mx-2" autoClose="true">
                 <DropDown.Menu show>
                     <DropDown.Header> Options </DropDown.Header>{' '}
-                    <DropDown.Item> Edit </DropDown.Item>{' '}
+                    <DropDown.Item onClick={editItem}> Edit </DropDown.Item>{' '}
                     <DropDown.Item onClick={deleteProject}>
                         Delete{' '}
                     </DropDown.Item>{' '}
