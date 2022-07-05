@@ -6,38 +6,34 @@ import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 import { GraphComponent,
     License, 
-    ShapeNodeStyle,
     GraphEditorInputMode,
-    Size, 
-    Point } from 'yfiles';
+    Size,
+    Point  
+} from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
+import {style, greenNodeStyle } from './ProjectViewStyles.js';
+import Toolbox from './Toolbox.js';
 
 // Providing license information for the yfiles library
 License.value = license;
 
 // Initialize graphComponent and ContextMenu
-const graphComponent = new GraphComponent();
-const graph = graphComponent.graph;
+export const graphComponent = new GraphComponent();
+export const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode()
-
-//suppress automatic node creation due white rectangle
-GraphEditorInputMode.allowCreateNode = false
-
-//Style:
-const greenNodeStyle = new ShapeNodeStyle({
-  shape: 'ellipse',
-  fill: 'green',
-  stroke: 'transparent'
-})
-graph.nodeDefaults.size = new Size(150, 150)
+const nodeDefaults = graph.nodeDefaults
+// set a new default style
+nodeDefaults.style = style
+// set a new default size
+nodeDefaults.size = new Size(150, 150)
 
 
 //Graph methods: not used right now
 //Adds a node to the graph at (x,y) with label 'Label'
-function generateNewNode(x, y, input_label) {
-  const node = graph.createNodeAt(new Point(x,y), greenNodeStyle)
+export function generateNewNode(x, y, input_label) {
+  const node = graph.createNodeAt(new Point(x,y))
   graph.addLabel(node, input_label)
   return node
 }
@@ -72,6 +68,12 @@ export default function ProjectView() {
         };
     });
 
+    const RenderToolbox = () => {
+        return (
+            <Toolbox></Toolbox>
+        )
+    }
+
     return (
         <div>
             <Navbar bg="light" variant="light">
@@ -85,6 +87,7 @@ export default function ProjectView() {
                     </Form>
                 </Container>
             </Navbar>
+            <RenderToolbox />
             <div className="graph-container" ref={graphContainer}></div>
         </div>
     );
