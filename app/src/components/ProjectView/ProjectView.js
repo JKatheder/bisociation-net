@@ -13,8 +13,9 @@ import { GraphComponent,
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
-import {style, greenNodeStyle } from './ProjectViewStyles.js';
+import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
+//import {pool} from '../../../server/db.js'
 
 // Providing license information for the yfiles library
 License.value = license;
@@ -23,12 +24,11 @@ License.value = license;
 export const graphComponent = new GraphComponent();
 export const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode()
-const nodeDefaults = graph.nodeDefaults
-// set a new default style
-nodeDefaults.style = style
-// set a new default size
-nodeDefaults.size = new Size(150, 150)
 
+// set a new default style
+const nodeDefaults = graph.nodeDefaults
+nodeDefaults.style = style
+nodeDefaults.size = new Size(150, 150)
 
 //Graph methods: not used right now
 //Adds a node to the graph at (x,y) with label 'Label'
@@ -44,7 +44,6 @@ const node1 = generateNewNode(200,500, 'Node1')
 const node2 = generateNewNode(800,500, 'Node2')
 graph.createEdge(node0, node1)
 graph.createEdge(node0, node2)
-
 
 export default function ProjectView() {
   
@@ -64,7 +63,6 @@ export default function ProjectView() {
         // Return cleanup function
         return () => {
             currentgraphContainer.removeChild(graphComponent.div);
-            //contextMenu.clearItems()
         };
     });
 
