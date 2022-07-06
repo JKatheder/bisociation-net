@@ -6,47 +6,44 @@ import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 import { GraphComponent,
     License, 
-    ShapeNodeStyle,
     GraphEditorInputMode,
-    Size, 
-    Point } from 'yfiles';
+    Size,
+    Point  
+} from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
+import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
+//import {pool} from '../../../server/db.js'
 
 // Providing license information for the yfiles library
 License.value = license;
 
 // Initialize graphComponent and ContextMenu
-const graphComponent = new GraphComponent();
-const graph = graphComponent.graph;
+export const graphComponent = new GraphComponent();
+export const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode()
 
-
-//Style:
-const greenNodeStyle = new ShapeNodeStyle({
-  shape: 'ellipse',
-  fill: 'green',
-  stroke: 'transparent'
-})
-graph.nodeDefaults.size = new Size(150, 150)
+// set a new default style
+const nodeDefaults = graph.nodeDefaults
+nodeDefaults.style = style
+nodeDefaults.size = new Size(150, 150)
 
 //Graph methods: not used right now
 //Adds a node to the graph at (x,y) with label 'Label'
-function generateNewNode(x, y, input_label) {
-  const node = graph.createNodeAt(new Point(x,y), greenNodeStyle)
+export function generateNewNode(x, y, input_label) {
+  const node = graph.createNodeAt(new Point(x,y))
   graph.addLabel(node, input_label)
   return node
 }
 
 // Construct a some sample nodes:
-const node0 = generateNewNode(700,200, 'PROJECT-X')
-const node1 = generateNewNode(200,700, 'Node1')
-const node2 = generateNewNode(800,700, 'Node2')
+const node0 = generateNewNode(700,100, 'PROJECT-X')
+const node1 = generateNewNode(200,500, 'Node1')
+const node2 = generateNewNode(800,500, 'Node2')
 graph.createEdge(node0, node1)
 graph.createEdge(node0, node2)
-
 
 export default function ProjectView() {
   
@@ -66,7 +63,6 @@ export default function ProjectView() {
         // Return cleanup function
         return () => {
             currentgraphContainer.removeChild(graphComponent.div);
-            //contextMenu.clearItems()
         };
     });
 
