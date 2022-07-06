@@ -46,6 +46,7 @@ var loaded = false;
 export default function ProjectView() {
     let params = useParams();
 
+    // can't be outsourced into own component, because then graph is not changed
     if (!loaded) {
         var new_edges = [];
         axios
