@@ -206,6 +206,20 @@ app.delete('/edges/:edge_id', async(req, res) => {
     }
 });
 
+// get edges where node_1 has node_id
+app.get('/curredges/:node_id', async(req, res) => {
+    try {
+        const { node_id } = req.params;
+        const Edges = await pool.query(
+            'SELECT * FROM edges WHERE node_1 = $1', [node_id]
+        );
+
+        res.json(Edges.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
