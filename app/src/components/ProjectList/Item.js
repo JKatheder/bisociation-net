@@ -11,6 +11,10 @@ import axios from 'axios';
 
 export default function Item(props) {
     const [showMenu, setShowMenu] = useState(false);
+    const [editId, setEditId] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+    const [show, setShow] = useState(true);
+
     //adds ... if text is to long
     var text = props.text;
     if (text.length > 10) {
@@ -27,17 +31,21 @@ export default function Item(props) {
         // delete in current state
         props.onDelete(props.allItems.filter((items) => items.id !== props.id));
     };
-
-    const [show, setShow] = useState(false);
     
-    const editItem = () => {
+    const editItem = (props) => {
 
-        const handleShow = () => setShow(true);
         const handleClose = () => setShow(false);
         const handleSave = () => {
             setShow(false);
             /*TODO*/
         }
+
+        var title = "";
+        var des = "";
+
+        props.allItems.forEach((elem) => {
+            /*TODO*/
+        })
 
             return (
                 <Modal
@@ -51,11 +59,11 @@ export default function Item(props) {
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label> Titel </Form.Label>
-                                <Form.Control />
+                                <Form.Control value={title} />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label> Description </Form.Label>
-                                <Form.Control />
+                                <Form.Control value={des} />
                             </Form.Group>
                         </Form>
                     </Modal.Body>
