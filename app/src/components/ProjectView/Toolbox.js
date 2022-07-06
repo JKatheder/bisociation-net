@@ -1,9 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Draggable from 'react-draggable';
-import { Point } from 'yfiles';
-import { redNodeStyle } from './ProjectViewStyles';
-import ProjectView, {graph, graphComponent} from './ProjectView';
+import { Point, Fill } from 'yfiles';
+import { greenNodeStyle, redNodeStyle } from './ProjectViewStyles';
+import ProjectView, {graph, graphComponent, node1} from './ProjectView';
 import './Toolbox.css';
 
 export default function Toolbox() {
@@ -19,8 +19,15 @@ export default function Toolbox() {
     const handleColorChange = () => {
         /* TODO */
         if (graphComponent.selection.selectedNodes.size > 0){
-            graph.createNodeAt(new Point(900,100), redNodeStyle)
+            var i
+            for (i=0; i < graphComponent.selection.selectedNodes.size; i++) {
+                const t = graphComponent.selection.selectedNodes.elementAt(i)
+                graph.setStyle(t, greenNodeStyle)
+            }
         }
+    };
+    const handleRelabel = () => {
+        /* TODO */
     };
 
     return (
@@ -57,6 +64,13 @@ export default function Toolbox() {
                         onClick={handleColorChange}
                     >
                         Color-Change
+                    </Button>
+                    <Button
+                        className="buttons"
+                        variant="secondary"
+                        onClick={handleRelabel}
+                    >
+                        Relabel
                     </Button>
                 </Card.Body>
             </Card>
