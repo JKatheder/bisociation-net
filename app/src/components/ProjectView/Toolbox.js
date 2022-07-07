@@ -5,6 +5,7 @@ import { Point } from 'yfiles';
 import { redNodeStyle } from './ProjectViewStyles';
 import ProjectView, {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
+import { impulseEdgesToOneNode, IMPULSE_COUNT, layoutGraph, relabel } from '../impulseEdges/impulseEdges';
 
 export default function Toolbox() {
     const handleSave = () => {
@@ -15,6 +16,10 @@ export default function Toolbox() {
     };
     const handleAutoLayout = () => {
         /* TODO */
+    };
+    const handleImpulseEdges = () => {
+        graphComponent.selection.selectedNodes.forEach(item => impulseEdgesToOneNode(item, IMPULSE_COUNT))
+        layoutGraph()
     };
     const handleColorChange = () => {
         /* TODO */
@@ -50,6 +55,13 @@ export default function Toolbox() {
                         onClick={handleAutoLayout}
                     >
                         Auto-Layout
+                    </Button>
+                    <Button
+                        className="buttons"
+                        variant="secondary"
+                        onClick={handleImpulseEdges}
+                    >
+                        Add impulse edges
                     </Button>
                     <Button
                         className="buttons"

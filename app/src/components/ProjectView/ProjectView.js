@@ -15,6 +15,7 @@ import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
 import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
+import {impulseEdges, IMPULSE_COUNT} from '../impulseEdges/impulseEdges.js';
 //import {pool} from '../../../server/db.js'
 
 // Providing license information for the yfiles library
@@ -39,11 +40,15 @@ export function generateNewNode(x, y, input_label) {
 }
 
 // Construct a some sample nodes:
-const node0 = generateNewNode(700,100, 'PROJECT-X')
+export const root = generateNewNode(700,100, 'PROJECT-X')
 const node1 = generateNewNode(200,500, 'Node1')
 const node2 = generateNewNode(800,500, 'Node2')
-graph.createEdge(node0, node1)
-graph.createEdge(node0, node2)
+graph.createEdge(root, node1)
+graph.createEdge(root, node2)
+
+//impulseEdges(root, IMPULSE_COUNT)
+//impulseEdges(node1, IMPULSE_COUNT)
+
 
 export default function ProjectView() {
   
