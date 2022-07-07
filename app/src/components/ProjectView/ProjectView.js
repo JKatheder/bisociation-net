@@ -8,14 +8,13 @@ import { GraphComponent,
     License, 
     GraphEditorInputMode,
     Size,
-    Point  
+    Point
 } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
 import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
-import {impulseEdges, IMPULSE_COUNT} from '../impulseEdges/impulseEdges.js';
 //import {pool} from '../../../server/db.js'
 
 // Providing license information for the yfiles library

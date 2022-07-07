@@ -27,6 +27,10 @@ export function impulseEdgesToOneNode(rootNode, impulseCount){
     }
 }
 
+export function relabel(label){
+   graph.setLabelText(label, one())
+}
+
 export function layoutGraph(){
     const layout = new ClassicTreeLayout()
     layout.considerNodeSizes = true
