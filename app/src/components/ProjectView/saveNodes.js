@@ -1,17 +1,20 @@
 import axios from 'axios';
 
-export default function saveNodes(props) {
+// nodes is a property of graph (e.g. graph.nodes)
+// nodes.toList() is called in this compontent
+// nodesCallback is a function from ProjectView.js to change tags in the original graph
+export default function saveNodes(project_id, nodes, nodesCallback) {
     // get existing ids from database table nodes
     var prev_ids = [];
     var saved_ids = [];
     axios
-        .get(`http://localhost:3001/nodes/${props.project_id}`)
+        .get(`http://localhost:3001/nodes/${project_id}`)
         .catch((err) => console.log(err))
         .then((res) => {
             res.data.map((node) => prev_ids.push(node.node_id));
 
             // loop through nodes
-            props.graph.nodes.toList().forEach((node) => {
+            nodes.toList().forEach((node) => {
                 // get label
                 var label = '';
                 if (node.labels.size > 1) {
@@ -35,16 +38,14 @@ export default function saveNodes(props) {
                 // create new node if node not existing in database
                 else {
                     axios
-                        .post(
-                            `http://localhost:3001/nodes/${props.project_id}`, {
-                                x: node.layout.x,
-                                y: node.layout.y,
-                                content: label,
-                            }
-                        )
+                        .post(`http://localhost:3001/nodes/${project_id}`, {
+                            x: node.layout.x,
+                            y: node.layout.y,
+                            content: label,
+                        })
                         .then((res) => {
                             var item = res.data.rows[0];
-                            props.nodesCallback(node, item.node_id);
+                            nodesCallback(node, item.node_id);
                         })
                         .catch((err) => console.log(err));
                 }

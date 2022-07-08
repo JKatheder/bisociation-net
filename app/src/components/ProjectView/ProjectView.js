@@ -142,13 +142,16 @@ export default function ProjectView() {
     const RenderToolbox = () => {
         return (
             <Toolbox
-                graph={graph}
                 project_id={params.projectID}
+                nodes={graph.nodes}
+                edges={graph.edges}
                 nodesCallback={nodesCallback}
                 edgesCallback={edgesCallback}
             ></Toolbox>
         );
     };
+
+    const handleBack = () => {};
 
     return (
         <div>
@@ -158,9 +161,10 @@ export default function ProjectView() {
                         Project {params.projectID}{' '}
                     </Navbar.Brand>{' '}
                     <Form>
-                        <Link to={`/`} className="btn btn-success">
+                        <Button variant="secondary" onClick={handleBack}>
+                            {' '}
                             Back{' '}
-                        </Link>{' '}
+                        </Button>{' '}
                         <Button variant="secondary"> Logout </Button>{' '}
                     </Form>{' '}
                 </Container>{' '}

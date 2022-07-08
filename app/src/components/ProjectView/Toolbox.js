@@ -7,8 +7,8 @@ import saveEdges from './saveEdges.js';
 
 export default function Toolbox(props) {
     const handleSave = () => {
-        saveNodes(props);
-        saveEdges(props);
+        saveNodes(props.project_id, props.nodes, props.nodesCallback);
+        saveEdges(props.project_id, props.edges, props.edgesCallback);
     };
     const handleExport = () => {
         /* TODO */
