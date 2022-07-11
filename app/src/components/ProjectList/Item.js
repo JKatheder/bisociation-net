@@ -31,52 +31,51 @@ export default function Item(props) {
         // delete in current state
         props.onDelete(props.allItems.filter((items) => items.id !== props.id));
     };
-    
-    const editItem = (props) => {
 
+    const EditItem = (props) => {
         const handleClose = () => setShow(false);
         const handleSave = () => {
             setShow(false);
             /*TODO*/
-        }
+        };
 
-        var title = "";
-        var des = "";
+        var title = '';
+        var des = '';
 
         props.allItems.forEach((elem) => {
-            /*TODO*/
-        })
+            if (editId === elem.id) {
+                title = elem.title;
+                des = elem.text;
+            }
+        });
 
-            return (
-                <Modal
-                    show={show}
-                    onHide={handleClose}
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Edit Project</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label> Titel </Form.Label>
-                                <Form.Control value={title} />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label> Description </Form.Label>
-                                <Form.Control value={des} />
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleSave}>
-                            Save
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            );
+        return (
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Project</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label> Titel </Form.Label>
+                            <Form.Control value={title} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label> Description </Form.Label>
+                            <Form.Control value={des} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSave}>
+                        Save
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
     };
 
     const DropDownMenu = () => {
@@ -84,7 +83,15 @@ export default function Item(props) {
             <DropDown className="d-inline mx-2" autoClose="true">
                 <DropDown.Menu show>
                     <DropDown.Header> Options </DropDown.Header>{' '}
-                    <DropDown.Item onClick={editItem}> Edit </DropDown.Item>{' '}
+                    <DropDown.Item
+                        onClick={() => {
+                            setShowEdit(true);
+                            setEditId(props.id);
+                        }}
+                    >
+                        {' '}
+                        Edit{' '}
+                    </DropDown.Item>{' '}
                     <DropDown.Item onClick={deleteProject}>
                         Delete{' '}
                     </DropDown.Item>{' '}
@@ -122,6 +129,7 @@ export default function Item(props) {
                     </Link>{' '}
                 </div>{' '}
             </Card.Body>{' '}
+            {showEdit ? <EditItem allItems={props.allItems} /> : null}
         </Card>
     );
 }
