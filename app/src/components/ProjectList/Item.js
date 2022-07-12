@@ -45,7 +45,7 @@ export default function Item(props) {
         props.allItems.forEach((elem) => {
             if (editId === elem.id) {
                 title = elem.title;
-                des = elem.text;
+                des = elem.content;
             }
         });
 
@@ -62,7 +62,7 @@ export default function Item(props) {
                         </Form.Group>
                         <Form.Group>
                             <Form.Label> Description </Form.Label>
-                            <Form.Control value={des} />
+                            <Form.Control value={des} as="textarea" rows={3} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
