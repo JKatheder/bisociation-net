@@ -26,7 +26,8 @@
         "url": "^0.11.0",
         "util": "^0.12.4",
         "web-vitals": "^2.1.4",
-        "yfiles": "file:src/assets/js/yfiles/yfiles-24.0.5-dev.tgz"
+        "yfiles": "file:src/assets/js/yfiles/yfiles-24.0.5-dev.tgz",
+        "yfiles-umd": "file:src/assets/js/yfiles/yfiles-umd-24.0.5-dev.tgz"
     },
     "scripts": {
         "start": "react-scripts start",
@@ -62,5 +63,10 @@
         "@testing-library/react": "^13.2.0",
         "@testing-library/user-event": "^14.2.0",
         "react-test-renderer": "^18.1.0"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "^yfiles$": "<rootDir>/node_modules/yfiles-umd"
+        }
     }
 }
