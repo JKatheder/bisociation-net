@@ -1,6 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Draggable from 'react-draggable';
+import { Point } from 'yfiles';
+import { redNodeStyle } from './ProjectViewStyles';
+import ProjectView, {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
 import saveNodes from './saveNodes.js';
 import saveEdges from './saveEdges.js';
@@ -18,6 +21,9 @@ export default function Toolbox(props) {
     };
     const handleColorChange = () => {
         /* TODO */
+        if (graphComponent.selection.selectedNodes.size > 0){
+            graph.createNodeAt(new Point(900,100), redNodeStyle)
+        }
     };
 
     return (

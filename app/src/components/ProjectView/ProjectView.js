@@ -8,6 +8,7 @@ import { GraphComponent, License, GraphEditorInputMode, Size } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
+import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
 import axios from 'axios';
 import loadGraph from './loadGraph.js';
@@ -18,6 +19,7 @@ import saveNodes from './saveNodes.js';
 License.value = license;
 
 // Initialize graphComponent and ContextMenu
+
 const graphComponent = new GraphComponent();
 const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode();
@@ -50,7 +52,6 @@ export default function ProjectView() {
         // Return cleanup function
         return () => {
             currentgraphContainer.removeChild(graphComponent.div);
-            //contextMenu.clearItems()
         };
     });
 
