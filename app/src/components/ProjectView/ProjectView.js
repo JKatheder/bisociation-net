@@ -39,14 +39,11 @@ export function generateNewNode(x, y, input_label) {
 }
 
 // Construct a some sample nodes:
-export const root = generateNewNode(700,100, 'PROJECT-X')
+const node0 = generateNewNode(700,100, 'PROJECT-X')
 const node1 = generateNewNode(200,500, 'Node1')
 const node2 = generateNewNode(800,500, 'Node2')
-graph.createEdge(root, node1)
-graph.createEdge(root, node2)
-
-//impulseEdges(root, IMPULSE_COUNT)
-//impulseEdges(node1, IMPULSE_COUNT)
+graph.createEdge(node0, node1)
+graph.createEdge(node1, node2)
 
 
 export default function ProjectView() {

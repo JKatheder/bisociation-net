@@ -15,7 +15,7 @@ export default function Toolbox() {
         /* TODO */
     };
     const handleAutoLayout = () => {
-        /* TODO */
+        layoutGraph()
     };
     const handleRelabel = () => {
         graphComponent.selection.selectedLabels.forEach(item => relabel(item))
