@@ -4,19 +4,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
-import {
-    GraphComponent,
-    License,
-    ShapeNodeStyle,
-    GraphEditorInputMode,
-    Size,
-    Point,
-} from 'yfiles';
+import { GraphComponent, License, GraphEditorInputMode, Size } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
 import Toolbox from './Toolbox.js';
 import axios from 'axios';
+import loadGraph from './loadGraph.js';
+import saveEdges from './saveEdges.js';
+import saveNodes from './saveNodes.js';
 
 // Providing license information for the yfiles library
 License.value = license;
@@ -27,19 +23,7 @@ const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode();
 
 //Style:
-const greenNodeStyle = new ShapeNodeStyle({
-    shape: 'ellipse',
-    fill: 'green',
-    stroke: 'transparent',
-});
 graph.nodeDefaults.size = new Size(150, 150);
-
-//Adds a node to the graph at (x,y) with label 'Label'
-function generateNewNode(x, y, input_label) {
-    const node = graph.createNodeAt(new Point(x, y), greenNodeStyle);
-    graph.addLabel(node, input_label);
-    return node;
-}
 
 var loaded = false;
 
@@ -48,60 +32,8 @@ export default function ProjectView() {
 
     // can't be outsourced into own component, because then graph is not changed
     if (!loaded) {
-        var new_edges = [];
-        axios
-            .get(`http://localhost:3001/nodes/${params.projectID}`)
-            .then((res_nodes) => {
-                res_nodes.data.forEach((node) => {
-                    var curr_node = generateNewNode(
-                        Number(node.x_pos),
-                        Number(node.y_pos),
-                        node.content
-                    );
-                    curr_node.tag = node.node_id;
-                    // get edges with node_1 = node
-                    axios
-                        .get(`http://localhost:3001/curredges/${node.node_id}`)
-                        .then((res_edges) => {
-                            res_edges.data.forEach((edge) => {
-                                if (edge) {
-                                    // new_edges contains tupels of nodes, that will become edges
-                                    // the first node always is a graph node
-                                    // the second node at this point is a node id, as the node may not be loaded yet
-                                    var tupel_nodes = [curr_node, edge.node_2];
-                                    new_edges.push(tupel_nodes);
-                                    // go through all loaded nodes and generate edges
-                                    // this could also be done after all nodes are loaded in one loop
-                                    // more efficient here, because new_edges gets smaller while graph.nodes gets larger => shorter loops
-                                    graph.nodes
-                                        .toList()
-                                        .forEach((loaded_node) => {
-                                            new_edges.forEach(
-                                                (edge_toLoad, index) => {
-                                                    if (
-                                                        loaded_node.tag ===
-                                                        edge_toLoad[1]
-                                                    ) {
-                                                        graph.createEdge(
-                                                            edge_toLoad[0],
-                                                            loaded_node
-                                                        );
-                                                        // remove finished edge
-                                                        new_edges.splice(
-                                                            index,
-                                                            1
-                                                        );
-                                                    }
-                                                }
-                                            );
-                                        });
-                                }
-                            });
-                        })
-                        .catch((err) => console.log(err));
-                });
-            })
-            .catch((err) => console.log(err));
+        console.log('load');
+        loadGraph(graph, params.projectID);
         loaded = true;
     }
 
@@ -151,7 +83,11 @@ export default function ProjectView() {
         );
     };
 
-    const handleBack = () => {};
+    const handleBack = () => {
+        // save
+        saveNodes(params.projectID, graph.nodes, nodesCallback);
+        saveEdges(params.projectID, graph.edges, edgesCallback);
+    };
 
     return (
         <div>
@@ -161,12 +97,15 @@ export default function ProjectView() {
                         Project {params.projectID}{' '}
                     </Navbar.Brand>{' '}
                     <Form>
-                        <Button variant="secondary" onClick={handleBack}>
-                            {' '}
-                            Back{' '}
-                        </Button>{' '}
-                        <Button variant="secondary"> Logout </Button>{' '}
-                    </Form>{' '}
+                        <Link
+                            to={`/`}
+                            onClick={handleBack}
+                            className="btn btn-success"
+                        >
+                            Back
+                        </Link>{' '}
+                        <Button variant="secondary">Logout</Button>
+                    </Form>
                 </Container>{' '}
             </Navbar>{' '}
             <RenderToolbox />
