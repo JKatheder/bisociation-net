@@ -4,51 +4,39 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
-import { GraphComponent,
-    License, 
-    GraphEditorInputMode,
-    Size,
-    Point
-} from 'yfiles';
+import { GraphComponent, License, GraphEditorInputMode, Size } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
 import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
-//import {pool} from '../../../server/db.js'
+import axios from 'axios';
+import loadGraph from './loadGraph.js';
+import saveEdges from './saveEdges.js';
+import saveNodes from './saveNodes.js';
 
 // Providing license information for the yfiles library
 License.value = license;
 
 // Initialize graphComponent and ContextMenu
-export const graphComponent = new GraphComponent();
-export const graph = graphComponent.graph;
-graphComponent.inputMode = new GraphEditorInputMode()
 
-// set a new default style
-const nodeDefaults = graph.nodeDefaults
-nodeDefaults.style = style
-nodeDefaults.size = new Size(150, 150)
+const graphComponent = new GraphComponent();
+const graph = graphComponent.graph;
+graphComponent.inputMode = new GraphEditorInputMode();
 
-//Graph methods: not used right now
-//Adds a node to the graph at (x,y) with label 'Label'
-export function generateNewNode(x, y, input_label) {
-  const node = graph.createNodeAt(new Point(x,y))
-  graph.addLabel(node, input_label)
-  return node
-}
+//Style:
+graph.nodeDefaults.size = new Size(150, 150);
 
-// Construct a some sample nodes:
-const node0 = generateNewNode(700,100, 'PROJECT-X')
-const node1 = generateNewNode(200,500, 'Node1')
-const node2 = generateNewNode(800,500, 'Node2')
-graph.createEdge(node0, node1)
-graph.createEdge(node1, node2)
-
+var loaded = false;
 
 export default function ProjectView() {
-  
     let params = useParams();
+
+    if (!loaded) {
+        console.log('load');
+        loadGraph(graph, params.projectID);
+        loaded = true;
+    }
 
     // The useRef hook is used to reference the graph-container DOM node directly in order to append the graphComponent canvas to it
     const graphContainer = useRef(null);
@@ -67,27 +55,63 @@ export default function ProjectView() {
         };
     });
 
+    // allow to set node/edge id in tag on save
+    const nodesCallback = (node_return, id) => {
+        graph.nodes.toList().forEach((node) => {
+            if (node_return === node) {
+                node.tag = id;
+            }
+        });
+    };
+    const edgesCallback = (edge_return, id) => {
+        graph.edges.toList().forEach((edge) => {
+            if (edge_return === edge) {
+                edge.tag = id;
+            }
+        });
+    };
+
     const RenderToolbox = () => {
         return (
-            <Toolbox></Toolbox>
-        )
-    }
+            <Toolbox
+                project_id={params.projectID}
+                nodes={graph.nodes}
+                edges={graph.edges}
+                nodesCallback={nodesCallback}
+                edgesCallback={edgesCallback}
+            ></Toolbox>
+        );
+    };
+
+    const handleBack = () => {
+        // save
+        saveNodes(params.projectID, graph.nodes, nodesCallback);
+        saveEdges(params.projectID, graph.edges, edgesCallback);
+    };
 
     return (
         <div>
             <Navbar bg="light" variant="light">
                 <Container>
                     <Navbar.Brand href="#home">
-                        Project {params.projectID}
-                    </Navbar.Brand>
+                        Project {params.projectID}{' '}
+                    </Navbar.Brand>{' '}
                     <Form>
-                        <Link to={`/`} className="btn btn-success">Back</Link>{' '}
+                        <Link
+                            to={`/`}
+                            onClick={handleBack}
+                            className="btn btn-success"
+                        >
+                            Back
+                        </Link>{' '}
                         <Button variant="secondary">Logout</Button>
                     </Form>
-                </Container>
-            </Navbar>
+                </Container>{' '}
+            </Navbar>{' '}
             <RenderToolbox />
-            <div className="graph-container" ref={graphContainer}></div>
+            <div className="graph-container" ref={graphContainer}>
+                {' '}
+            </div>{' '}
         </div>
     );
 }

@@ -5,11 +5,14 @@ import { Point } from 'yfiles';
 import { redNodeStyle } from './ProjectViewStyles';
 import {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
+import saveNodes from './saveNodes.js';
+import saveEdges from './saveEdges.js';
 import { impulseEdgesToOneNode, IMPULSE_COUNT, layoutGraph, relabel } from '../impulseEdges/impulseEdges';
 
-export default function Toolbox() {
+export default function Toolbox(props) {
     const handleSave = () => {
-        /* TODO */
+        saveNodes(props.project_id, props.nodes, props.nodesCallback);
+        saveEdges(props.project_id, props.edges, props.edgesCallback);
     };
     const handleExport = () => {
         /* TODO */
@@ -32,9 +35,7 @@ export default function Toolbox() {
     };
 
     return (
-        <Draggable
-            defaultPosition={{ x: 0, y: 0 }}
-        >
+        <Draggable defaultPosition={{ x: 0, y: 0 }}>
             <Card style={{ zIndex: 1000, width: '10rem' }}>
                 <Card.Body>
                     <Card.Title>Toolbox</Card.Title>
