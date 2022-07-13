@@ -15,6 +15,6 @@ export const greenNodeStyle = new ShapeNodeStyle({
 //Style 2:
 export const redNodeStyle = new ShapeNodeStyle({
       shape: 'ellipse',
-      fill: 'red',
+      fill: Fill.DARK_RED,
       stroke: 'black'
 })

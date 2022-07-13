@@ -8,14 +8,16 @@ import { GraphComponent,
     License, 
     GraphEditorInputMode,
     Size,
-    Point  
+    Point
 } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
 import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
-//import {pool} from '../../../server/db.js'
+import { saveHelper } from './saveHelper.js';
+//import CreateExport from './demo-resources/CreateExport.js'
+
 
 // Providing license information for the yfiles library
 License.value = license;
@@ -39,15 +41,21 @@ export function generateNewNode(x, y, input_label) {
 }
 
 // Construct a some sample nodes:
-const node0 = generateNewNode(700,100, 'PROJECT-X')
+const rootNode = generateNewNode(700,100, 'PROJECT-X')
 export const node1 = generateNewNode(200,500, 'Node1')
 const node2 = generateNewNode(800,500, 'Node2')
-graph.createEdge(node0, node1)
-graph.createEdge(node0, node2)
+graph.createEdge(rootNode, node1)
+graph.createEdge(rootNode, node2)
 
+
+
+var loaded = false;
 export default function ProjectView() {
   
     let params = useParams();
+
+    // saving the graph, if button is pressed
+    saveHelper(loaded, params)
 
     // The useRef hook is used to reference the graph-container DOM node directly in order to append the graphComponent canvas to it
     const graphContainer = useRef(null);
@@ -66,9 +74,31 @@ export default function ProjectView() {
         };
     });
 
+        // allow to set node/edge id in tag on save
+        const nodesCallback = (node_return, id) => {
+            graph.nodes.toList().forEach((node) => {
+                if (node_return === node) {
+                    node.tag = id;
+                }
+            });
+        };
+        const edgesCallback = (edge_return, id) => {
+            graph.edges.toList().forEach((edge) => {
+                if (edge_return === edge) {
+                    edge.tag = id;
+                }
+            });
+        };
+
     const RenderToolbox = () => {
         return (
-            <Toolbox></Toolbox>
+            <Toolbox position="absolute !important">
+                project_id={params.projectID}
+                nodes={graph.nodes}
+                edges={graph.edges}
+                nodesCallback={nodesCallback}
+                edgesCallback={edgesCallback}
+            </Toolbox>
         )
     }
 
@@ -85,7 +115,7 @@ export default function ProjectView() {
                     </Form>
                 </Container>
             </Navbar>
-            <RenderToolbox />
+            <RenderToolbox position="absolute !important"/>
             <div className="graph-container" ref={graphContainer}></div>
         </div>
     );
