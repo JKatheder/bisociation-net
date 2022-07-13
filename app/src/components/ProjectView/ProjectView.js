@@ -8,7 +8,7 @@ import { GraphComponent,
     License, 
     GraphEditorInputMode,
     Size,
-    Point  
+    Point
 } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
@@ -43,7 +43,8 @@ const node0 = generateNewNode(700,100, 'PROJECT-X')
 const node1 = generateNewNode(200,500, 'Node1')
 const node2 = generateNewNode(800,500, 'Node2')
 graph.createEdge(node0, node1)
-graph.createEdge(node0, node2)
+graph.createEdge(node1, node2)
+
 
 export default function ProjectView() {
   
