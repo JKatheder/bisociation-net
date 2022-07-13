@@ -1,12 +1,12 @@
 import {graph, 
-    graphComponent, 
-    generateNewNode} from '../ProjectView/ProjectView';
+    graphComponent} from '../ProjectView/ProjectView';
 import { GraphEditorInputMode, 
     Class, 
     LayoutExecutor, 
     ClassicTreeLayout, 
     EdgeSegmentLabelModel, 
-    EdgeSides
+    EdgeSides,
+    Point
 } from 'yfiles';
 
 export const IMPULSE_COUNT = 5;
@@ -17,7 +17,7 @@ const { one } = require('nouns');
 
 export function impulseEdgesToOneNode(rootNode, impulseCount){
     for(var i = 0; i < impulseCount; i++){
-        const node = generateNewNode(0, 0, '')
+        const node = graph.createNodeAt(new Point(0,0))
         const edge = graph.createEdge(rootNode, node)
         graph.addLabel(
             edge,
