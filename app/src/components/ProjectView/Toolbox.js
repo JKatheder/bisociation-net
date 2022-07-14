@@ -4,14 +4,14 @@ import Draggable from 'react-draggable';
 import { greenNodeStyle, redNodeStyle, style } from './ProjectViewStyles';
 //import {initializeInteraction} from './demo-resources/CreateExport.js'
 //import ClientSideImageExport from './demo-resources/ClientSideImageExport'
+import { Point } from 'yfiles';
 import {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
 import saveNodes from './saveNodes.js';
 import saveEdges from './saveEdges.js';
 //import { MutableRectangle, RectangleIndicatorInstaller} from 'yfiles';
 
-  
-
+import { impulseEdgesToOneNode, IMPULSE_COUNT, layoutGraph, relabel } from '../impulseEdges/impulseEdges';
 
 export default function Toolbox(props) {
     const handleSave = () => {
@@ -22,7 +22,14 @@ export default function Toolbox(props) {
 
     };
     const handleAutoLayout = () => {
-        /* TODO */
+        layoutGraph()
+    };
+    const handleRelabel = () => {
+        graphComponent.selection.selectedLabels.forEach(item => relabel(item))
+    };
+    const handleImpulseEdges = () => {
+        graphComponent.selection.selectedNodes.forEach(item => impulseEdgesToOneNode(item, IMPULSE_COUNT))
+        layoutGraph()
     };
 
 
@@ -55,7 +62,6 @@ export default function Toolbox(props) {
         <Draggable
             defaultPosition={{ x: 0, y: 0 }}
         >
-            
             <Card style={{ zIndex: 1000, width: '10rem'}}>
                 <div className="card">
                     <Card.Body>

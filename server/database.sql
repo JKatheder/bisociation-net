@@ -12,17 +12,18 @@ CREATE TABLE projects(
 
 CREATE TABLE nodes(
 	node_id      int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	project_id 	 int REFERENCES projects(project_id),
-	x_pos		     int,
-	y_pos 		   int,
-	content		   varchar(100)
+	project_id 	 int REFERENCES projects(project_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	x_pos		 float,
+	y_pos 		 float,
+	content		 varchar(100)
 );
 
 CREATE TABLE edges(
 	edge_id      int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	project_id 	 int REFERENCES projects(project_id),
-	node_1		   int REFERENCES nodes(node_id),
-	node_2 		   int REFERENCES nodes(node_id)
+	project_id 	 int REFERENCES projects(project_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	node_1		 int REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	node_2 		 int REFERENCES nodes(node_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	content		 varchar(100)
 );
 
 -- title will be "project id" if no title given
