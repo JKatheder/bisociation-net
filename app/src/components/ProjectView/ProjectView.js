@@ -20,11 +20,13 @@ License.value = license;
 
 // Initialize graphComponent and ContextMenu
 
-const graphComponent = new GraphComponent();
-const graph = graphComponent.graph;
+export const graphComponent = new GraphComponent();
+export const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode();
 
 //Style:
+const nodeDefaults = graph.nodeDefaults
+nodeDefaults.style = style
 graph.nodeDefaults.size = new Size(150, 150);
 
 var loaded = false;
