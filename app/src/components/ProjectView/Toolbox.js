@@ -1,5 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Form from 'react-bootstrap/Form';
 import Draggable from 'react-draggable';
 import { Point } from 'yfiles';
 import { redNodeStyle } from './ProjectViewStyles';
@@ -52,14 +54,14 @@ export default function Toolbox(props) {
                         onClick={handleExport}
                     >
                         Export
-                    </Button>
+                    </Button> 
                     <Button
                         className="buttons"
                         variant="secondary"
                         onClick={handleAutoLayout}
                     >
                         Auto-Layout
-                    </Button>
+                    </Button> 
                     <Button
                         className="buttons"
                         variant="secondary"
@@ -67,13 +69,19 @@ export default function Toolbox(props) {
                     >
                         Relabel
                     </Button>
-                    <Button
-                        className="buttons"
-                        variant="secondary"
-                        onClick={handleImpulseEdges}
-                    >
-                        Add impulse edges
-                    </Button>
+                    <InputGroup
+                        className="buttons">
+                        <Form.Label>Add impulse edges</Form.Label>
+                        <Form.Control 
+                            defaultValue="5"
+                        />
+                        <Button 
+                            variant="outline-secondary"
+                            onClick={handleImpulseEdges} 
+                            >
+                            add
+                        </Button>
+                    </InputGroup>
                     <Button
                         className="buttons"
                         variant="secondary"
