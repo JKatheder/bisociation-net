@@ -12,8 +12,7 @@ import axios from 'axios';
 export default function Item(props) {
     const [showMenu, setShowMenu] = useState(false);
     const [editId, setEditId] = useState(false);
-    const [showEdit, setShowEdit] = useState(false);
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
 
     //adds ... if text is to long
     var text = props.text;
@@ -35,31 +34,33 @@ export default function Item(props) {
     const EditItem = (props) => {
         const [title, setTitle] = useState('');
         const [description, setDescription] = useState('');
-        const handleClose = () => setShow(false);
+        const [id, setID] = useState(-1);
+
+        const handleClose = () => {
+            setShow(false);
+        };
         const handleSave = () => {
             setShow(false);
             const NewTitleDesc = { title: title, description: description };
-
             axios
                 // update in database
-                .put(`http://localhost:3001/projects/${props.id}`, NewTitleDesc)
-                .then()
-                .catch((error) => {
-                    console.log(error);
-                });
+                .put(`http://localhost:3001/projects/${id}`, NewTitleDesc)
+                .then((response) =>
+                    this.setState({ updatedAt: response.data.updatedAt })
+                );
         };
-
-        //var title = '';
-        //var description = '';
 
         useEffect(() => {
             props.allItems.forEach((elem) => {
                 if (editId === elem.id) {
                     setTitle(elem.title);
                     setDescription(elem.content);
+                    setID(elem.id);
                 }
             });
         }, []);
+
+        //console.log(show);
 
         //setDescription(description);
         return (
@@ -112,7 +113,7 @@ export default function Item(props) {
                     <DropDown.Header> Options </DropDown.Header>{' '}
                     <DropDown.Item
                         onClick={() => {
-                            setShowEdit(true);
+                            setShow(true);
                             setEditId(props.id);
                         }}
                     >
