@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -33,22 +33,35 @@ export default function Item(props) {
     };
 
     const EditItem = (props) => {
+        const [title, setTitle] = useState('');
+        const [description, setDescription] = useState('');
         const handleClose = () => setShow(false);
         const handleSave = () => {
             setShow(false);
-            /*TODO*/
+            const NewTitleDesc = { title: title, description: description };
+
+            axios
+                // update in database
+                .put(`http://localhost:3001/projects/${props.id}`, NewTitleDesc)
+                .then()
+                .catch((error) => {
+                    console.log(error);
+                });
         };
 
-        var title = '';
-        var des = '';
+        //var title = '';
+        //var description = '';
 
-        props.allItems.forEach((elem) => {
-            if (editId === elem.id) {
-                title = elem.title;
-                des = elem.content;
-            }
-        });
+        useEffect(() => {
+            props.allItems.forEach((elem) => {
+                if (editId === elem.id) {
+                    setTitle(elem.title);
+                    setDescription(elem.content);
+                }
+            });
+        }, []);
 
+        //setDescription(description);
         return (
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -58,11 +71,25 @@ export default function Item(props) {
                     <Form>
                         <Form.Group className="mb-3">
                             <Form.Label> Titel </Form.Label>
-                            <Form.Control value={title} />
+                            <Form.Control
+                                type="text"
+                                value={title}
+                                onChange={(e) => {
+                                    setTitle(e.target.value);
+                                }}
+                            />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label> Description </Form.Label>
-                            <Form.Control value={des} as="textarea" rows={3} />
+                            <Form.Control
+                                type="text"
+                                value={description}
+                                as="textarea"
+                                rows={3}
+                                onChange={(e) => {
+                                    setDescription(e.target.value);
+                                }}
+                            />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -129,7 +156,7 @@ export default function Item(props) {
                     </Link>{' '}
                 </div>{' '}
             </Card.Body>{' '}
-            {showEdit ? <EditItem allItems={props.allItems} /> : null}
+            {show ? <EditItem allItems={props.allItems} /> : null}
         </Card>
     );
 }
