@@ -50,53 +50,58 @@ export default function Toolbox(props) {
 
     return (
         <Draggable defaultPosition={{ x: 0, y: 0 }}>
+            
             <Card style={{ zIndex: 1000, width: '10rem' }}>
-                <Card.Body>
-                    <Card.Title>Toolbox</Card.Title>
-                    <Button
-                        className="buttons"
-                        variant="secondary"
-                        onClick={handleSave}
-                    >
-                        Save
-                    </Button>
-                    <Button
-                        className="buttons"
-                        variant="secondary"
-                        onClick={handleExport}
-                    >
-                        Export
-                    </Button>
-                    <Button
-                        className="buttons"
-                        variant="secondary"
-                        onClick={handleAutoLayout}
-                    >
-                        Auto-Layout
-                    </Button>
-                    <Button
-                        className="buttons"
-                        variant="secondary"
-                        onClick={handleRelabel}
-                    >
-                        Relabel
-                    </Button>
-                    <Button
-                        className="buttons"
-                        variant="secondary"
-                        onClick={handleImpulseEdges}
-                    >
-                        Add impulse edges
-                    </Button>
-                    <Button
-                        className="buttons"
-                        variant="secondary"
-                        onClick={handleColorChange}
-                    >
-                        Color-Change
-                    </Button>
-                </Card.Body>
+
+                <div className="positionCanvas">
+                    <Card.Body>
+                        <Card.Title>Toolbox</Card.Title>
+                        <Button
+                            className="buttons"
+                            variant="secondary"
+                            onClick={handleSave}
+                        >
+                            Save
+                        </Button>
+                        <Button
+                            className="buttons"
+                            variant="secondary"
+                            onClick={handleExport}
+                        >
+                            Export
+                        </Button>
+                        <Button
+                            className="buttons"
+                            variant="secondary"
+                            onClick={handleAutoLayout}
+                        >
+                            Auto-Layout
+                        </Button>
+                        <Button
+                            className="buttons"
+                            variant="secondary"
+                            onClick={handleRelabel}
+                        >
+                            Relabel
+                        </Button>
+                        <Button
+                            className="buttons"
+                            variant="secondary"
+                            onClick={handleImpulseEdges}
+                        >
+                            Add impulse edges
+                        </Button>
+                        <Button
+                            className="buttons"
+                            variant="secondary"
+                            onClick={handleColorChange}
+                        >
+                            Color-Change
+                        </Button>
+                    </Card.Body>
+                </div>
             </Card>
+            
         </Draggable>
     );
 }

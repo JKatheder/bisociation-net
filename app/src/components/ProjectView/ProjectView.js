@@ -10,7 +10,6 @@ import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
 import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
-import axios from 'axios';
 import loadGraph from './loadGraph.js';
 import saveEdges from './saveEdges.js';
 import saveNodes from './saveNodes.js';
@@ -109,7 +108,10 @@ export default function ProjectView() {
                     </Form>
                 </Container>{' '}
             </Navbar>{' '}
-            <RenderToolbox />
+            <div className="card">
+                <RenderToolbox />
+            </div>
+            
             <div className="graph-container" ref={graphContainer}>
                 {' '}
             </div>{' '}
