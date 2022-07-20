@@ -14,7 +14,7 @@ import { impulseEdgesToOneNode, IMPULSE_COUNT, layoutGraph, relabel } from '../i
 import { useState } from 'react';
 
 export default function Toolbox(props) {
-    const [layoutMode, setLayoutMode] = useState(0);
+    const [layoutMode, setLayoutMode] = useState("tree");
 
     const handleLayout = (layoutMode) => {
         return () => {
