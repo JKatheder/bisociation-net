@@ -9,9 +9,14 @@ import {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
 import saveNodes from './saveNodes.js';
 import saveEdges from './saveEdges.js';
-import { impulseEdgesToOneNode, IMPULSE_COUNT, layoutGraph, relabel } from '../impulseEdges/impulseEdges';
+import { impulseEdgesToOneNode, layoutGraph, relabel } from '../impulseEdges/impulseEdges';
+import { useState } from 'react';
 
 export default function Toolbox(props) {
+
+    const defaultImpulseCount =  5;
+    const [impulseCount, setImpulseCount] = useState(defaultImpulseCount);
+
     const handleSave = () => {
         saveNodes(props.project_id, props.nodes, props.nodesCallback);
         saveEdges(props.project_id, props.edges, props.edgesCallback);
@@ -26,7 +31,7 @@ export default function Toolbox(props) {
         graphComponent.selection.selectedLabels.forEach(item => relabel(item))
     };
     const handleImpulseEdges = () => {
-        graphComponent.selection.selectedNodes.forEach(item => impulseEdgesToOneNode(item, IMPULSE_COUNT))
+        graphComponent.selection.selectedNodes.forEach(item => impulseEdgesToOneNode(item, impulseCount))
         layoutGraph()
     };
     const handleColorChange = () => {
@@ -34,6 +39,27 @@ export default function Toolbox(props) {
         if (graphComponent.selection.selectedNodes.size > 0){
             graph.createNodeAt(new Point(900,100), redNodeStyle)
         }
+    };
+    const handleOnChange = (e) => {
+        var currValue;
+        const minimum = 1;
+        const maximum = 10;
+
+        //check weather input is correct
+        currValue = parseInt(e.target.value); //afterwards: string input has type number
+
+        if (currValue <= maximum && currValue >= minimum){
+            //everything alright, nothing to do
+        } else if(currValue < minimum) {
+            currValue = 1; //if number too small, add minimum edge count
+        } else if(currValue > maximum) {
+            currValue = maximum; //if number too big, add maximum edge count
+        } else {
+            currValue = defaultImpulseCount; //input was not a number, add default edge count
+        }
+        
+        setImpulseCount(currValue);
+        
     };
 
     return (
@@ -70,10 +96,12 @@ export default function Toolbox(props) {
                         Relabel
                     </Button>
                     <InputGroup
+                        onChange={handleOnChange}
                         className="buttons">
                         <Form.Label>Add impulse edges</Form.Label>
                         <Form.Control 
                             defaultValue="5"
+                            type="number"
                         />
                         <Button 
                             variant="outline-secondary"
