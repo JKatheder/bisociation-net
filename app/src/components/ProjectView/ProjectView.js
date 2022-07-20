@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 import { GraphComponent, License, GraphEditorInputMode, Size } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
+import { layoutGraph } from '../impulseEdges/impulseEdges';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
 import {style} from './ProjectViewStyles.js';
@@ -50,6 +51,7 @@ export default function ProjectView() {
         const currentgraphContainer = graphContainer.current;
         currentgraphContainer.appendChild(graphComponent.div);
         configureContextMenu(graphComponent);
+        layoutGraph("tree");
 
         // Return cleanup function
         return () => {
