@@ -1,17 +1,13 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Draggable from 'react-draggable';
-import { greenNodeStyle, redNodeStyle, style } from './ProjectViewStyles';
-//import {initializeInteraction} from './demo-resources/CreateExport.js'
-//import ClientSideImageExport from './demo-resources/ClientSideImageExport'
+import { Point } from 'yfiles';
+import { redNodeStyle , greenNodeStyle, style} from './ProjectViewStyles';
 import {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
 import saveNodes from './saveNodes.js';
 import saveEdges from './saveEdges.js';
-//import { MutableRectangle, RectangleIndicatorInstaller} from 'yfiles';
-
-  
-
+import { impulseEdgesToOneNode, IMPULSE_COUNT, layoutGraph, relabel } from '../impulseEdges/impulseEdges';
 
 export default function Toolbox(props) {
     const handleSave = () => {
@@ -22,7 +18,14 @@ export default function Toolbox(props) {
 
     };
     const handleAutoLayout = () => {
-        /* TODO */
+        layoutGraph()
+    };
+    const handleRelabel = () => {
+        graphComponent.selection.selectedLabels.forEach(item => relabel(item))
+    };
+    const handleImpulseEdges = () => {
+        graphComponent.selection.selectedNodes.forEach(item => impulseEdgesToOneNode(item, IMPULSE_COUNT))
+        layoutGraph()
     };
 
 
@@ -47,56 +50,55 @@ export default function Toolbox(props) {
             }
         }
     };
-    const handleRelabel = () => {
-        /* TODO */
-    };
 
     return (
-        <Draggable
-            defaultPosition={{ x: 0, y: 0 }}
-        >
-            
-            <Card style={{ zIndex: 1000, width: '10rem'}}>
-                <div className="card">
-                    <Card.Body>
-                        <Card.Title>Toolbox</Card.Title>
-                        <Button
-                            className="buttons"
-                            variant="secondary"
-                            onClick={handleSave}
-                        >
-                            Save
-                        </Button>
-                        <Button
-                            className="buttons"
-                            variant="secondary"
-                            onClick={handleExport}
-                        >
-                            Export
-                        </Button>
-                        <Button
-                            className="buttons"
-                            variant="secondary"
-                            onClick={handleAutoLayout}
-                        >
-                            Auto-Layout
-                        </Button>
-                        <Button
-                            className="buttons"
-                            variant="secondary"
-                            onClick={handleColorChange}
-                        >
-                            Color-Change
-                        </Button>
-                        <Button
-                            className="buttons"
-                            variant="secondary"
-                            onClick={handleRelabel}
-                        >
-                            Relabel
-                        </Button>
-                    </Card.Body>
-                </div>
+        <Draggable defaultPosition={{ x: 0, y: 0 }}>
+            <Card style={{ zIndex: 1000, width: '10rem' }}>
+                <Card.Body>
+                    <Card.Title>Toolbox</Card.Title>
+                    <Button
+                        className="buttons"
+                        variant="secondary"
+                        onClick={handleSave}
+                    >
+                        Save
+                    </Button>
+                    <Button
+                        className="buttons"
+                        variant="secondary"
+                        onClick={handleExport}
+                    >
+                        Export
+                    </Button>
+                    <Button
+                        className="buttons"
+                        variant="secondary"
+                        onClick={handleAutoLayout}
+                    >
+                        Auto-Layout
+                    </Button>
+                    <Button
+                        className="buttons"
+                        variant="secondary"
+                        onClick={handleRelabel}
+                    >
+                        Relabel
+                    </Button>
+                    <Button
+                        className="buttons"
+                        variant="secondary"
+                        onClick={handleImpulseEdges}
+                    >
+                        Add impulse edges
+                    </Button>
+                    <Button
+                        className="buttons"
+                        variant="secondary"
+                        onClick={handleColorChange}
+                    >
+                        Color-Change
+                    </Button>
+                </Card.Body>
             </Card>
         </Draggable>
     );
