@@ -1,7 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Draggable from 'react-draggable';
-import { Point } from 'yfiles';
 import { redNodeStyle , greenNodeStyle, style} from './ProjectViewStyles';
 import {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
@@ -28,16 +27,14 @@ export default function Toolbox(props) {
         layoutGraph()
     };
 
-
     //0="original Color", 1="green" and 2="red"
     var saveIfColored = new Array(graphComponent.selection.selectedNodes.size).fill(0)
     const handleColorChange = () => {
-        const gmm = graphComponent.graphModelManager
         if (graphComponent.selection.selectedNodes.size > 0){ 
             var i
             for (i=0; i < graphComponent.selection.selectedNodes.size; i++) {
                 const t = graphComponent.selection.selectedNodes.elementAt(i)
-                if(gmm.getStyle(style) === style){
+                if(saveIfColored[i] === 0){
                     graph.setStyle(t, greenNodeStyle) 
                     saveIfColored[i] = 1
                 }else if(saveIfColored[i] === 1) {
