@@ -3,3 +3,10 @@
     width: 100%;
     margin: 1px 1px 1px 1px;
 }
+.dropdown-toggle {
+    width: 100%;
+}
+.label-form {
+    width: 100%;
+    margin: 1px 1px 1px 1px !important;
+}

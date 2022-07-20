@@ -33,13 +33,13 @@ export function relabel(label){
    graph.setLabelText(label, one())
 }
 
-export function layoutGraph(num){
+export function layoutGraph(mode){
     var layout = new ClassicTreeLayout()
 
-    if(num === 1){
+    if(mode === "organic"){
         layout = new OrganicLayout()
     } 
-    if(num === 2){
+    if(mode === "circular"){
         layout = new  CircularLayout()
     }
     
