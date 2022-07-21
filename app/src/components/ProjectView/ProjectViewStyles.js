@@ -2,7 +2,7 @@ import { ShapeNodeStyle, Fill, ShapeNodeShape} from 'yfiles';
 
 //Default Style
 export const style = new ShapeNodeStyle({
-  fill: Fill.GREEN,
+  fill: Fill.DARK_KHAKI,
   shape: ShapeNodeShape.ELLIPSE
 })
 
@@ -10,11 +10,11 @@ export const style = new ShapeNodeStyle({
 export const greenNodeStyle = new ShapeNodeStyle({
     shape: 'ellipse',
     fill: 'green',
-    stroke: 'transparent'
+    stroke: 'black'
   })
 //Style 2:
 export const redNodeStyle = new ShapeNodeStyle({
       shape: 'ellipse',
-      fill: 'red',
-      stroke: 'transparent'
+      fill: Fill.DARK_RED,
+      stroke: 'black'
 })

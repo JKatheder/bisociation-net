@@ -10,7 +10,6 @@ import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
 import {style} from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
-import axios from 'axios';
 import loadGraph from './loadGraph.js';
 import saveEdges from './saveEdges.js';
 import saveNodes from './saveNodes.js';
@@ -30,7 +29,6 @@ nodeDefaults.style = style
 graph.nodeDefaults.size = new Size(150, 150);
 
 var loaded = false;
-
 export default function ProjectView() {
     let params = useParams();
 
@@ -57,7 +55,7 @@ export default function ProjectView() {
         };
     });
 
-    // allow to set node/edge id in tag on save
+    //allow to set node/edge id in tag on save
     const nodesCallback = (node_return, id) => {
         graph.nodes.toList().forEach((node) => {
             if (node_return === node) {
@@ -110,7 +108,10 @@ export default function ProjectView() {
                     </Form>
                 </Container>{' '}
             </Navbar>{' '}
-            <RenderToolbox />
+            <div className="card">
+                <RenderToolbox />
+            </div>
+            
             <div className="graph-container" ref={graphContainer}>
                 {' '}
             </div>{' '}
