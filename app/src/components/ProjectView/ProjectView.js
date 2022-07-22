@@ -35,7 +35,6 @@ nodeDefaults.style = style;
 graph.nodeDefaults.size = new Size(150, 150);
 
 var loaded = false;
-
 export default function ProjectView() {
     let params = useParams();
 
@@ -89,7 +88,10 @@ export default function ProjectView() {
                     </Form>
                 </Container>{' '}
             </Navbar>{' '}
-            <RenderToolbox />
+            <div className="card">
+                <RenderToolbox />
+            </div>
+            
             <div className="graph-container" ref={graphContainer}>
                 {' '}
             </div>{' '}
