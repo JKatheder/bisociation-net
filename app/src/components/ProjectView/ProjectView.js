@@ -11,6 +11,7 @@ import './ProjectView.css';
 import { style } from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
 import loadGraph from './loadGraph.js';
+import saveGraph from './saveGraph.js';
 
 // Providing license information for the yfiles library
 License.value = license;
@@ -20,6 +21,7 @@ export const graphComponent = new GraphComponent();
 export const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode();
 
+//Not in use right now, might be useful as reference
 //Adds a node to the graph at (x,y) with label 'Label'
 // function generateNewNode(x, y, input_label, graph) {
 //     const node = graph.createNodeAt(new Point(x, y));
@@ -64,8 +66,8 @@ export default function ProjectView() {
     };
 
     const handleBack = () => {
-        // save
-        // TODO dont merge like this
+        // save before exit
+        saveGraph(params.projectID);
     };
 
     return (

@@ -1,31 +1,20 @@
 import { graph } from './ProjectView.js';
-import { GraphBuilder } from 'yfiles';
+import { GraphMLIOHandler, Point } from 'yfiles';
 import axios from 'axios';
 
 export default function loadGraph(project_id) {
-    graph.clear();
-    const graphBuilder = new GraphBuilder(graph);
+    const handler = new GraphMLIOHandler();
     axios
         .get(`http://localhost:3001/graphdata/${project_id}`)
         .then((res) => {
-            const nodesSource = graphBuilder.createNodesSource(
-                res.data.nodes,
-                (node) => node.node_id
-            );
-            nodesSource.nodeCreator.createLabelBinding('content');
-            nodesSource.nodeCreator.tagProvider = 'node_id';
-
-            const edgesSource = graphBuilder.createEdgesSource(
-                res.data.edges,
-                (edge) => edge.node_1,
-                (edge) => edge.node_2
-            );
-            edgesSource.edgeCreator.createLabelBinding('content');
-            edgesSource.edgeCreator.tagProvider = 'edge_id';
-
-            //graphBuilder.onNodeCreated()
-
-            graphBuilder.buildGraph();
+            if (res.data.rows[0].data) {
+                // load graph when data present
+                handler.readFromGraphMLText(graph, res.data.rows[0].data);
+            } else {
+                // generate root node when first time opening project
+                const root = graph.createNodeAt(new Point(0, 0));
+                graph.addLabel(root, res.data.rows[0].title);
+            }
         })
         .catch((err) => console.log(err));
 }
