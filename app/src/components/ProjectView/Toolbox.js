@@ -3,34 +3,41 @@ import Card from 'react-bootstrap/Card';
 import Draggable from 'react-draggable';
 import { Point } from 'yfiles';
 import { redNodeStyle } from './ProjectViewStyles';
-import {graph, graphComponent} from './ProjectView';
+import { graph, graphComponent } from './ProjectView';
 import './Toolbox.css';
-import saveNodes from './saveNodes.js';
-import saveEdges from './saveEdges.js';
-import { impulseEdgesToOneNode, IMPULSE_COUNT, layoutGraph, relabel } from '../impulseEdges/impulseEdges';
+import saveGraph from './saveGraph.js';
+import {
+    impulseEdgesToOneNode,
+    IMPULSE_COUNT,
+    layoutGraph,
+    relabel,
+} from '../impulseEdges/impulseEdges';
 
 export default function Toolbox(props) {
     const handleSave = () => {
-        saveNodes(props.project_id, props.nodes, props.nodesCallback);
-        saveEdges(props.project_id, props.edges, props.edgesCallback);
+        saveGraph(props.project_id);
     };
     const handleExport = () => {
         /* TODO */
     };
     const handleAutoLayout = () => {
-        layoutGraph()
+        layoutGraph();
     };
     const handleRelabel = () => {
-        graphComponent.selection.selectedLabels.forEach(item => relabel(item))
+        graphComponent.selection.selectedLabels.forEach((item) =>
+            relabel(item)
+        );
     };
     const handleImpulseEdges = () => {
-        graphComponent.selection.selectedNodes.forEach(item => impulseEdgesToOneNode(item, IMPULSE_COUNT))
-        layoutGraph()
+        graphComponent.selection.selectedNodes.forEach((item) =>
+            impulseEdgesToOneNode(item, IMPULSE_COUNT)
+        );
+        layoutGraph();
     };
     const handleColorChange = () => {
         /* TODO */
-        if (graphComponent.selection.selectedNodes.size > 0){
-            graph.createNodeAt(new Point(900,100), redNodeStyle)
+        if (graphComponent.selection.selectedNodes.size > 0) {
+            graph.createNodeAt(new Point(900, 100), redNodeStyle);
         }
     };
 
