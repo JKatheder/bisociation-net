@@ -3,6 +3,7 @@ import { GraphMLIOHandler, Point } from 'yfiles';
 import axios from 'axios';
 
 export default function loadGraph(project_id) {
+    graph.clear();
     const handler = new GraphMLIOHandler();
     axios
         .get(`http://localhost:3001/graphdata/${project_id}`)

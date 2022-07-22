@@ -67,6 +67,7 @@ export default function ProjectView() {
     const handleBack = () => {
         // save before exit
         saveGraph(params.projectID);
+        loaded = false;
     };
 
     return (
@@ -91,7 +92,6 @@ export default function ProjectView() {
             <div className="card">
                 <RenderToolbox />
             </div>
-            
             <div className="graph-container" ref={graphContainer}>
                 {' '}
             </div>{' '}
