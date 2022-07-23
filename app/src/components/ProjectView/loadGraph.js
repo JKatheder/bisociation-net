@@ -15,6 +15,7 @@ export default function loadGraph(project_id) {
                 // generate root node when first time opening project
                 const root = graph.createNodeAt(new Point(0, 0));
                 graph.addLabel(root, res.data.rows[0].title);
+                root.tag = res.data.rows[0].description;
             }
         })
         .catch((err) => console.log(err));

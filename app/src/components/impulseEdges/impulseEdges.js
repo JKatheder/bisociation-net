@@ -1,12 +1,12 @@
-import {graph, 
-    graphComponent} from '../ProjectView/ProjectView';
-import { GraphEditorInputMode, 
-    Class, 
-    LayoutExecutor, 
-    ClassicTreeLayout, 
-    EdgeSegmentLabelModel, 
+import { graph, graphComponent } from '../ProjectView/ProjectView';
+import {
+    GraphEditorInputMode,
+    Class,
+    LayoutExecutor,
+    ClassicTreeLayout,
+    EdgeSegmentLabelModel,
     EdgeSides,
-    Point
+    Point,
 } from 'yfiles';
 
 export const IMPULSE_COUNT = 5;
@@ -14,37 +14,41 @@ export const IMPULSE_COUNT = 5;
 //get random noun
 const { one } = require('nouns');
 
-
-export function impulseEdgesToOneNode(rootNode, impulseCount){
-    for(var i = 0; i < impulseCount; i++){
-        const node = graph.createNodeAt(new Point(0,0))
-        const edge = graph.createEdge(rootNode, node)
+export function impulseEdgesToOneNode(rootNode, impulseCount) {
+    for (var i = 0; i < impulseCount; i++) {
+        const node = graph.createNodeAt(new Point(0, 0));
+        const edge = graph.createEdge(rootNode, node);
         graph.addLabel(
             edge,
             one(),
-            new EdgeSegmentLabelModel(5, 0, 0, false, EdgeSides.LEFT_OF_EDGE).createDefaultParameter()
-          )
+            new EdgeSegmentLabelModel(
+                5,
+                0,
+                0,
+                false,
+                EdgeSides.LEFT_OF_EDGE
+            ).createDefaultParameter()
+        );
     }
 }
 
-export function relabel(label){
-   graph.setLabelText(label, one())
+export function relabel(label) {
+    graph.setLabelText(label, one());
 }
 
-export function layoutGraph(){
-    const layout = new ClassicTreeLayout()
-    layout.considerNodeSizes = true
-    layout.minimumNodeDistance = 100
-    layout.minimumLayerDistance = 100
+export function layoutGraph() {
+    const layout = new ClassicTreeLayout();
+    layout.considerNodeSizes = true;
+    layout.minimumNodeDistance = 100;
+    layout.minimumLayerDistance = 100;
 
-    Class.ensure(LayoutExecutor)
+    Class.ensure(LayoutExecutor);
 
     graphComponent
         .morphLayout(layout)
-        .catch(e => alert('An error occurred during layout'))
+        .catch((e) => alert('An error occurred during layout'));
 
-    graphComponent.fitGraphBounds()
-    graphComponent.inputMode = new GraphEditorInputMode()
-
-  
+    graphComponent.fitGraphBounds();
+    //graphComponent.inputMode = new GraphEditorInputMode()
+    // showing tooltips does not work after this
 }

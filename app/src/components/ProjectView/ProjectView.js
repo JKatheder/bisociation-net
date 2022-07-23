@@ -4,7 +4,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
-import { GraphComponent, License, GraphEditorInputMode, Size } from 'yfiles';
+import {
+    GraphComponent,
+    License,
+    GraphEditorInputMode,
+    Size,
+    GraphItemTypes,
+    Point,
+} from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
@@ -33,6 +40,28 @@ graphComponent.inputMode = new GraphEditorInputMode();
 const nodeDefaults = graph.nodeDefaults;
 nodeDefaults.style = style;
 graph.nodeDefaults.size = new Size(150, 150);
+
+// show description on hover
+graphComponent.inputMode.toolTipItems = GraphItemTypes.NODE;
+graphComponent.inputMode.addQueryItemToolTipListener((src, args) => {
+    if (args.handled) {
+        // A tooltip has already been assigned -> nothing to do
+        return;
+    }
+    // We can safely cast here because we set ToolTipItems to only Node
+    const hitNode = args.item;
+    if (hitNode) {
+        args.toolTip = hitNode.tag;
+        args.handled = true;
+    }
+});
+// duration to show tooltip/description in seconds
+graphComponent.inputMode.mouseHoverInputMode.duration = 10000;
+// show description under cursor
+graphComponent.inputMode.mouseHoverInputMode.toolTipLocationOffset = new Point(
+    0,
+    20
+);
 
 var loaded = false;
 export default function ProjectView() {
