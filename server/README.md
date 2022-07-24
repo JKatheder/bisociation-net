@@ -2,7 +2,7 @@
 1. download and install Postgres https://www.postgresql.org/download/
     - the user postgres should have no password
 2. create the database and table for the project
-    - change to directiory /server
+    - change to directory /server
     - execute the command ```psql -f database.sql -U postgres```
 3. execute the command ```npm i express pg cors``` in /
 
