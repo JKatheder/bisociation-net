@@ -41,7 +41,7 @@ export default function Toolbox(props) {
         graphComponent.selection.selectedNodes.forEach((item) =>
             impulseEdgesToOneNode(item, IMPULSE_COUNT)
         );
-        layoutGraph();
+        layoutGraph(layoutMode);
     };
 
     //0="original Color", 1="green" and 2="red"
@@ -66,11 +66,10 @@ export default function Toolbox(props) {
     };
 
     return (
-        <Draggable defaultPosition={{ x: 0, y: 0 }}>
+        <div className="positionCanvas">
+            <Draggable defaultPosition={{ x: 0, y: 0 }}>
 
-            <Card style={{ zIndex: 1000, width: '12rem' }}>
-
-                <div className="positionCanvas">
+                <Card style={{ zIndex: 1000, width: '12rem' }}>
                     <Card.Body>
                         <Card.Title>Toolbox</Card.Title>
                         <Button
@@ -129,9 +128,9 @@ export default function Toolbox(props) {
                             Color-Change
                         </Button>
                     </Card.Body>
-                </div>
-            </Card>
-            
-        </Draggable>
+                </Card>
+
+            </Draggable>
+        </div>
     );
 }
