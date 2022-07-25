@@ -7,6 +7,7 @@ We project aims to develop a web application that offers a project structure and
 - [React.js](https://reactjs.org/)
 - [Bootstrap](https://getbootstrap.com/)
 - [yFiles](https://www.yworks.com/products/yfiles)
+- [Postgres](https://www.postgresql.org)
 
 ## Getting Started
 Make sure that you have installed Node.js, this includes the installation of npm. <br>
@@ -19,14 +20,15 @@ npm install --save src/assets/js/yfiles/yfiles-24.0.5-dev.tgz <br>
 
 ## Getting Started With Additional Software
  - [React READme](/app/README.md)
+ - [Postgres READme](/server/README.md)
  - [yfile Introduction](https://docs.yworks.com/yfileshtml/#/dguide/introduction)
 
 
 ## Usage 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-(If you have something in mind, please add!)
-
-- For starting npm, make sure you are within the folder app
+- use ```npm start``` in / and in /app to start the application
+- to add a node, click on the desired position on the screen
+- you can change the name by double-clicking on the node or using the context menu via right-click on the node 
+- for other actions use the Toolbox which is initially positioned on the top left (you can drag it to a desired position)
 
 ## Course-Related Requirements
 
