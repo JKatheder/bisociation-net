@@ -22,6 +22,7 @@
         "react-draggable": "^4.4.5",
         "react-router-dom": "^6.3.0",
         "react-scripts": "5.0.1",
+        "react-use-effect": "^0.0.1",
         "stream-browserify": "^3.0.0",
         "stream-http": "^3.2.0",
         "url": "^0.11.0",
@@ -32,7 +33,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test",  
+        "test": "react-scripts test",
         "eject": "react-scripts eject",
         "prettier": "prettier --write ."
     },
