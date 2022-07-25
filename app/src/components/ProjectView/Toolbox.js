@@ -1,30 +1,47 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Draggable from 'react-draggable';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Form from 'react-bootstrap/Form';
+import { Point } from 'yfiles';
 import { redNodeStyle , greenNodeStyle, style} from './ProjectViewStyles';
 import {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
-import saveNodes from './saveNodes.js';
-import saveEdges from './saveEdges.js';
-import { impulseEdgesToOneNode, IMPULSE_COUNT, layoutGraph, relabel } from '../impulseEdges/impulseEdges';
+import { useState } from 'react';
+import saveGraph from './saveGraph.js';
+import {
+    impulseEdgesToOneNode,
+    IMPULSE_COUNT,
+    layoutGraph,
+    relabel,
+} from '../impulseEdges/impulseEdges';
 
 export default function Toolbox(props) {
+    const [layoutMode, setLayoutMode] = useState("tree");
+
+    const handleLayout = (layoutMode) => {
+        return () => {
+            layoutGraph(layoutMode)
+            setLayoutMode(layoutMode)
+        }
+    };
     const handleSave = () => {
-        saveNodes(props.project_id, props.nodes, props.nodesCallback);
-        saveEdges(props.project_id, props.edges, props.edgesCallback);
+        saveGraph(props.project_id);
     };
     const handleExport = () => {
 
     };
-    const handleAutoLayout = () => {
-        layoutGraph()
-    };
     const handleRelabel = () => {
-        graphComponent.selection.selectedLabels.forEach(item => relabel(item))
+        graphComponent.selection.selectedLabels.forEach((item) =>
+            relabel(item)
+        );
     };
     const handleImpulseEdges = () => {
-        graphComponent.selection.selectedNodes.forEach(item => impulseEdgesToOneNode(item, IMPULSE_COUNT))
-        layoutGraph()
+        graphComponent.selection.selectedNodes.forEach((item) =>
+            impulseEdgesToOneNode(item, IMPULSE_COUNT)
+        );
+        layoutGraph(layoutMode);
     };
 
     //0="original Color", 1="green" and 2="red"
@@ -49,11 +66,10 @@ export default function Toolbox(props) {
     };
 
     return (
-        <Draggable defaultPosition={{ x: 0, y: 0 }}>
-            
-            <Card style={{ zIndex: 1000, width: '10rem' }}>
+        <div className="positionCanvas">
+            <Draggable defaultPosition={{ x: 0, y: 0 }}>
 
-                <div className="positionCanvas">
+                <Card style={{ zIndex: 1000, width: '12rem' }}>
                     <Card.Body>
                         <Card.Title>Toolbox</Card.Title>
                         <Button
@@ -70,13 +86,26 @@ export default function Toolbox(props) {
                         >
                             Export
                         </Button>
-                        <Button
-                            className="buttons"
-                            variant="secondary"
-                            onClick={handleAutoLayout}
+                        <Form.Label 
+                            className="label-form"
                         >
-                            Auto-Layout
-                        </Button>
+                            Select Layout:
+                        </Form.Label>
+                        <DropdownButton 
+                            className="buttons"
+                            title={"current: " + layoutMode}
+                            variant="secondary"
+                        >
+                            <Dropdown.Item onClick={handleLayout("tree")}>
+                                Tree
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={handleLayout("organic")}>
+                                Organic
+                                </Dropdown.Item>
+                            <Dropdown.Item onClick={handleLayout("circular")}>
+                                Circular
+                            </Dropdown.Item>
+                        </DropdownButton>
                         <Button
                             className="buttons"
                             variant="secondary"
@@ -99,9 +128,9 @@ export default function Toolbox(props) {
                             Color-Change
                         </Button>
                     </Card.Body>
-                </div>
-            </Card>
-            
-        </Draggable>
+                </Card>
+
+            </Draggable>
+        </div>
     );
 }
