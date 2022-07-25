@@ -15,6 +15,7 @@ CREATE TABLE nodes(
 	project_id 	 int REFERENCES projects(project_id) ON UPDATE CASCADE ON DELETE CASCADE,
 	x_pos		 float,
 	y_pos 		 float,
+	color		 float,
 	content		 varchar(100)
 );
 
@@ -46,11 +47,11 @@ VALUES ('Project 1', 'Contains no default nodes from the database');
 INSERT INTO projects(title, description)
 VALUES ('Project 2', 'Contains two default nodes with edges from the database (not displayed yet)');
 
-INSERT INTO nodes(project_id, x_pos, y_pos, content)
-VALUES (2, 0, 0, 'Node 1');
+INSERT INTO nodes(project_id, x_pos, y_pos, color, content)
+VALUES (2, 0, 0, 2, 'Node 1');
 
-INSERT INTO nodes(project_id, x_pos, y_pos, content)
-VALUES (2, 10, 20, 'Node 2');
+INSERT INTO nodes(project_id, x_pos, y_pos, color, content)
+VALUES (2, 10, 20, 2, 'Node 2');
 
 INSERT INTO edges(project_id, node_1, node_2)
 VALUES (2, 1, 2);

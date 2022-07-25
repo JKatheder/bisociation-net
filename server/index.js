@@ -110,9 +110,9 @@ app.get('/nodes/:project_id', async(req, res) => {
 app.post('/nodes/:project_id', async(req, res) => {
     try {
         const { project_id } = req.params;
-        const { x, y, content } = req.body;
+        const { x, y, color, content } = req.body;
         const newNode = await pool.query(
-            'INSERT INTO nodes (project_id, x_pos, y_pos, content) VALUES ($1, $2, $3, $4) RETURNING node_id', [project_id, x, y, content]
+            'INSERT INTO nodes (project_id, x_pos, y_pos, color, content) VALUES ($1, $2, $3, $4, $5) RETURNING node_id', [project_id, x, y, color, content]
         );
         res.json(newNode);
     } catch (err) {
@@ -124,9 +124,9 @@ app.post('/nodes/:project_id', async(req, res) => {
 app.put('/nodes/:node_id', async(req, res) => {
     try {
         const { node_id } = req.params;
-        const { x, y, content } = req.body;
+        const { x, y, color, content } = req.body;
         const updateNode = await pool.query(
-            'UPDATE nodes SET x_pos = $2, y_pos = $3, content = $4 WHERE node_id = $1', [node_id, x, y, content]
+            'UPDATE nodes SET x_pos = $2, y_pos = $3, color=$4, content = $5 WHERE node_id = $1', [node_id, x, y, color, content]
         );
 
         res.json(updateNode);
