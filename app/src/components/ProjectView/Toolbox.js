@@ -67,12 +67,11 @@ export default function Toolbox(props) {
         }
     };
     const handleOnChange = (e) => {
-        var currValue;
         const minimum = 1;
         const maximum = 10;
 
         //check weather input is correct
-        currValue = parseInt(e.target.value); //afterwards: string input has type number
+        var currValue = parseInt(e.target.value); //afterwards: string input has type number
 
         if (currValue <= maximum && currValue >= minimum){
             //everything alright, nothing to do
