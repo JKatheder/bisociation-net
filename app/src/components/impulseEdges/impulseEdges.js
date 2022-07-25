@@ -4,6 +4,8 @@ import { GraphEditorInputMode,
     Class, 
     LayoutExecutor, 
     ClassicTreeLayout, 
+    OrganicLayout,
+    CircularLayout,
     EdgeSegmentLabelModel, 
     EdgeSides,
     Point
@@ -31,8 +33,16 @@ export function relabel(label){
    graph.setLabelText(label, one())
 }
 
-export function layoutGraph(){
-    const layout = new ClassicTreeLayout()
+export function layoutGraph(mode){
+    var layout = new ClassicTreeLayout()
+
+    if(mode === "organic"){
+        layout = new OrganicLayout()
+    } 
+    if(mode === "circular"){
+        layout = new  CircularLayout()
+    }
+    
     layout.considerNodeSizes = true
     layout.minimumNodeDistance = 100
     layout.minimumLayerDistance = 100

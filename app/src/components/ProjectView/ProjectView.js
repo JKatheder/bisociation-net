@@ -6,37 +6,41 @@ import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 import { GraphComponent, License, GraphEditorInputMode, Size } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
+import { layoutGraph } from '../impulseEdges/impulseEdges';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
-import {style} from './ProjectViewStyles.js';
+import { style } from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
-import axios from 'axios';
 import loadGraph from './loadGraph.js';
-import saveEdges from './saveEdges.js';
-import saveNodes from './saveNodes.js';
+import saveGraph from './saveGraph.js';
 
 // Providing license information for the yfiles library
 License.value = license;
 
 // Initialize graphComponent and ContextMenu
-
 export const graphComponent = new GraphComponent();
 export const graph = graphComponent.graph;
 graphComponent.inputMode = new GraphEditorInputMode();
 
+//Not in use right now, might be useful as reference
+//Adds a node to the graph at (x,y) with label 'Label'
+// function generateNewNode(x, y, input_label, graph) {
+//     const node = graph.createNodeAt(new Point(x, y));
+//     graph.addLabel(node, input_label);
+//     return node;
+// }
+
 //Style:
-const nodeDefaults = graph.nodeDefaults
-nodeDefaults.style = style
+const nodeDefaults = graph.nodeDefaults;
+nodeDefaults.style = style;
 graph.nodeDefaults.size = new Size(150, 150);
 
 var loaded = false;
-
 export default function ProjectView() {
     let params = useParams();
 
     if (!loaded) {
-        console.log('load');
-        loadGraph(graph, params.projectID);
+        loadGraph(params.projectID);
         loaded = true;
     }
 
@@ -50,6 +54,7 @@ export default function ProjectView() {
         const currentgraphContainer = graphContainer.current;
         currentgraphContainer.appendChild(graphComponent.div);
         configureContextMenu(graphComponent);
+        layoutGraph("tree");
 
         // Return cleanup function
         return () => {
@@ -57,38 +62,14 @@ export default function ProjectView() {
         };
     });
 
-    // allow to set node/edge id in tag on save
-    const nodesCallback = (node_return, id) => {
-        graph.nodes.toList().forEach((node) => {
-            if (node_return === node) {
-                node.tag = id;
-            }
-        });
-    };
-    const edgesCallback = (edge_return, id) => {
-        graph.edges.toList().forEach((edge) => {
-            if (edge_return === edge) {
-                edge.tag = id;
-            }
-        });
-    };
-
     const RenderToolbox = () => {
-        return (
-            <Toolbox
-                project_id={params.projectID}
-                nodes={graph.nodes}
-                edges={graph.edges}
-                nodesCallback={nodesCallback}
-                edgesCallback={edgesCallback}
-            ></Toolbox>
-        );
+        return <Toolbox project_id={params.projectID}></Toolbox>;
     };
 
     const handleBack = () => {
-        // save
-        saveNodes(params.projectID, graph.nodes, nodesCallback);
-        saveEdges(params.projectID, graph.edges, edgesCallback);
+        // save before exit
+        saveGraph(params.projectID);
+        loaded = false;
     };
 
     return (
@@ -110,7 +91,9 @@ export default function ProjectView() {
                     </Form>
                 </Container>{' '}
             </Navbar>{' '}
-            <RenderToolbox />
+            <div className="card">
+                <RenderToolbox />
+            </div>
             <div className="graph-container" ref={graphContainer}>
                 {' '}
             </div>{' '}
