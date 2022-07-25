@@ -4,7 +4,7 @@ import Draggable from 'react-draggable';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
-import { Point } from 'yfiles';
+import { Fill } from 'yfiles';
 import { redNodeStyle , greenNodeStyle, style} from './ProjectViewStyles';
 import {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
@@ -44,22 +44,17 @@ export default function Toolbox(props) {
         layoutGraph(layoutMode);
     };
 
-    //0="original Color", 1="green" and 2="red"
-    var saveIfColored = new Array(graphComponent.selection.selectedNodes.size).fill(0)
     const handleColorChange = () => {
         if (graphComponent.selection.selectedNodes.size > 0){ 
             var i
             for (i=0; i < graphComponent.selection.selectedNodes.size; i++) {
                 const t = graphComponent.selection.selectedNodes.elementAt(i)
-                if(saveIfColored[i] === 0){
+                if(t.style.fill.hasSameValue(Fill.DARK_KHAKI)) {
                     graph.setStyle(t, greenNodeStyle) 
-                    saveIfColored[i] = 1
-                }else if(saveIfColored[i] === 1) {
+                }else if(t.style.fill.hasSameValue(Fill.GREEN)) {
                     graph.setStyle(t, redNodeStyle)
-                    saveIfColored[i] = 2
-                }else {
+                }else if(t.style.fill.hasSameValue(Fill.DARK_RED)) {
                     graph.setStyle(t, style)
-                    saveIfColored[i] = 0
                 }
             }
         }
