@@ -4,12 +4,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
-import { GraphComponent, License, GraphEditorInputMode, Size } from 'yfiles';
+import { GraphComponent, License, GraphEditorInputMode, Size} from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import { layoutGraph } from '../impulseEdges/impulseEdges';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
-import { style } from './ProjectViewStyles.js';
+import { style, decorateSelection } from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
 import loadGraph from './loadGraph.js';
 import saveGraph from './saveGraph.js';
@@ -34,6 +34,7 @@ graphComponent.inputMode = new GraphEditorInputMode();
 const nodeDefaults = graph.nodeDefaults;
 nodeDefaults.style = style;
 graph.nodeDefaults.size = new Size(150, 150);
+decorateSelection(graphComponent)
 
 var loaded = false;
 export default function ProjectView() {
