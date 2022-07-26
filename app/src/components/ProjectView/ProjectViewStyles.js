@@ -1,6 +1,6 @@
-import { Fill, ShapeNodeShape,  EdgeStyleDecorationInstaller, 
+import { Fill, ShapeNodeShape,  EdgeStyleDecorationInstaller,
   NodeStyleDecorationInstaller, ShapeNodeStyle, StyleDecorationZoomPolicy, 
-  Insets, DefaultLabelStyle, LabelStyleDecorationInstaller, PolylineEdgeStyle } from 'yfiles';
+  Insets, PolylineEdgeStyle } from 'yfiles';
 
 //Default Style
 export const style = new ShapeNodeStyle({
@@ -33,12 +33,4 @@ export function decorateSelection(graphComponent) {
   const selectionEdgeStyle = new PolylineEdgeStyle({ stroke: '5px solid grey' })
   const edgeSelectionDecorator = new EdgeStyleDecorationInstaller({ edgeStyle: selectionEdgeStyle })
   graphDecorator.edgeDecorator.selectionDecorator.setImplementation(edgeSelectionDecorator)
-
-  const selectionLabelStyle = new DefaultLabelStyle({ textFill: 'black' })
-  const labelSelectionDecorator = new LabelStyleDecorationInstaller({
-    labelStyle: selectionLabelStyle,
-    zoomPolicy: StyleDecorationZoomPolicy.WORLD_COORDINATES,
-    margins: Insets.EMPTY
-  })
-  graphDecorator.labelDecorator.selectionDecorator.setImplementation(labelSelectionDecorator)
 }
