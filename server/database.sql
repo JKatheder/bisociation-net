@@ -11,6 +11,7 @@ CREATE TABLE projects(
 	-- data is string in GraphML form, contains all information about graph
 	-- maximum chars to be adjusted
 	data		 varchar(100000)
+
 );
 
 -- title will be "project id" if no title given
