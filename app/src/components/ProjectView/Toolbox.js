@@ -20,7 +20,7 @@ import {
 
 export default function Toolbox(props) {
     const [show, setShow] = useState(false);
-    const [newDes, setDes] = useState(null);
+    const [newDes, setDes] = useState('');
 
     const defaultImpulseCount = 5;
     const [impulseCount, setImpulseCount] = useState(defaultImpulseCount);
@@ -56,7 +56,9 @@ export default function Toolbox(props) {
     const handleDesClose = () => setShow(false);
     const handleDesSave = () => {
         setShow(false);
-        graphComponent.currentItem.tag = newDes;
+        if (!(graphComponent.currentItem === graph.nodes.toList().first())) {
+            graphComponent.currentItem.tag = newDes;
+        }
     };
 
     const handleColorChange = () => {
