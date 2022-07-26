@@ -10,7 +10,7 @@ export const style = new ShapeNodeStyle({
 //Style 1:
 export const greenNodeStyle = new ShapeNodeStyle({
     shape: 'ellipse',
-    fill: '#006633',
+    fill: 'green',
     stroke: 'black'
   })
 //Style 2:
