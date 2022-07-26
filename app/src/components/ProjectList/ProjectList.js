@@ -5,6 +5,9 @@ import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 export default function ProjectList() {
@@ -55,6 +58,16 @@ export default function ProjectList() {
 
     return (
         <div>
+            <Navbar bg="light" variant="light">
+                <Container>
+                    <Navbar.Brand href="#home">
+                        Bisociation Net{' '}
+                    </Navbar.Brand>{' '}
+                    <Form>
+                        <Button variant="secondary">Logout</Button>
+                    </Form>
+                </Container>{' '}
+            </Navbar>{' '}
             <h1 style={{ padding: 50 }}> My Projects </h1>{' '}
             <Container>
                 <Row>
