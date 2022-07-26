@@ -4,18 +4,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
-import {
-    GraphComponent,
-    License,
-    GraphEditorInputMode,
-    Size,
-    GraphItemTypes,
-    Point,
-} from 'yfiles';
+import { GraphComponent, License, GraphEditorInputMode, Size } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
+import { layoutGraph } from '../impulseEdges/impulseEdges';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
-import { style } from './ProjectViewStyles.js';
+import { style, decorateSelection } from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
 import loadGraph from './loadGraph.js';
 import saveGraph from './saveGraph.js';
@@ -40,6 +34,7 @@ graphComponent.inputMode = new GraphEditorInputMode();
 const nodeDefaults = graph.nodeDefaults;
 nodeDefaults.style = style;
 graph.nodeDefaults.size = new Size(150, 150);
+decorateSelection(graphComponent);
 
 // show description on hover
 graphComponent.inputMode.toolTipItems = GraphItemTypes.NODE;
@@ -82,6 +77,7 @@ export default function ProjectView() {
         const currentgraphContainer = graphContainer.current;
         currentgraphContainer.appendChild(graphComponent.div);
         configureContextMenu(graphComponent);
+        layoutGraph('tree');
 
         // Return cleanup function
         return () => {
@@ -90,7 +86,7 @@ export default function ProjectView() {
     });
 
     const RenderToolbox = () => {
-        return <Toolbox project_id={params.projectID}></Toolbox>;
+        return <Toolbox project_id = { params.projectID } > < /Toolbox>;
     };
 
     const handleBack = () => {
@@ -99,31 +95,36 @@ export default function ProjectView() {
         loaded = false;
     };
 
-    return (
-        <div>
-            <Navbar bg="light" variant="light">
-                <Container>
-                    <Navbar.Brand href="#home">
-                        Project {params.projectID}{' '}
-                    </Navbar.Brand>{' '}
-                    <Form>
-                        <Link
-                            to={`/`}
-                            onClick={handleBack}
-                            className="btn btn-success"
-                        >
-                            Back
-                        </Link>{' '}
-                        <Button variant="secondary">Logout</Button>
-                    </Form>
-                </Container>{' '}
-            </Navbar>{' '}
-            <div className="card">
-                <RenderToolbox />
-            </div>
-            <div className="graph-container" ref={graphContainer}>
-                {' '}
-            </div>{' '}
-        </div>
+    return ( <
+        div >
+        <
+        Navbar bg = "light"
+        variant = "light" >
+        <
+        Container >
+        <
+        Navbar.Brand href = "#home" >
+        Project { params.projectID } { ' ' } <
+        /Navbar.Brand>{' '} <
+        Form >
+        <
+        Link to = { `/` }
+        onClick = { handleBack }
+        className = "btn btn-success" >
+        Back <
+        /Link>{' '} <
+        Button variant = "secondary" > Logout < /Button> <
+        /Form> <
+        /Container>{' '} <
+        /Navbar>{' '} <
+        div className = "card" >
+        <
+        RenderToolbox / >
+        <
+        /div> <
+        div className = "graph-container"
+        ref = { graphContainer } > { ' ' } <
+        /div>{' '} <
+        /div>
     );
 }

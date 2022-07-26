@@ -57,6 +57,7 @@ function populateContextMenu(contextMenu, graphComponent, args) {
         contextMenu.addMenuItem('Cut', () => ICommand.CUT.execute(null, graphComponent))
         contextMenu.addMenuItem('Edit', () => ICommand.EDIT_LABEL.execute(null, graphComponent))
         contextMenu.addMenuItem('Copy', () => ICommand.COPY.execute(null, graphComponent))
+        contextMenu.addMenuItem('Reverse selected Edges', () => ICommand.REVERSE_EDGE.execute(null, graphComponent))
         contextMenu.addMenuItem('Delete', () => ICommand.DELETE.execute(null, graphComponent))
     } else {
         // no node has been hit

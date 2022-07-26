@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Form from 'react-bootstrap/Form';
 import Draggable from 'react-draggable';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
 import { graph, graphComponent } from './ProjectView';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import { Fill } from 'yfiles';
+import { redNodeStyle , greenNodeStyle, style} from './ProjectViewStyles';
+import {graph, graphComponent} from './ProjectView';
 import './Toolbox.css';
+import { useState } from 'react';
 import saveGraph from './saveGraph.js';
 import {
     impulseEdgesToOneNode,
-    IMPULSE_COUNT,
     layoutGraph,
     relabel,
 } from '../impulseEdges/impulseEdges';
@@ -19,12 +26,21 @@ export default function Toolbox(props) {
     const [show, setShow] = useState(false);
     const [newDes, setDes] = useState(null);
 
+    const defaultImpulseCount =  5;
+    const [impulseCount, setImpulseCount] = useState(defaultImpulseCount);
+
+    const [layoutMode, setLayoutMode] = useState("tree");
+    const handleLayout = (layoutMode) => {
+        return () => {
+            layoutGraph(layoutMode)
+            setLayoutMode(layoutMode)
+        }
+    };
     const handleSave = () => {
         saveGraph(props.project_id);
     };
-    const handleExport = () => {};
-    const handleAutoLayout = () => {
-        layoutGraph();
+    const handleExport = () => {
+
     };
     const handleRelabel = () => {
         graphComponent.selection.selectedLabels.forEach((item) =>
@@ -33,9 +49,9 @@ export default function Toolbox(props) {
     };
     const handleImpulseEdges = () => {
         graphComponent.selection.selectedNodes.forEach((item) =>
-            impulseEdgesToOneNode(item, IMPULSE_COUNT)
+            impulseEdgesToOneNode(item, impulseCount)
         );
-        layoutGraph();
+        layoutGraph(layoutMode);
     };
     const handleDescription = () => {
         if (graphComponent.currentItem) {
@@ -49,33 +65,47 @@ export default function Toolbox(props) {
         graphComponent.currentItem.tag = newDes;
     };
 
-    //0="original Color", 1="green" and 2="red"
-    var saveIfColored = new Array(
-        graphComponent.selection.selectedNodes.size
-    ).fill(0);
     const handleColorChange = () => {
-        if (graphComponent.selection.selectedNodes.size > 0) {
-            var i;
-            for (i = 0; i < graphComponent.selection.selectedNodes.size; i++) {
-                const t = graphComponent.selection.selectedNodes.elementAt(i);
-                if (saveIfColored[i] === 0) {
-                    graph.setStyle(t, greenNodeStyle);
-                    saveIfColored[i] = 1;
-                } else if (saveIfColored[i] === 1) {
-                    graph.setStyle(t, redNodeStyle);
-                    saveIfColored[i] = 2;
-                } else {
-                    graph.setStyle(t, style);
-                    saveIfColored[i] = 0;
+        if (graphComponent.selection.selectedNodes.size > 0){ 
+            var i
+            for (i=0; i < graphComponent.selection.selectedNodes.size; i++) {
+                const t = graphComponent.selection.selectedNodes.elementAt(i)
+                if(t.style.fill.hasSameValue(Fill.DARK_KHAKI)) {
+                    graph.setStyle(t, greenNodeStyle) 
+                }else if(t.style.fill.hasSameValue(Fill.GREEN)) {
+                    graph.setStyle(t, redNodeStyle)
+                }else if(t.style.fill.hasSameValue(Fill.DARK_RED)) {
+                    graph.setStyle(t, style)
                 }
             }
         }
     };
+    const handleOnChange = (e) => {
+        const minimum = 1;
+        const maximum = 10;
+
+        //check weather input is correct
+        var currValue = parseInt(e.target.value); //afterwards: string input has type number
+
+        if (currValue <= maximum && currValue >= minimum){
+            //everything alright, nothing to do
+        } else if(currValue < minimum) {
+            currValue = 1; //if number too small, add minimum edge count
+        } else if(currValue > maximum) {
+            currValue = maximum; //if number too big, add maximum edge count
+        } else {
+            currValue = defaultImpulseCount; //input was not a number, add default edge count
+        }
+        
+        setImpulseCount(currValue);
+        
+    };
 
     return (
-        <Draggable defaultPosition={{ x: 0, y: 0 }}>
-            <Card style={{ zIndex: 1000, width: '10rem' }}>
-                <div className="positionCanvas">
+        <div className="positionCanvas">
+            <Draggable defaultPosition={{ x: 0, y: 0 }}>
+
+                <Card style={{ zIndex: 1000, width: '12rem' }}>
                     <Card.Body>
                         <Card.Title>Toolbox</Card.Title>
                         <Button
@@ -92,13 +122,24 @@ export default function Toolbox(props) {
                         >
                             Export
                         </Button>
-                        <Button
+                        <Form.Label>
+                            Select Layout:
+                        </Form.Label>
+                        <DropdownButton 
                             className="buttons"
+                            title={"current: " + layoutMode}
                             variant="secondary"
-                            onClick={handleAutoLayout}
                         >
-                            Auto-Layout
-                        </Button>
+                            <Dropdown.Item onClick={handleLayout("tree")}>
+                                Tree
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={handleLayout("organic")}>
+                                Organic
+                                </Dropdown.Item>
+                            <Dropdown.Item onClick={handleLayout("circular")}>
+                                Circular
+                            </Dropdown.Item>
+                        </DropdownButton>
                         <Button
                             className="buttons"
                             variant="secondary"
@@ -106,13 +147,21 @@ export default function Toolbox(props) {
                         >
                             Relabel
                         </Button>
-                        <Button
-                            className="buttons"
-                            variant="secondary"
-                            onClick={handleImpulseEdges}
-                        >
-                            Add impulse edges
-                        </Button>
+                        <InputGroup
+                            onChange={handleOnChange}
+                            className="buttons">
+                            <Form.Label>Add impulse edges</Form.Label>
+                            <Form.Control 
+                                defaultValue="5"
+                                type="number"
+                            />
+                            <Button 
+                                variant="outline-secondary"
+                                onClick={handleImpulseEdges} 
+                                >
+                                add
+                            </Button>
+                        </InputGroup>
                         <Button
                             className="buttons"
                             variant="secondary"
@@ -128,7 +177,6 @@ export default function Toolbox(props) {
                             Edit description
                         </Button>
                     </Card.Body>
-                </div>
                 <div>
                     <Modal show={show} onHide={handleDesClose}>
                         <Modal.Header closeButton>

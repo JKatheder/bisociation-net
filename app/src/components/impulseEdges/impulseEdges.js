@@ -1,3 +1,4 @@
+<< << << < HEAD
 import { graph, graphComponent } from '../ProjectView/ProjectView';
 import {
     GraphEditorInputMode,
@@ -5,50 +6,71 @@ import {
     LayoutExecutor,
     ClassicTreeLayout,
     EdgeSegmentLabelModel,
-    EdgeSides,
-    Point,
-} from 'yfiles';
+    ===
+    === =
+    import {
+        graph,
+        graphComponent
+    } from '../ProjectView/ProjectView';
+    import {
+        GraphEditorInputMode,
+        Class,
+        LayoutExecutor,
+        ClassicTreeLayout,
+        OrganicLayout,
+        CircularLayout,
+        EdgeSegmentLabelModel,
+        >>>
+        >>> > f7e881550ba5881d1a8632aa0d6b3ee1861a28a2
+        EdgeSides,
+        Point,
+    } from 'yfiles';
 
-export const IMPULSE_COUNT = 5;
+    //get random noun
+    const { one } = require('nouns');
 
-//get random noun
-const { one } = require('nouns');
-
-export function impulseEdgesToOneNode(rootNode, impulseCount) {
-    for (var i = 0; i < impulseCount; i++) {
-        const node = graph.createNodeAt(new Point(0, 0));
-        const edge = graph.createEdge(rootNode, node);
-        graph.addLabel(
-            edge,
-            one(),
-            new EdgeSegmentLabelModel(
-                5,
-                0,
-                0,
-                false,
-                EdgeSides.LEFT_OF_EDGE
-            ).createDefaultParameter()
-        );
+    export function impulseEdgesToOneNode(rootNode, impulseCount) {
+        for (var i = 0; i < impulseCount; i++) {
+            const node = graph.createNodeAt(new Point(0, 0))
+            const edge = graph.createEdge(rootNode, node)
+            graph.addLabel(
+                edge,
+                one(),
+                new EdgeSegmentLabelModel(
+                    5,
+                    0,
+                    0,
+                    false,
+                    EdgeSides.LEFT_OF_EDGE
+                ).createDefaultParameter()
+            );
+        }
     }
-}
 
-export function relabel(label) {
-    graph.setLabelText(label, one());
-}
+    export function relabel(label) {
+        graph.setLabelText(label, one());
+    }
 
-export function layoutGraph() {
-    const layout = new ClassicTreeLayout();
-    layout.considerNodeSizes = true;
-    layout.minimumNodeDistance = 100;
-    layout.minimumLayerDistance = 100;
+    export function layoutGraph(mode) {
+        var layout = new ClassicTreeLayout()
 
-    Class.ensure(LayoutExecutor);
+        if (mode === "organic") {
+            layout = new OrganicLayout()
+        }
+        if (mode === "circular") {
+            layout = new CircularLayout()
+        }
 
-    graphComponent
-        .morphLayout(layout)
-        .catch((e) => alert('An error occurred during layout'));
+        layout.considerNodeSizes = true
+        layout.minimumNodeDistance = 100
+        layout.minimumLayerDistance = 100
 
-    graphComponent.fitGraphBounds();
-    //graphComponent.inputMode = new GraphEditorInputMode()
-    // showing tooltips does not work after this
-}
+        Class.ensure(LayoutExecutor);
+
+        graphComponent
+            .morphLayout(layout)
+            .catch((e) => alert('An error occurred during layout'));
+
+        graphComponent.fitGraphBounds()
+            //graphComponent.inputMode = new GraphEditorInputMode() 
+    }
