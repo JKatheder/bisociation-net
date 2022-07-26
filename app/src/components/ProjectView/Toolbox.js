@@ -34,6 +34,7 @@ export default function Toolbox(props) {
         };
     };
     const handleSave = () => {
+        graph.nodes.toList().forEach((node) => console.log(node.labels.size));
         saveGraph(props.project_id);
     };
     const handleExport = () => {};
@@ -57,14 +58,19 @@ export default function Toolbox(props) {
     const handleDesClose = () => setShow(false);
     const handleDesSave = () => {
         setShow(false);
+        // shorten description if longer than 1000 chars
+        var shortDes = newDes;
+        if (shortDes.length > 1000) {
+            shortDes = shortDes.slice(0, 1000);
+        }
         // if root: update project description
         if (graphComponent.currentItem === graph.nodes.toList().first()) {
             axios.put(`http://localhost:3001/projects/${props.project_id}`, {
                 title: graphComponent.currentItem.labels.first().text,
-                description: newDes,
+                description: shortDes,
             });
         }
-        graphComponent.currentItem.tag = newDes;
+        graphComponent.currentItem.tag = shortDes;
     };
 
     const handleColorChange = () => {

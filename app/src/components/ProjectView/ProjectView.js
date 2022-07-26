@@ -65,6 +65,19 @@ graphComponent.inputMode.mouseHoverInputMode.toolTipLocationOffset = new Point(
     20
 );
 
+// only allow one label per node
+graphComponent.inputMode.addLabelAddingListener((source, args) => {
+    if (args.owner && args.owner.labels.size >= 1) {
+        args.cancel = true;
+    }
+});
+// maximum label lenght: 20 chars
+graphComponent.inputMode.addValidateLabelTextListener((source, args) => {
+    if (args.newText.length > 20) {
+        args.newText = args.newText.slice(0, 20);
+    }
+});
+
 var loaded = false;
 export default function ProjectView() {
     let params = useParams();
