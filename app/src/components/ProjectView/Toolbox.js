@@ -17,6 +17,7 @@ import {
     layoutGraph,
     relabel,
 } from '../impulseEdges/impulseEdges';
+import axios from 'axios';
 
 export default function Toolbox(props) {
     const [show, setShow] = useState(false);
@@ -56,9 +57,14 @@ export default function Toolbox(props) {
     const handleDesClose = () => setShow(false);
     const handleDesSave = () => {
         setShow(false);
-        if (!(graphComponent.currentItem === graph.nodes.toList().first())) {
-            graphComponent.currentItem.tag = newDes;
+        // if root: update project description
+        if (graphComponent.currentItem === graph.nodes.toList().first()) {
+            axios.put(`http://localhost:3001/projects/${props.project_id}`, {
+                title: graphComponent.currentItem.labels.first().text,
+                description: newDes,
+            });
         }
+        graphComponent.currentItem.tag = newDes;
     };
 
     const handleColorChange = () => {
