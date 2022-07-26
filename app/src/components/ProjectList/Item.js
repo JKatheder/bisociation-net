@@ -101,7 +101,7 @@ export default function Item(props) {
             {show ? (
                 <EditItem
                     allItems={arr}
-                    argh={setVArr}
+                    update={setVArr}
                     setShow={setShow}
                     show={show}
                 />

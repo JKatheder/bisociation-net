@@ -14,7 +14,7 @@ export default function EditItem(props) {
     };
     const handleSave = () => {
         props.setShow(false);
-        props.argh({ id: id, title: title, description: description });
+        props.update({ id: id, title: title, description: description });
         const NewTitleDesc = { title: title, description: description };
         axios
 
