@@ -14,12 +14,12 @@
         "dropdown": "^0.2.0",
         "dropdown-menu": "^0.1.1",
         "fs": "^0.0.1-security",
+        "nouns": "^1.0.1",
         "path-browserify": "^1.0.1",
         "querystring-es3": "^0.2.1",
         "react": "^18.1.0",
         "react-bootstrap": "^2.4.0",
         "react-dom": "^18.1.0",
-        "react-draggable": "^4.4.5",
         "react-router-dom": "^6.3.0",
         "react-scripts": "5.0.1",
         "react-use-effect": "^0.0.1",
@@ -28,7 +28,8 @@
         "url": "^0.11.0",
         "util": "^0.12.4",
         "web-vitals": "^2.1.4",
-        "yfiles": "file:src/assets/js/yfiles/yfiles-24.0.5-dev.tgz"
+        "yfiles": "file:src/assets/js/yfiles/yfiles-24.0.5-dev.tgz",
+        "yfiles-umd": "file:src/assets/js/yfiles/yfiles-umd-24.0.5-dev.tgz"
     },
     "scripts": {
         "start": "react-scripts start",
@@ -64,5 +65,10 @@
         "@testing-library/react": "^13.2.0",
         "@testing-library/user-event": "^14.2.0",
         "react-test-renderer": "^18.1.0"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "^yfiles$": "<rootDir>/node_modules/yfiles-umd"
+        }
     }
 }

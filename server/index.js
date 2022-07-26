@@ -17,8 +17,8 @@ app.use(
 app.use(express.json());
 
 //ROUTES
+// Project List
 
-//insert in table projects via http post
 //returns title, description, generated id and generated date
 //post: {"title": "title", "description": "text"}
 app.post('/projects', async(req, res) => {
@@ -85,6 +85,37 @@ app.delete('/projects/:id', async(req, res) => {
         );
 
         res.json(deleteProject);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Project View
+
+// Load project
+app.get('/graphdata/:project_id', async(req, res) => {
+    try {
+        const { project_id } = req.params;
+        const data = await pool.query(
+            'SELECT * FROM projects WHERE project_id = $1', [project_id]
+        );
+
+        res.json(data);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Save project
+app.put('/graphdata/:project_id', async(req, res) => {
+    try {
+        const { project_id } = req.params;
+        const { data } = req.body;
+        const updateProject = await pool.query(
+            'UPDATE projects SET data = $2 WHERE project_id = $1', [project_id, data]
+        );
+
+        res.json(updateProject);
     } catch (err) {
         console.error(err.message);
     }

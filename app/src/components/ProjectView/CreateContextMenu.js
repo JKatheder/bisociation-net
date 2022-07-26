@@ -1,8 +1,9 @@
 import {
     ICommand,
-    INode,
+    INode
 } from 'yfiles';
 import ContextMenu from './ContextMenu.js'
+
 
 
 //Methods for creating context menu:
@@ -53,8 +54,10 @@ function populateContextMenu(contextMenu, graphComponent, args) {
 
     // Create the context menu items
     if (graphComponent.selection.selectedNodes.size > 0) {
+        contextMenu.addMenuItem('Cut', () => ICommand.CUT.execute(null, graphComponent))
         contextMenu.addMenuItem('Edit', () => ICommand.EDIT_LABEL.execute(null, graphComponent))
         contextMenu.addMenuItem('Copy', () => ICommand.COPY.execute(null, graphComponent))
+        contextMenu.addMenuItem('Reverse selected Edges', () => ICommand.REVERSE_EDGE.execute(null, graphComponent))
         contextMenu.addMenuItem('Delete', () => ICommand.DELETE.execute(null, graphComponent))
     } else {
         // no node has been hit
