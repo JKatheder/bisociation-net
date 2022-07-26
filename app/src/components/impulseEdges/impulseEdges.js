@@ -11,11 +11,8 @@ import { GraphEditorInputMode,
     Point
 } from 'yfiles';
 
-export const IMPULSE_COUNT = 5;
-
 //get random noun
 const { one } = require('nouns');
-
 
 export function impulseEdgesToOneNode(rootNode, impulseCount){
     for(var i = 0; i < impulseCount; i++){
@@ -54,7 +51,5 @@ export function layoutGraph(mode){
         .catch(e => alert('An error occurred during layout'))
 
     graphComponent.fitGraphBounds()
-    graphComponent.inputMode = new GraphEditorInputMode()
-
-  
+    graphComponent.inputMode = new GraphEditorInputMode() 
 }
