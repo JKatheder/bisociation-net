@@ -22,7 +22,7 @@ export const redNodeStyle = new ShapeNodeStyle({
 //Decorating the selection of Nodes and Edges
 export function decorateSelection(graphComponent) {
   const graphDecorator = graphComponent.graph.decorator
-  const selectionNodeStyle = new ShapeNodeStyle({ shape: 'ellipse', fill: Fill.DARK_GRAY })
+  const selectionNodeStyle = new ShapeNodeStyle({ shape: 'ellipse', fill: 'none', stroke: '7px solid grey' })
   const nodeSelectionDecorator = new NodeStyleDecorationInstaller({
     nodeStyle: selectionNodeStyle,
     zoomPolicy: StyleDecorationZoomPolicy.WORLD_COORDINATES,
