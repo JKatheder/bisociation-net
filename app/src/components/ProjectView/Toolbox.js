@@ -1,9 +1,10 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Form from 'react-bootstrap/Form';
 import Draggable from 'react-draggable';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Form from 'react-bootstrap/Form';
 import { Fill } from 'yfiles';
 import { redNodeStyle , greenNodeStyle, style} from './ProjectViewStyles';
 import {graph, graphComponent} from './ProjectView';
@@ -12,14 +13,16 @@ import { useState } from 'react';
 import saveGraph from './saveGraph.js';
 import {
     impulseEdgesToOneNode,
-    IMPULSE_COUNT,
     layoutGraph,
     relabel,
 } from '../impulseEdges/impulseEdges';
 
 export default function Toolbox(props) {
-    const [layoutMode, setLayoutMode] = useState("tree");
 
+    const defaultImpulseCount =  5;
+    const [impulseCount, setImpulseCount] = useState(defaultImpulseCount);
+
+    const [layoutMode, setLayoutMode] = useState("tree");
     const handleLayout = (layoutMode) => {
         return () => {
             layoutGraph(layoutMode)
@@ -39,7 +42,7 @@ export default function Toolbox(props) {
     };
     const handleImpulseEdges = () => {
         graphComponent.selection.selectedNodes.forEach((item) =>
-            impulseEdgesToOneNode(item, IMPULSE_COUNT)
+            impulseEdgesToOneNode(item, impulseCount)
         );
         layoutGraph(layoutMode);
     };
@@ -58,6 +61,26 @@ export default function Toolbox(props) {
                 }
             }
         }
+    };
+    const handleOnChange = (e) => {
+        const minimum = 1;
+        const maximum = 10;
+
+        //check weather input is correct
+        var currValue = parseInt(e.target.value); //afterwards: string input has type number
+
+        if (currValue <= maximum && currValue >= minimum){
+            //everything alright, nothing to do
+        } else if(currValue < minimum) {
+            currValue = 1; //if number too small, add minimum edge count
+        } else if(currValue > maximum) {
+            currValue = maximum; //if number too big, add maximum edge count
+        } else {
+            currValue = defaultImpulseCount; //input was not a number, add default edge count
+        }
+        
+        setImpulseCount(currValue);
+        
     };
 
     return (
@@ -81,9 +104,7 @@ export default function Toolbox(props) {
                         >
                             Export
                         </Button>
-                        <Form.Label 
-                            className="label-form"
-                        >
+                        <Form.Label>
                             Select Layout:
                         </Form.Label>
                         <DropdownButton 
@@ -108,13 +129,21 @@ export default function Toolbox(props) {
                         >
                             Relabel
                         </Button>
-                        <Button
-                            className="buttons"
-                            variant="secondary"
-                            onClick={handleImpulseEdges}
-                        >
-                            Add impulse edges
-                        </Button>
+                        <InputGroup
+                            onChange={handleOnChange}
+                            className="buttons">
+                            <Form.Label>Add impulse edges</Form.Label>
+                            <Form.Control 
+                                defaultValue="5"
+                                type="number"
+                            />
+                            <Button 
+                                variant="outline-secondary"
+                                onClick={handleImpulseEdges} 
+                                >
+                                add
+                            </Button>
+                        </InputGroup>
                         <Button
                             className="buttons"
                             variant="secondary"
