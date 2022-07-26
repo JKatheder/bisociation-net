@@ -32,8 +32,10 @@ export default function Toolbox(props) {
     const handleSave = () => {
         saveGraph(props.project_id);
     };
-    const handleExport = () => {
 
+    const handleExport = () => {
+        exportSvg(canvas: graphComponent): Element;
+        shouldEncodeImageBase64(image: SVGImageElement): true;
     };
     const handleRelabel = () => {
         graphComponent.selection.selectedLabels.forEach((item) =>

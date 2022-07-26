@@ -10,6 +10,7 @@ export default function Item(props) {
     const [showMenu, setShowMenu] = useState(false);
     //adds ... if text is to long
     var text = props.text;
+    if(text !== null)
     if (text.length > 10) {
         text = text.substring(0, 20) + '...';
     }
