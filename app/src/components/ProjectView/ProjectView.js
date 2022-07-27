@@ -4,7 +4,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
-import { GraphComponent, License, GraphEditorInputMode, Size} from 'yfiles';
+import {
+    GraphComponent,
+    License,
+    GraphEditorInputMode,
+    Size,
+    Point,
+    GraphItemTypes,
+} from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import { layoutGraph } from '../impulseEdges/impulseEdges';
 import license from '../../assets/js/yfiles/license.json';
@@ -34,7 +41,42 @@ graphComponent.inputMode = new GraphEditorInputMode();
 const nodeDefaults = graph.nodeDefaults;
 nodeDefaults.style = style;
 graph.nodeDefaults.size = new Size(150, 150);
-decorateSelection(graphComponent)
+decorateSelection(graphComponent);
+
+// show description on hover
+graphComponent.inputMode.toolTipItems = GraphItemTypes.NODE;
+graphComponent.inputMode.addQueryItemToolTipListener((src, args) => {
+    if (args.handled) {
+        // A tooltip has already been assigned -> nothing to do
+        return;
+    }
+    // We can safely cast here because we set ToolTipItems to only Node
+    const hitNode = args.item;
+    if (hitNode) {
+        args.toolTip = hitNode.tag;
+        args.handled = true;
+    }
+});
+// duration to show tooltip/description in seconds
+graphComponent.inputMode.mouseHoverInputMode.duration = 10000;
+// show description under cursor
+graphComponent.inputMode.mouseHoverInputMode.toolTipLocationOffset = new Point(
+    0,
+    20
+);
+
+// only allow one label per node
+graphComponent.inputMode.addLabelAddingListener((source, args) => {
+    if (args.owner && args.owner.labels.size >= 1) {
+        args.cancel = true;
+    }
+});
+// maximum label lenght: 20 chars
+graphComponent.inputMode.addValidateLabelTextListener((source, args) => {
+    if (args.newText.length > 20) {
+        args.newText = args.newText.slice(0, 20);
+    }
+});
 
 var loaded = false;
 export default function ProjectView() {
@@ -55,7 +97,7 @@ export default function ProjectView() {
         const currentgraphContainer = graphContainer.current;
         currentgraphContainer.appendChild(graphComponent.div);
         configureContextMenu(graphComponent);
-        layoutGraph("tree");
+        layoutGraph('tree');
 
         // Return cleanup function
         return () => {
@@ -64,7 +106,7 @@ export default function ProjectView() {
     });
 
     const RenderToolbox = () => {
-        return <Toolbox project_id={params.projectID}></Toolbox>;
+        return <Toolbox project_id={params.projectID}> </Toolbox>;
     };
 
     const handleBack = () => {
@@ -86,15 +128,15 @@ export default function ProjectView() {
                             onClick={handleBack}
                             className="btn button-color"
                         >
-                            Back
+                            Back{' '}
                         </Link>{' '}
-                        <Button variant="secondary">Logout</Button>
-                    </Form>
+                        <Button variant="secondary"> Logout </Button>{' '}
+                    </Form>{' '}
                 </Container>{' '}
             </Navbar>{' '}
             <div className="card">
                 <RenderToolbox />
-            </div>
+            </div>{' '}
             <div className="graph-container" ref={graphContainer}>
                 {' '}
             </div>{' '}
