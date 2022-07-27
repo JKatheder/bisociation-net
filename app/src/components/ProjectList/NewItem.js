@@ -53,7 +53,7 @@ export default function NewItem(props) {
                         }}
                     >
                         <Button
-                            variant="btn btn-secondary"
+                            variant="btn button-color"
                             onClick={handleShow}
                         >
                             +
@@ -90,7 +90,7 @@ export default function NewItem(props) {
                     <Button variant="secondary" onClick={handleClose}>
                         Close{' '}
                     </Button>{' '}
-                    <Button variant="primary" onClick={handleSave}>
+                    <Button variant="btn button-color" onClick={handleSave}>
                         Save{' '}
                     </Button>{' '}
                 </Modal.Footer>{' '}

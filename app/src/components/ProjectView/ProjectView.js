@@ -84,7 +84,7 @@ export default function ProjectView() {
                         <Link
                             to={`/`}
                             onClick={handleBack}
-                            className="btn btn-success"
+                            className="btn button-color"
                         >
                             Back
                         </Link>{' '}
