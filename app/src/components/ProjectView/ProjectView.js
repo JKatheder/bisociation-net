@@ -64,7 +64,7 @@ export default function ProjectView() {
     });
 
     const RenderToolbox = () => {
-        return <Toolbox project_id={params.projectID}></Toolbox>;
+        return <Toolbox project_id={params.projectID} graphComponent={graphComponent}></Toolbox>;
     };
 
     const handleBack = () => {

@@ -5,9 +5,9 @@ import Form from 'react-bootstrap/Form';
 import Draggable from 'react-draggable';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import { Fill } from 'yfiles';
-import { redNodeStyle , greenNodeStyle, style} from './ProjectViewStyles';
-import {graph, graphComponent} from './ProjectView';
+import { Fill, SvgExport, GraphComponent } from 'yfiles';
+import { redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
+import { graph, graphComponent } from './ProjectView';
 import './Toolbox.css';
 import { useState } from 'react';
 import saveGraph from './saveGraph.js';
@@ -18,25 +18,52 @@ import {
 } from '../impulseEdges/impulseEdges';
 
 export default function Toolbox(props) {
-
-    const defaultImpulseCount =  5;
+    const defaultImpulseCount = 5;
     const [impulseCount, setImpulseCount] = useState(defaultImpulseCount);
 
-    const [layoutMode, setLayoutMode] = useState("tree");
+    const [layoutMode, setLayoutMode] = useState('tree');
     const handleLayout = (layoutMode) => {
         return () => {
-            layoutGraph(layoutMode)
-            setLayoutMode(layoutMode)
-        }
+            layoutGraph(layoutMode);
+            setLayoutMode(layoutMode);
+        };
     };
     const handleSave = () => {
         saveGraph(props.project_id);
     };
 
     const handleExport = () => {
-        exportSvg(canvas: graphComponent): Element;
-        shouldEncodeImageBase64(image: SVGImageElement): true;
+        const exportComponent = new GraphComponent();
+        exportComponent.graph = graphComponent.graph;
+        exportComponent.updateContentRect();
+        var scale = 1;
+
+        const targetRect = exportComponent.contentRect;
+
+        const exporter = new SvgExport({
+            worldBounds: targetRect,
+            scale,
+            encodeImagesBase64: true,
+            inlineSvgImages: true,
+        });
+
+        exporter.cssStyleSheet = null;
+
+        const svgElem = exporter.exportSvg(exportComponent);
+        let fileContent = SvgExport.exportSvgString(svgElem);
+
+        console.log(fileContent);
+
+        const element = document.createElement('a');
+        const file = new Blob([fileContent], {
+            type: 'text/plain',
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = 'myFile.svg';
+        document.body.appendChild(element);
+        element.click();
     };
+
     const handleRelabel = () => {
         graphComponent.selection.selectedLabels.forEach((item) =>
             relabel(item)
@@ -50,16 +77,16 @@ export default function Toolbox(props) {
     };
 
     const handleColorChange = () => {
-        if (graphComponent.selection.selectedNodes.size > 0){ 
-            var i
-            for (i=0; i < graphComponent.selection.selectedNodes.size; i++) {
-                const t = graphComponent.selection.selectedNodes.elementAt(i)
-                if(t.style.fill.hasSameValue(Fill.DARK_KHAKI)) {
-                    graph.setStyle(t, greenNodeStyle) 
-                }else if(t.style.fill.hasSameValue(Fill.GREEN)) {
-                    graph.setStyle(t, redNodeStyle)
-                }else if(t.style.fill.hasSameValue(Fill.DARK_RED)) {
-                    graph.setStyle(t, style)
+        if (graphComponent.selection.selectedNodes.size > 0) {
+            var i;
+            for (i = 0; i < graphComponent.selection.selectedNodes.size; i++) {
+                const t = graphComponent.selection.selectedNodes.elementAt(i);
+                if (t.style.fill.hasSameValue(Fill.DARK_KHAKI)) {
+                    graph.setStyle(t, greenNodeStyle);
+                } else if (t.style.fill.hasSameValue(Fill.GREEN)) {
+                    graph.setStyle(t, redNodeStyle);
+                } else if (t.style.fill.hasSameValue(Fill.DARK_RED)) {
+                    graph.setStyle(t, style);
                 }
             }
         }
@@ -71,24 +98,22 @@ export default function Toolbox(props) {
         //check weather input is correct
         var currValue = parseInt(e.target.value); //afterwards: string input has type number
 
-        if (currValue <= maximum && currValue >= minimum){
+        if (currValue <= maximum && currValue >= minimum) {
             //everything alright, nothing to do
-        } else if(currValue < minimum) {
+        } else if (currValue < minimum) {
             currValue = 1; //if number too small, add minimum edge count
-        } else if(currValue > maximum) {
+        } else if (currValue > maximum) {
             currValue = maximum; //if number too big, add maximum edge count
         } else {
             currValue = defaultImpulseCount; //input was not a number, add default edge count
         }
-        
+
         setImpulseCount(currValue);
-        
     };
 
     return (
         <div className="positionCanvas">
             <Draggable defaultPosition={{ x: 0, y: 0 }}>
-
                 <Card style={{ zIndex: 1000, width: '12rem' }}>
                     <Card.Body>
                         <Card.Title>Toolbox</Card.Title>
@@ -106,21 +131,19 @@ export default function Toolbox(props) {
                         >
                             Export
                         </Button>
-                        <Form.Label>
-                            Select Layout:
-                        </Form.Label>
-                        <DropdownButton 
+                        <Form.Label>Select Layout:</Form.Label>
+                        <DropdownButton
                             className="buttons"
-                            title={"current: " + layoutMode}
+                            title={'current: ' + layoutMode}
                             variant="secondary"
                         >
-                            <Dropdown.Item onClick={handleLayout("tree")}>
+                            <Dropdown.Item onClick={handleLayout('tree')}>
                                 Tree
                             </Dropdown.Item>
-                            <Dropdown.Item onClick={handleLayout("organic")}>
+                            <Dropdown.Item onClick={handleLayout('organic')}>
                                 Organic
-                                </Dropdown.Item>
-                            <Dropdown.Item onClick={handleLayout("circular")}>
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={handleLayout('circular')}>
                                 Circular
                             </Dropdown.Item>
                         </DropdownButton>
@@ -133,16 +156,14 @@ export default function Toolbox(props) {
                         </Button>
                         <InputGroup
                             onChange={handleOnChange}
-                            className="buttons">
+                            className="buttons"
+                        >
                             <Form.Label>Add impulse edges</Form.Label>
-                            <Form.Control 
-                                defaultValue="5"
-                                type="number"
-                            />
-                            <Button 
+                            <Form.Control defaultValue="5" type="number" />
+                            <Button
                                 variant="outline-secondary"
-                                onClick={handleImpulseEdges} 
-                                >
+                                onClick={handleImpulseEdges}
+                            >
                                 add
                             </Button>
                         </InputGroup>
@@ -155,7 +176,6 @@ export default function Toolbox(props) {
                         </Button>
                     </Card.Body>
                 </Card>
-
             </Draggable>
         </div>
     );
