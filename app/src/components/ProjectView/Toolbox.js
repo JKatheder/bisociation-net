@@ -112,72 +112,72 @@ export default function Toolbox(props) {
             <Draggable defaultPosition={{ x: 0, y: 0 }}>
                 <Card style={{ zIndex: 1000, width: '12rem' }}>
                     <Card.Body>
-                        <Card.Title> Toolbox </Card.Title>{' '}
+                        <Card.Title>Toolbox</Card.Title>
                         <Button
                             className="buttons"
                             variant="secondary"
                             onClick={handleSave}
                         >
-                            Save{' '}
-                        </Button>{' '}
+                            Save
+                        </Button>
                         <Button
                             className="buttons"
                             variant="secondary"
                             onClick={handleExport}
                         >
-                            Export{' '}
-                        </Button>{' '}
-                        <Form.Label> Select Layout: </Form.Label>{' '}
+                            Export
+                        </Button>
+                        <Form.Label>Select Layout:</Form.Label>
                         <DropdownButton
                             className="buttons"
                             title={'current: ' + layoutMode}
                             variant="secondary"
                         >
                             <Dropdown.Item onClick={handleLayout('tree')}>
-                                Tree{' '}
-                            </Dropdown.Item>{' '}
+                                Tree
+                            </Dropdown.Item>
                             <Dropdown.Item onClick={handleLayout('organic')}>
-                                Organic{' '}
-                            </Dropdown.Item>{' '}
+                                Organic
+                            </Dropdown.Item>
                             <Dropdown.Item onClick={handleLayout('circular')}>
-                                Circular{' '}
-                            </Dropdown.Item>{' '}
-                        </DropdownButton>{' '}
+                                Circular
+                            </Dropdown.Item>
+                        </DropdownButton>
                         <Button
                             className="buttons"
                             variant="secondary"
                             onClick={handleRelabel}
                         >
-                            Relabel{' '}
-                        </Button>{' '}
+                            Relabel
+                        </Button>
                         <InputGroup
                             onChange={handleOnChange}
                             className="buttons"
                         >
-                            <Form.Label> Add impulse edges </Form.Label>{' '}
+                            <Form.Label>Add impulse edges</Form.Label>
                             <Form.Control defaultValue="5" type="number" />
                             <Button
                                 variant="outline-secondary"
                                 onClick={handleImpulseEdges}
                             >
-                                add{' '}
-                            </Button>{' '}
-                        </InputGroup>{' '}
+                                add
+                            </Button>
+                        </InputGroup>
                         <Button
                             className="buttons"
                             variant="secondary"
                             onClick={handleColorChange}
                         >
-                            Color - Change{' '}
-                        </Button>{' '}
+                            Color-Change
+                        </Button>
                         <Button
                             className="buttons"
                             variant="secondary"
                             onClick={handleDescription}
                         >
-                            Edit description{' '}
-                        </Button>{' '}
-                    </Card.Body>{' '}
+                            Edit description
+                        </Button>
+                    </Card.Body>
                     <div>
                         <Modal show={show} onHide={handleDesClose}>
                             <Modal.Header closeButton>
@@ -213,9 +213,9 @@ export default function Toolbox(props) {
                                 </Button>{' '}
                             </Modal.Footer>{' '}
                         </Modal>{' '}
-                    </div>{' '}
-                </Card>{' '}
-            </Draggable>{' '}
+                    </div>
+                </Card>
+            </Draggable>
         </div>
     );
 }
