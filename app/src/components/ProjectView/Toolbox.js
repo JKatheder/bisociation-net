@@ -34,7 +34,6 @@ export default function Toolbox(props) {
         };
     };
     const handleSave = () => {
-        graph.nodes.toList().forEach((node) => console.log(node.labels.size));
         saveGraph(props.project_id);
     };
     const handleExport = () => {};
