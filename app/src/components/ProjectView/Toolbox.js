@@ -10,7 +10,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { Fill, SvgExport, GraphComponent } from 'yfiles';
 import { redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
-import { graph, graphComponent } from './ProjectView';
 import './Toolbox.css';
 import saveGraph from './saveGraph.js';
 import {
