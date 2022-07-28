@@ -19,14 +19,21 @@ export default function ProjectList() {
             .get('http://localhost:3001/projects')
             .then((res) => {
                 // saves objects from json in form of Items
-                res.data.map((item) =>
+                res.data.forEach((item) => {
+                    var formatDate = new Date(item.date);
+                    formatDate =
+                        formatDate.getDate() +
+                        '.' +
+                        (formatDate.getMonth() + 1) +
+                        '.' +
+                        formatDate.getFullYear();
                     arrayIt.push({
                         content: item.description,
-                        date: item.date,
+                        date: formatDate,
                         title: item.title,
                         id: item.project_id,
-                    })
-                );
+                    });
+                });
                 setArrayItems(arrayIt);
             })
             .catch((err) => console.log(err));
