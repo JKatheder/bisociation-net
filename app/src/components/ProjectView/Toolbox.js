@@ -1,23 +1,29 @@
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Draggable from 'react-draggable';
+import Modal from 'react-bootstrap/Modal';
+import { graph, graphComponent } from './ProjectView';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { Fill, SvgExport, GraphComponent } from 'yfiles';
 import { redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
 import { graph, graphComponent } from './ProjectView';
 import './Toolbox.css';
-import { useState } from 'react';
 import saveGraph from './saveGraph.js';
 import {
     impulseEdgesToOneNode,
     layoutGraph,
     relabel,
 } from '../impulseEdges/impulseEdges';
+import axios from 'axios';
 
 export default function Toolbox(props) {
+    const [show, setShow] = useState(false);
+    const [newDes, setDes] = useState('');
+
     const defaultImpulseCount = 5;
     const [impulseCount, setImpulseCount] = useState(defaultImpulseCount);
 
@@ -72,6 +78,29 @@ export default function Toolbox(props) {
             impulseEdgesToOneNode(item, impulseCount)
         );
         layoutGraph(layoutMode);
+    };
+    const handleDescription = () => {
+        if (graphComponent.currentItem) {
+            setShow(true);
+            setDes(graphComponent.currentItem.tag);
+        }
+    };
+    const handleDesClose = () => setShow(false);
+    const handleDesSave = () => {
+        setShow(false);
+        // shorten description if longer than 1000 chars
+        var shortDes = newDes;
+        if (shortDes.length > 1000) {
+            shortDes = shortDes.slice(0, 1000);
+        }
+        // if root: update project description
+        if (graphComponent.currentItem === graph.nodes.toList().first()) {
+            axios.put(`http://localhost:3001/projects/${props.project_id}`, {
+                title: graphComponent.currentItem.labels.first().text,
+                description: shortDes,
+            });
+        }
+        graphComponent.currentItem.tag = shortDes;
     };
 
     const handleColorChange = () => {
@@ -172,7 +201,50 @@ export default function Toolbox(props) {
                         >
                             Color-Change
                         </Button>
+                        <Button
+                            className="buttons"
+                            variant="secondary"
+                            onClick={handleDescription}
+                        >
+                            Edit description
+                        </Button>
                     </Card.Body>
+                    <div>
+                        <Modal show={show} onHide={handleDesClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title> Edit Description </Modal.Title>{' '}
+                            </Modal.Header>{' '}
+                            <Modal.Body>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Label> Description </Form.Label>{' '}
+                                        <Form.Control
+                                            as="textarea"
+                                            rows={3}
+                                            value={newDes}
+                                            onChange={(e) =>
+                                                setDes(e.target.value)
+                                            }
+                                        />{' '}
+                                    </Form.Group>{' '}
+                                </Form>{' '}
+                            </Modal.Body>{' '}
+                            <Modal.Footer>
+                                <Button
+                                    variant="secondary"
+                                    onClick={handleDesClose}
+                                >
+                                    Close{' '}
+                                </Button>{' '}
+                                <Button
+                                    variant="primary"
+                                    onClick={handleDesSave}
+                                >
+                                    Save{' '}
+                                </Button>{' '}
+                            </Modal.Footer>{' '}
+                        </Modal>{' '}
+                    </div>
                 </Card>
             </Draggable>
         </div>
