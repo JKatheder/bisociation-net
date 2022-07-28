@@ -36,13 +36,12 @@ export default function Toolbox(props) {
         const exportComponent = new GraphComponent();
         exportComponent.graph = graphComponent.graph;
         exportComponent.updateContentRect();
-        var scale = 1;
 
         const targetRect = exportComponent.contentRect;
 
         const exporter = new SvgExport({
             worldBounds: targetRect,
-            scale,
+            scale: 1,
             encodeImagesBase64: true,
             inlineSvgImages: true,
         });
@@ -52,8 +51,6 @@ export default function Toolbox(props) {
         const svgElem = exporter.exportSvg(exportComponent);
         let fileContent = SvgExport.exportSvgString(svgElem);
 
-        console.log(fileContent);
-
         const element = document.createElement('a');
         const file = new Blob([fileContent], {
             type: 'text/plain',
@@ -62,6 +59,7 @@ export default function Toolbox(props) {
         element.download = 'myFile.svg';
         document.body.appendChild(element);
         element.click();
+        document.body.removeChild(element);
     };
 
     const handleRelabel = () => {
