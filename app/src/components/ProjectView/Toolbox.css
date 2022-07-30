@@ -3,6 +3,16 @@
     width: 100%;
     margin: 1px 1px 1px 1px;
 }
+.btn-secondary{
+    background-color:  #006633 !important;
+}
+.buttonAddImpulseEdges{
+    background-color: white;
+}
+.buttonAdd{
+    background-color: #006633 !important;
+    color: white !important;
+}
 .dropdown-toggle {
     width: 100%;
 }
