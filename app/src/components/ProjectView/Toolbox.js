@@ -8,8 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import { graph, graphComponent } from './ProjectView';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import { Fill } from 'yfiles';
-import { redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
+import { nodeColorDefault, nodeColorStyle1, nodeColorStyle2, redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
 import './Toolbox.css';
 import saveGraph from './saveGraph.js';
 import {
@@ -77,11 +76,11 @@ export default function Toolbox(props) {
             var i;
             for (i = 0; i < graphComponent.selection.selectedNodes.size; i++) {
                 const t = graphComponent.selection.selectedNodes.elementAt(i);
-                if (t.style.fill.hasSameValue(Fill.DARK_KHAKI)) {
+                if (t.style.fill.hasSameValue(nodeColorDefault)) {
                     graph.setStyle(t, greenNodeStyle);
-                } else if (t.style.fill.hasSameValue(Fill.GREEN)) {
+                } else if (t.style.fill.hasSameValue(nodeColorStyle1)) {
                     graph.setStyle(t, redNodeStyle);
-                } else if (t.style.fill.hasSameValue(Fill.DARK_RED)) {
+                } else if (t.style.fill.hasSameValue(nodeColorStyle2)) {
                     graph.setStyle(t, style);
                 }
             }
