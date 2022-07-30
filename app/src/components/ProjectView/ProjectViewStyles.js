@@ -7,6 +7,7 @@ import {
   NodeStyleDecorationInstaller,
   ShapeNodeStyle, 
   StyleDecorationZoomPolicy, 
+  DefaultLabelStyle,
   Insets, 
   PolylineEdgeStyle } from 'yfiles';
 
@@ -49,6 +50,13 @@ export function initializeDefaultStyle(graph, graphComponent){
     stroke: edgeColorDefault,
     targetArrow: IArrow.TRIANGLE
   })
+
+  //Default LabelStyle and EdgeLabelStyle:
+  const labelStyle = new DefaultLabelStyle({
+    font: 'bold 16px sans-serif'
+  })
+  graph.nodeDefaults.labels.style = labelStyle
+  graph.edgeDefaults.labels.style = labelStyle
 }
 
 //Decorating the selection of Nodes and Edges

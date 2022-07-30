@@ -15,7 +15,7 @@ import { configureContextMenu } from './CreateContextMenu.js';
 import { layoutGraph } from '../impulseEdges/impulseEdges';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
-import { style, initializeDefaultStyle, decorateSelection } from './ProjectViewStyles.js';
+import { initializeDefaultStyle, decorateSelection } from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
 import loadGraph from './loadGraph.js';
 import saveGraph from './saveGraph.js';

@@ -127,21 +127,23 @@ export default function Toolbox(props) {
                             Export
                         </Button>
                         <Form.Label>Select Layout:</Form.Label>
-                        <DropdownButton
-                            className="buttons"
-                            title={'current: ' + layoutMode}
-                            variant="secondary"
-                        >
-                            <Dropdown.Item onClick={handleLayout('tree')}>
-                                Tree
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={handleLayout('organic')}>
-                                Organic
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={handleLayout('circular')}>
-                                Circular
-                            </Dropdown.Item>
-                        </DropdownButton>
+                        <div>
+                            <DropdownButton
+                                className="buttons"
+                                title={'current: ' + layoutMode}
+                                variant="secondary"
+                            >
+                                <Dropdown.Item onClick={handleLayout('tree')}>
+                                    Tree
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={handleLayout('organic')}>
+                                    Organic
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={handleLayout('circular')}>
+                                    Circular
+                                </Dropdown.Item>
+                            </DropdownButton>
+                        </div>
                         <Button
                             className="buttons"
                             variant="secondary"
@@ -151,15 +153,16 @@ export default function Toolbox(props) {
                         </Button>
                         <InputGroup
                             onChange={handleOnChange}
-                            className="buttons"
+                            className="buttonAddImpulseEdges"
                         >
-                            <Form.Label>Add impulse edges</Form.Label>
+                            <Form.Label>Add Impulse Edges</Form.Label>
                             <Form.Control defaultValue="5" type="number" />
                             <Button
                                 variant="outline-secondary"
+                                className="buttonAdd"
                                 onClick={handleImpulseEdges}
                             >
-                                add
+                                Add
                             </Button>
                         </InputGroup>
                         <Button
@@ -167,14 +170,14 @@ export default function Toolbox(props) {
                             variant="secondary"
                             onClick={handleColorChange}
                         >
-                            Color-Change
+                            Color Change
                         </Button>
                         <Button
                             className="buttons"
                             variant="secondary"
                             onClick={handleDescription}
                         >
-                            Edit description
+                            Edit Description
                         </Button>
                     </Card.Body>
                     <div>
