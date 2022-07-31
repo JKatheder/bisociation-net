@@ -96,7 +96,7 @@ export default function Item(props) {
                 <div className="d-grid">
                     <Link
                         to={`/project/${props.id}`}
-                        className="btn btn-secondary"
+                        className="btn button-color"
                     >
                         Open{' '}
                     </Link>{' '}
