@@ -13,6 +13,7 @@ export default function Item(props) {
     const [show, setShow] = useState(false);
     const [arr, setArr] = useState({});
 
+    //sets state to project data that wants to be edited
     useEffect(() => {
         setArr({
             title: props.title,
@@ -20,6 +21,7 @@ export default function Item(props) {
             id: props.id,
             date: props.date,
         });
+        console.log(arr);
     }, []);
 
     const deleteProject = () => {
@@ -33,6 +35,7 @@ export default function Item(props) {
         props.onDelete(props.allItems.filter((items) => items.id !== props.id));
     };
 
+    //sets state when edited data is saved 
     const setVArr = (vArr) => {
         setArr(vArr);
     };
@@ -59,10 +62,11 @@ export default function Item(props) {
         );
     };
 
+    //shortens description if its over 20 symbols long
     const shortDes = (txt) => {
         if (txt !== undefined && txt !== null) {
             if (txt.length > 10) {
-                return txt.substring(0, 20);
+                return txt.substring(0, 20) + '...';
             } else {
                 return txt;
             }

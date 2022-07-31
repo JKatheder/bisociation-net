@@ -8,13 +8,14 @@ export default function EditItem(props) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [id, setID] = useState(-1);
+    const [date, setDate] = useState('');
 
     const handleClose = () => {
         props.setShow(false);
     };
     const handleSave = () => {
         props.setShow(false);
-        props.update({ id: id, title: title, description: description });
+        props.update({ id: id, title: title, description: description, date: date });
         const NewTitleDesc = { title: title, description: description };
         axios
 
@@ -28,6 +29,7 @@ export default function EditItem(props) {
         setTitle(props.allItems.title);
         setDescription(props.allItems.description);
         setID(props.allItems.id);
+        setDate(props.allItems.date)
     }, []);
 
     return (
