@@ -21,7 +21,6 @@ export default function Item(props) {
             id: props.id,
             date: props.date,
         });
-        console.log(arr);
     }, []);
 
     const deleteProject = () => {
