@@ -28,7 +28,7 @@ export default function ProjectList() {
                         '.' +
                         formatDate.getFullYear();
                     arrayIt.push({
-                        content: item.description,
+                        description: item.description,
                         date: formatDate,
                         title: item.title,
                         id: item.project_id,
@@ -44,7 +44,7 @@ export default function ProjectList() {
         arrayItems.map((item) => (
             <div className="col col-lg-3" key={item.id}>
                 <Item
-                    text={item.content}
+                    text={item.description}
                     date={item.date}
                     title={item.title}
                     id={item.id}

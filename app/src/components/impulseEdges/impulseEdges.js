@@ -1,6 +1,5 @@
 import { graph, graphComponent } from '../ProjectView/ProjectView';
 import {
-    GraphEditorInputMode,
     Class,
     LayoutExecutor,
     ClassicTreeLayout,
