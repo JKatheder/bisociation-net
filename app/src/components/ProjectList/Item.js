@@ -11,11 +11,11 @@ export default function Item(props) {
     const [showMenu, setShowMenu] = useState(false);
     const [editId, setEditId] = useState(false);
     const [show, setShow] = useState(false);
-    const [arr, setArr] = useState({});
+    const [ProjectData, setProjectData] = useState({});
 
     //sets state to project data that wants to be edited
     useEffect(() => {
-        setArr({
+        setProjectData({
             title: props.title,
             description: props.text,
             id: props.id,
@@ -34,9 +34,9 @@ export default function Item(props) {
         props.onDelete(props.allItems.filter((items) => items.id !== props.id));
     };
 
-    //sets state when edited data is saved 
-    const setVArr = (vArr) => {
-        setArr(vArr);
+    //sets state when edited data is saved
+    const setStateNew = (NewProjectDate) => {
+        setProjectData(NewProjectDate);
     };
 
     const DropDownMenu = () => {
@@ -77,12 +77,15 @@ export default function Item(props) {
             <Card.Body>
                 <Row>
                     <Col xs={11}>
-                        <Card.Title> {arr.title} </Card.Title>{' '}
+                        <Card.Title> {ProjectData.title} </Card.Title>{' '}
                         <Card.Subtitle className="mb-2 text-muted">
                             {' '}
-                            {arr.date}{' '}
+                            {ProjectData.date}{' '}
                         </Card.Subtitle>{' '}
-                        <Card.Text> {shortDes(arr.description)} </Card.Text>{' '}
+                        <Card.Text>
+                            {' '}
+                            {shortDes(ProjectData.description)}{' '}
+                        </Card.Text>{' '}
                     </Col>{' '}
                     <Col xs={1} style={{ paddingRight: -50 }}>
                         <span
@@ -103,8 +106,8 @@ export default function Item(props) {
             </Card.Body>{' '}
             {show ? (
                 <EditItem
-                    allItems={arr}
-                    update={setVArr}
+                    allItems={ProjectData}
+                    update={setStateNew}
                     setShow={setShow}
                     show={show}
                 />
