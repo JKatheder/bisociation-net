@@ -58,7 +58,7 @@ export default function Item(props) {
     //shortens description if its over 20 symbols long
     const shortDes = (txt) => {
         if (txt !== undefined && txt !== null) {
-            if (txt.length > 10) {
+            if (txt.length > 20) {
                 return txt.substring(0, 20) + '...';
             } else {
                 return txt;
