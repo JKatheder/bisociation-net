@@ -26,7 +26,7 @@
  ** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  **
  ***************************************************************************/
-import { GraphComponent, Point, TimeSpan } from 'yfiles'
+import { Point, TimeSpan } from 'yfiles'
 
 /**
  * A demo implementation of a context menu that is used in various yFiles demos.
