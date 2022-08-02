@@ -5,14 +5,19 @@ import Col from 'react-bootstrap/Col';
 import DropDown from 'react-bootstrap/DropDown';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import EditItem from './EditItem';
 
 export default function Item(props) {
     const [showMenu, setShowMenu] = useState(false);
-    //adds ... if text is to long
-    var text = props.text;
-    if (text.length > 10) {
-        text = text.substring(0, 20) + '...';
-    }
+    const [show, setShow] = useState(false);
+    //sets state to project data that wants to be edited
+    const [projectData, setprojectData] = useState({
+        title: props.title,
+        description: props.text,
+        id: props.id,
+        date: props.date,
+    });
+
     const deleteProject = () => {
         // delete in database
         axios
@@ -24,12 +29,24 @@ export default function Item(props) {
         props.onDelete(props.allItems.filter((items) => items.id !== props.id));
     };
 
+    //sets state when edited data is saved
+    const setStateNew = (NewProjectDate) => {
+        setprojectData(NewProjectDate);
+    };
+
     const DropDownMenu = () => {
         return (
             <DropDown className="d-inline mx-2" autoClose="true">
                 <DropDown.Menu show>
                     <DropDown.Header> Options </DropDown.Header>{' '}
-                    <DropDown.Item> Edit </DropDown.Item>{' '}
+                    <DropDown.Item
+                        onClick={() => {
+                            setShow(true);
+                        }}
+                    >
+                        {' '}
+                        Edit{' '}
+                    </DropDown.Item>{' '}
                     <DropDown.Item onClick={deleteProject}>
                         Delete{' '}
                     </DropDown.Item>{' '}
@@ -38,17 +55,31 @@ export default function Item(props) {
         );
     };
 
+    //shortens description if its over 20 symbols long
+    const shortDes = (txt) => {
+        if (txt !== undefined && txt !== null) {
+            if (txt.length > 20) {
+                return txt.substring(0, 20) + '...';
+            } else {
+                return txt;
+            }
+        }
+    };
+
     return (
         <Card border="border border-dark" className="card h-100">
             <Card.Body>
                 <Row>
                     <Col xs={11}>
-                        <Card.Title> {props.title} </Card.Title>{' '}
+                        <Card.Title> {projectData.title} </Card.Title>{' '}
                         <Card.Subtitle className="mb-2 text-muted">
                             {' '}
-                            {props.date}{' '}
+                            {projectData.date}{' '}
                         </Card.Subtitle>{' '}
-                        <Card.Text> {text} </Card.Text>{' '}
+                        <Card.Text>
+                            {' '}
+                            {shortDes(projectData.description)}{' '}
+                        </Card.Text>{' '}
                     </Col>{' '}
                     <Col xs={1} style={{ paddingRight: -50 }}>
                         <span
@@ -67,6 +98,14 @@ export default function Item(props) {
                     </Link>{' '}
                 </div>{' '}
             </Card.Body>{' '}
+            {show ? (
+                <EditItem
+                    allItems={projectData}
+                    update={setStateNew}
+                    setShow={setShow}
+                    show={show}
+                />
+            ) : null}
         </Card>
     );
 }

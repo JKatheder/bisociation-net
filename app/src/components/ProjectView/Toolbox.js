@@ -7,12 +7,15 @@ import Draggable from 'react-draggable';
 import Modal from 'react-bootstrap/Modal';
 import { graph, graphComponent } from './ProjectView';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Fill, SvgExport, GraphComponent } from 'yfiles';
+import { SvgExport, GraphComponent } from 'yfiles';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { 
     nodeColorDefault, 
     nodeColorStyle1,
-    nodeColorStyle2, redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
+    nodeColorStyle2, 
+    redNodeStyle, 
+    greenNodeStyle, 
+    style } from './ProjectViewStyles';
 import './Toolbox.css';
 import saveGraph from './saveGraph.js';
 import {
