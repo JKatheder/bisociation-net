@@ -7,8 +7,12 @@ import Draggable from 'react-draggable';
 import Modal from 'react-bootstrap/Modal';
 import { graph, graphComponent } from './ProjectView';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Fill, SvgExport, GraphComponent } from 'yfiles';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import { nodeColorDefault, nodeColorStyle1, nodeColorStyle2, redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
+import { 
+    nodeColorDefault, 
+    nodeColorStyle1,
+    nodeColorStyle2, redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
 import './Toolbox.css';
 import saveGraph from './saveGraph.js';
 import {
@@ -35,7 +39,35 @@ export default function Toolbox(props) {
     const handleSave = () => {
         saveGraph(props.project_id);
     };
-    const handleExport = () => {};
+    const handleExport = () => {
+        const exportComponent = new GraphComponent();
+        exportComponent.graph = graphComponent.graph;
+        exportComponent.updateContentRect();
+
+        const targetRect = exportComponent.contentRect;
+
+        const exporter = new SvgExport({
+            worldBounds: targetRect,
+            scale: 1,
+            encodeImagesBase64: true,
+            inlineSvgImages: true,
+        });
+
+        exporter.cssStyleSheet = null;
+
+        const svgElem = exporter.exportSvg(exportComponent);
+        let fileContent = SvgExport.exportSvgString(svgElem);
+
+        const element = document.createElement('a');
+        const file = new Blob([fileContent], {
+            type: 'text/plain',
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = 'myFile.svg';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    };
     const handleRelabel = () => {
         graphComponent.selection.selectedLabels.forEach((item) =>
             relabel(item)
