@@ -8,15 +8,14 @@ import {
     GraphComponent,
     License,
     GraphEditorInputMode,
-    Size,
     Point,
-    GraphItemTypes,
+    GraphItemTypes
 } from 'yfiles';
 import { configureContextMenu } from './CreateContextMenu.js';
 import { layoutGraph } from '../impulseEdges/impulseEdges';
 import license from '../../assets/js/yfiles/license.json';
 import './ProjectView.css';
-import { style, decorateSelection } from './ProjectViewStyles.js';
+import { initializeDefaultStyle, decorateSelection } from './ProjectViewStyles.js';
 import Toolbox from './Toolbox.js';
 import loadGraph from './loadGraph.js';
 import saveGraph from './saveGraph.js';
@@ -38,9 +37,7 @@ graphComponent.inputMode = new GraphEditorInputMode();
 // }
 
 //Style:
-const nodeDefaults = graph.nodeDefaults;
-nodeDefaults.style = style;
-graph.nodeDefaults.size = new Size(150, 150);
+initializeDefaultStyle(graph, graphComponent);
 decorateSelection(graphComponent);
 
 // show description on hover

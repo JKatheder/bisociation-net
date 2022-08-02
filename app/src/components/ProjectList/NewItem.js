@@ -69,7 +69,7 @@ export default function NewItem(props) {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3">
-                            <Form.Label> Titel </Form.Label>{' '}
+                            <Form.Label> Title </Form.Label>{' '}
                             <Form.Control
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}

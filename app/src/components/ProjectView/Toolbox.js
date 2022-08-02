@@ -7,9 +7,15 @@ import Draggable from 'react-draggable';
 import Modal from 'react-bootstrap/Modal';
 import { graph, graphComponent } from './ProjectView';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { SvgExport, GraphComponent } from 'yfiles';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import { Fill, SvgExport, GraphComponent } from 'yfiles';
-import { redNodeStyle, greenNodeStyle, style } from './ProjectViewStyles';
+import { 
+    nodeColorDefault, 
+    nodeColorStyle1,
+    nodeColorStyle2, 
+    redNodeStyle, 
+    greenNodeStyle, 
+    style } from './ProjectViewStyles';
 import './Toolbox.css';
 import saveGraph from './saveGraph.js';
 import {
@@ -36,7 +42,6 @@ export default function Toolbox(props) {
     const handleSave = () => {
         saveGraph(props.project_id);
     };
-
     const handleExport = () => {
         const exportComponent = new GraphComponent();
         exportComponent.graph = graphComponent.graph;
@@ -66,7 +71,6 @@ export default function Toolbox(props) {
         element.click();
         document.body.removeChild(element);
     };
-
     const handleRelabel = () => {
         graphComponent.selection.selectedLabels.forEach((item) =>
             relabel(item)
@@ -107,11 +111,11 @@ export default function Toolbox(props) {
             var i;
             for (i = 0; i < graphComponent.selection.selectedNodes.size; i++) {
                 const t = graphComponent.selection.selectedNodes.elementAt(i);
-                if (t.style.fill.hasSameValue(Fill.DARK_KHAKI)) {
+                if (t.style.fill.hasSameValue(nodeColorDefault)) {
                     graph.setStyle(t, greenNodeStyle);
-                } else if (t.style.fill.hasSameValue(Fill.GREEN)) {
+                } else if (t.style.fill.hasSameValue(nodeColorStyle1)) {
                     graph.setStyle(t, redNodeStyle);
-                } else if (t.style.fill.hasSameValue(Fill.DARK_RED)) {
+                } else if (t.style.fill.hasSameValue(nodeColorStyle2)) {
                     graph.setStyle(t, style);
                 }
             }
@@ -158,21 +162,23 @@ export default function Toolbox(props) {
                             Export
                         </Button>
                         <Form.Label>Select Layout:</Form.Label>
-                        <DropdownButton
-                            className="buttons"
-                            title={'current: ' + layoutMode}
-                            variant="secondary"
-                        >
-                            <Dropdown.Item onClick={handleLayout('tree')}>
-                                Tree
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={handleLayout('organic')}>
-                                Organic
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={handleLayout('circular')}>
-                                Circular
-                            </Dropdown.Item>
-                        </DropdownButton>
+                        <div>
+                            <DropdownButton
+                                className="buttons"
+                                title={'current: ' + layoutMode}
+                                variant="secondary"
+                            >
+                                <Dropdown.Item onClick={handleLayout('tree')}>
+                                    Tree
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={handleLayout('organic')}>
+                                    Organic
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={handleLayout('circular')}>
+                                    Circular
+                                </Dropdown.Item>
+                            </DropdownButton>
+                        </div>
                         <Button
                             className="buttons"
                             variant="secondary"
@@ -182,15 +188,16 @@ export default function Toolbox(props) {
                         </Button>
                         <InputGroup
                             onChange={handleOnChange}
-                            className="buttons"
+                            className="buttonAddImpulseEdges"
                         >
-                            <Form.Label>Add impulse edges</Form.Label>
+                            <Form.Label>Add Impulse Edges</Form.Label>
                             <Form.Control defaultValue="5" type="number" />
                             <Button
                                 variant="outline-secondary"
+                                className="buttonAdd"
                                 onClick={handleImpulseEdges}
                             >
-                                add
+                                Add
                             </Button>
                         </InputGroup>
                         <Button
@@ -198,14 +205,14 @@ export default function Toolbox(props) {
                             variant="secondary"
                             onClick={handleColorChange}
                         >
-                            Color-Change
+                            Color Change
                         </Button>
                         <Button
                             className="buttons"
                             variant="secondary"
                             onClick={handleDescription}
                         >
-                            Edit description
+                            Edit Description
                         </Button>
                     </Card.Body>
                     <div>
