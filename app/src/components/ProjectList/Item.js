@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,17 +10,13 @@ import EditItem from './EditItem';
 export default function Item(props) {
     const [showMenu, setShowMenu] = useState(false);
     const [show, setShow] = useState(false);
-    const [ProjectData, setProjectData] = useState({});
-
     //sets state to project data that wants to be edited
-    useEffect(() => {
-        setProjectData({
-            title: props.title,
-            description: props.text,
-            id: props.id,
-            date: props.date,
-        });
-    }, []);
+    const [projectData, setprojectData] = useState({
+        title: props.title,
+        description: props.text,
+        id: props.id,
+        date: props.date,
+    });
 
     const deleteProject = () => {
         // delete in database
@@ -35,7 +31,7 @@ export default function Item(props) {
 
     //sets state when edited data is saved
     const setStateNew = (NewProjectDate) => {
-        setProjectData(NewProjectDate);
+        setprojectData(NewProjectDate);
     };
 
     const DropDownMenu = () => {
@@ -75,14 +71,14 @@ export default function Item(props) {
             <Card.Body>
                 <Row>
                     <Col xs={11}>
-                        <Card.Title> {ProjectData.title} </Card.Title>{' '}
+                        <Card.Title> {projectData.title} </Card.Title>{' '}
                         <Card.Subtitle className="mb-2 text-muted">
                             {' '}
-                            {ProjectData.date}{' '}
+                            {projectData.date}{' '}
                         </Card.Subtitle>{' '}
                         <Card.Text>
                             {' '}
-                            {shortDes(ProjectData.description)}{' '}
+                            {shortDes(projectData.description)}{' '}
                         </Card.Text>{' '}
                     </Col>{' '}
                     <Col xs={1} style={{ paddingRight: -50 }}>
@@ -104,7 +100,7 @@ export default function Item(props) {
             </Card.Body>{' '}
             {show ? (
                 <EditItem
-                    allItems={ProjectData}
+                    allItems={projectData}
                     update={setStateNew}
                     setShow={setShow}
                     show={show}

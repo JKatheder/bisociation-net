@@ -1,36 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 export default function EditItem(props) {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [id, setID] = useState(-1);
-    const [date, setDate] = useState('');
+    const [title, setTitle] = useState(props.allItems.title);
+    const [description, setDescription] = useState(props.allItems.description);
 
     const handleClose = () => {
         props.setShow(false);
     };
     const handleSave = () => {
         props.setShow(false);
-        props.update({ id: id, title: title, description: description, date: date });
+        props.update({
+            id: props.allItems.id,
+            title: title,
+            description: description,
+            date: props.allItems.date,
+        });
         const NewTitleDesc = { title: title, description: description };
         axios
 
-            .put(`http://localhost:3001/projects/${id}`, NewTitleDesc)
+            .put(
+                `http://localhost:3001/projects/${props.allItems.id}`,
+                NewTitleDesc
+            )
             .catch((error) => {
                 console.log(error);
             });
     };
-
-    useEffect(() => {
-        setTitle(props.allItems.title);
-        setDescription(props.allItems.description);
-        setID(props.allItems.id);
-        setDate(props.allItems.date)
-    }, []);
 
     return (
         <Modal show={props.show} onHide={handleClose}>
