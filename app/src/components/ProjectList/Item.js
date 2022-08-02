@@ -9,7 +9,6 @@ import EditItem from './EditItem';
 
 export default function Item(props) {
     const [showMenu, setShowMenu] = useState(false);
-    const [editId, setEditId] = useState(false);
     const [show, setShow] = useState(false);
     const [ProjectData, setProjectData] = useState({});
 
@@ -47,7 +46,6 @@ export default function Item(props) {
                     <DropDown.Item
                         onClick={() => {
                             setShow(true);
-                            setEditId(props.id);
                         }}
                     >
                         {' '}
