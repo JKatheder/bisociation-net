@@ -15,7 +15,7 @@ export default function loadGraph(project_id) {
                 handler.readFromGraphMLText(graph, res.data.rows[0].data);
                 setRoot = graph.nodes.toList().first();
                 // change root when project changed
-                graph.addLabel(setRoot, res.data.rows[0].title);
+                graph.setLabelText(setRoot.labels.toList().first(), res.data.rows[0].title);
                 setRoot.tag = res.data.rows[0].description;
             } else {
                 // generate root node when first time opening project
