@@ -27,11 +27,18 @@ export default function NewItem(props) {
             // add in current state
             .then((res) => {
                 var item = res.data.rows[0];
+                var formatDate = new Date(item.date);
+                    formatDate =
+                        formatDate.getDate() +
+                        '.' +
+                        (formatDate.getMonth() + 1) +
+                        '.' +
+                        formatDate.getFullYear();
                 props.onSave([
                     {
                         description: item.description,
                         title: item.title,
-                        date: item.date,
+                        date: formatDate,
                         id: item.project_id,
                     },
                     ...props.prevItems,
