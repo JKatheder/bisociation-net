@@ -29,7 +29,7 @@ export default function NewItem(props) {
                 var item = res.data.rows[0];
                 props.onSave([
                     {
-                        content: item.description,
+                        description: item.description,
                         title: item.title,
                         date: item.date,
                         id: item.project_id,
